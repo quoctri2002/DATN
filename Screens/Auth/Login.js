@@ -1,12 +1,10 @@
 import React from "react";
 import { Text, View } from "react-native";
 
-function Login() {
+export function Login() {
   return (
     <View>
-      <Text>Login</Text>
+      <Text>Login hahaha</Text>
     </View>
   );
 }
-
-export default Login;
