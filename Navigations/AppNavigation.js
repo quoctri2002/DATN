@@ -1,8 +1,8 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-function AppNavigation() {
+export function AppNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Home" component={Home} />

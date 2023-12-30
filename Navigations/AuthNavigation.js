@@ -1,8 +1,8 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-function AuthNavigation() {
+export function AuthNavigation() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Login" component={Login} />
