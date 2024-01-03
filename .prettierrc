@@ -5,7 +5,7 @@
   "endOfLine": "lf",
   "tabWidth": 2,
   "bracketSameLine": true,
-  "printWidth": 200,
+  "printWidth": 150,
   "arrowParens": "always",
   "semi": true
 }
