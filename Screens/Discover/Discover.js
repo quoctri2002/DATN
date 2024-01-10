@@ -4,6 +4,11 @@ import { Feather } from '@expo/vector-icons';
 import { ButtonGroup } from '@rneui/themed';
 
 const Discover = () => {
+
+  const listRenderItem = ({item}) => {
+
+  }
+
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   return (
     <View style={styles.container}>
@@ -39,7 +44,7 @@ const Discover = () => {
         <Text style={styles.txtButton}>Boarding</Text>
       </View>
       <View style={styles.line}></View>
-      <View style={{ flexDirection: 'row', justifyContent:'space-between', marginHorizontal: '13%', marginTop: '3%'}}>
+      <View style={{ flexDirection: 'row', justifyContent:'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems:'center'}}>
         <Text style={{color: 'black', fontSize: 20, fontWeight: '500'}}>Nearby  Veterinarian</Text>
         <Text style={{color: '#A6A6A6', fontSize: 15, fontWeight: '400'}}>See all</Text>
       </View>
@@ -103,3 +108,28 @@ const styles = StyleSheet.create({
     height: '100%',
   }
 })
+
+const list = [
+  {
+    id: 1,
+    image: require('../../assets/images/'),
+    name: 'Dr. Nambuvan',
+    nameClinic: 'Bachelor of veterinary science',
+    rate: 5,
+    experience: 10,
+    status: 'open',
+    kilometer: '2.5',
+    price: 100,
+  },
+  {
+    id: 1,
+    image: require('../../assets/images/'),
+    name: 'Dr. Nambuvan',
+    nameClinic: 'Bachelor of veterinary science',
+    rate: 5,
+    status: 'closed',
+    experience: 10,
+    kilometer: '2.5',
+    price: 100,
+  },
+]
