@@ -1,11 +1,11 @@
 import { Image } from '@rneui/themed';
 import { StyleSheet, Text, View } from 'react-native';
 
-export const Article = ({ title, children, icon }) => {
+export const Article = ({ title, children, icon, containerStyle }) => {
   return (
-    <View style={styles.container}>
+    <View style={{ ...styles.container, ...containerStyle }}>
       <View style={styles.heading}>
-        <Image style={styles.image} source={icon} />
+        {icon && <Image style={styles.image} source={icon} />}
         <Text style={styles.text}>{title}</Text>
       </View>
       {children}
@@ -15,21 +15,20 @@ export const Article = ({ title, children, icon }) => {
 
 const styles = StyleSheet.create({
   container: {
-    shadowColor: 'black',
     marginTop: 20,
     backgroundColor: 'white',
     borderRadius: 26,
     flexDirection: 'column',
-    width: '100%',
+    width: 'auto',
     height: 'auto',
     borderStyle: 'solid',
-    backgroundColor: '#ffffff',
     overflow: 'hidden',
     shadowColor: '#171717',
     shadowOffset: { width: -2, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
     elevation: 20,
+    width: '100%',
   },
   image: {
     width: 26,

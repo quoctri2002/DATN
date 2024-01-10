@@ -1,11 +1,11 @@
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React from 'react'
-import { Feather } from '@expo/vector-icons';
+import { Feather, Ionicons } from '@expo/vector-icons';
 import { ButtonGroup } from '@rneui/themed';
 
 const Discover = () => {
 
-  const listRenderItem = ({item}) => {
+  const listRenderItem = ({ item }) => {
 
   }
 
@@ -44,10 +44,43 @@ const Discover = () => {
         <Text style={styles.txtButton}>Boarding</Text>
       </View>
       <View style={styles.line}></View>
-      <View style={{ flexDirection: 'row', justifyContent:'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems:'center'}}>
-        <Text style={{color: 'black', fontSize: 20, fontWeight: '500'}}>Nearby  Veterinarian</Text>
-        <Text style={{color: '#A6A6A6', fontSize: 15, fontWeight: '400'}}>See all</Text>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems: 'center' }}>
+        <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby  Veterinarian</Text>
+        <Text style={{ color: '#A6A6A6', fontSize: 15, fontWeight: '400' }}>See all</Text>
       </View>
+
+      <TouchableOpacity style={styles.itemBox}>
+        <View style={{ flexDirection: 'row', gap: 5 }}>
+          <Image resizeMode='cover' style={{ width: '30%', height: '100%', borderRadius: 15 }} source={require('../../assets/images/docter1.png')} />
+          <View style={{marginLeft: 5}}>
+            <Text>Dr. Nambuvan</Text>
+            <Text>Bachelor of veterinary science </Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Feather name="star" size={20} color="#FFD700" />
+              <Feather name="star" size={20} color="#FFD700" />
+              <Feather name="star" size={20} color="#FFD700" />
+              <Feather name="star" size={20} color="#FFD700" />
+              <Feather name="star" size={20} color="#FFD700" />
+              <Text style={{ marginLeft: 10 }}>5.0</Text>
+            </View>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 5 }}>
+          <Text>10 years of experience</Text>
+          <View style={{ flexDirection: 'row' }}>
+            <Ionicons name="location-sharp" size={20} color="#A6A6A6" />
+            <Text>2.5</Text>
+          </View>
+          <View style={{ flexDirection: 'row' }}>
+            <Ionicons name="pricetag" size={20} color="#A6A6A6" />
+            <Text>100 $</Text>
+          </View>
+        </View>
+        <View style={{ flexDirection: 'row', gap: 5, marginTop: 5 }}>
+          <Ionicons name="time-sharp" size={20} color="#A6A6A6" />
+          <Text>Monday - Friday at 8.00 am - 5.00 pm</Text>
+        </View>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -55,6 +88,22 @@ const Discover = () => {
 export default Discover
 
 const styles = StyleSheet.create({
+  itemBox: {
+    width: '80%',
+    alignSelf: 'center',
+    marginTop: 20,
+    padding: '3%',
+    backgroundColor: 'white',
+    borderRadius: 26,
+    borderStyle: 'solid',
+    overflow: 'hidden',
+    shadowColor: '#171717',
+    shadowOffset: { width: -2, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    elevation: 20,
+  },
+
   line: {
     height: 2,
     backgroundColor: '#000000',
@@ -112,7 +161,7 @@ const styles = StyleSheet.create({
 const list = [
   {
     id: 1,
-    image: require('../../assets/images/'),
+    image: require('../../assets/images/docter1.png'),
     name: 'Dr. Nambuvan',
     nameClinic: 'Bachelor of veterinary science',
     rate: 5,
@@ -120,10 +169,11 @@ const list = [
     status: 'open',
     kilometer: '2.5',
     price: 100,
+    date: 'Monday - Friday at 8.00 am - 5.00pm',
   },
   {
-    id: 1,
-    image: require('../../assets/images/'),
+    id: 2,
+    image: require('../../assets/images/docter1.png'),
     name: 'Dr. Nambuvan',
     nameClinic: 'Bachelor of veterinary science',
     rate: 5,
@@ -131,5 +181,6 @@ const list = [
     experience: 10,
     kilometer: '2.5',
     price: 100,
+    date: 'Monday - Friday at 8.00 am - 5.00pm',
   },
 ]
