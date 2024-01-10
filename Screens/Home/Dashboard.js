@@ -1,8 +1,13 @@
-import { FlatList, StyleSheet, Text, View } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Image } from '@rneui/themed';
 import { Article, ListDogs } from '../../Components';
+import PetStatusList from '../../Components/PetStatusList';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getMyPetList } from '../../Store/thunkApis';
 
 export const Dashboard = () => {
+  const dispatch = useDispatch();
   const Randeritem = (item) => {
     item = data;
     return (
@@ -85,8 +90,12 @@ export const Dashboard = () => {
     );
   };
 
+  useEffect(() => {
+    dispatch(getMyPetList());
+  }, []);
+
   return (
-    <View style={styles.container}>
+    <ScrollView style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.text}>Hey Pixel Posse,</Text>
         <View style={styles.logo}>
@@ -99,18 +108,18 @@ export const Dashboard = () => {
           <ListDogs />
         </Article>
 
-        <View style={{ flexDirection: 'row', width: '100%', gap: 20 }}>
-          <Article title="Pet Location" icon={require('../../assets/images/Location.png')}>
-            <Text>Text</Text>
+        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between' }}>
+          <Article asLink={'Hello'} containerStyle={{ width: '48%' }} title="Pet Location" icon={require('../../assets/images/Location.png')}>
+            <Image containerStyle={{ flex: 1, borderRadius: 15 }} source={require('../../assets/images/Map.png')} />
           </Article>
-          <Article title="Pet Status" icon={require('../../assets/images/MoodHappy.png')}>
-            <Text>List</Text>
+          <Article asLink={'Hello'} containerStyle={{ width: '48%' }} title="Pet Status" icon={require('../../assets/images/MoodHappy.png')}>
+            <PetStatusList />
           </Article>
         </View>
 
-        <FlatList data={data} renderItem={Randeritem} keyExtractor={(item) => item.id} />
+        <FlatList scrollEnabled={false} data={data} renderItem={Randeritem} keyExtractor={(item) => item.id} />
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -124,7 +133,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#5CB15A',
     paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingVertical: 20,
   },
   text: {
     color: 'white',
@@ -146,7 +155,8 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
   },
   main: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 20,
+    flexDirection: 'column',
   },
 });
 
