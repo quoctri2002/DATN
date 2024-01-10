@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
     borderRadius: 26,
     flexDirection: 'column',
     width: '100%',
+    height: 'auto',
     borderStyle: 'solid',
     backgroundColor: '#ffffff',
     overflow: 'hidden',
