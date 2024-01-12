@@ -4,7 +4,7 @@ import { Article, ListDogs } from '../../Components';
 import PetStatusList from '../../Components/PetStatusList';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { getMyPetList } from '../../Store/thunkApis';
+import { getMyPetList } from '../../store/thunkApis';
 
 export const Dashboard = () => {
   const dispatch = useDispatch();

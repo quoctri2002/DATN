@@ -27,7 +27,7 @@ const Screen1 = () => {
                                 </View>
                                 <View style={styles.view2in6}>
                                     <Image style={{ width: 12, height: 12 }} source={require('./media/address.png')} />
-                                    <Text style={{ marginLeft: 3, fontSize: 12 }}>2.5km</Text>
+                                    <Text style={{ marginLeft: 3, fontSize: 12 }}>'2.5km'</Text>
                                 </View>
                             </View>
                         </View>
@@ -104,7 +104,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#F3F2F5',
         borderTopLeftRadius: 300,
         borderTopRightRadius: 300,
-
     },
     view2in1a: {
         marginTop: '5%',

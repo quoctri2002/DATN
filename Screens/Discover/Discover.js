@@ -7,44 +7,93 @@ const Discover = () => {
 
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   return (
-      <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <Feather style={{ color: '#FFFFFF', paddingLeft: 10, }} name="chevron-left" size={25} />
-        </View>
+    <ScrollView style={styles.container}>
+      <View style={styles.header}>
+        <Feather style={{ color: '#FFFFFF', paddingLeft: 10, }} name="chevron-left" size={25} />
+      </View>
 
-        <Text style={styles.hello}>Hello, How may I help you ?</Text>
+      <Text style={styles.hello}>Hello, How may I help you ?</Text>
 
-        <ButtonGroup
-          innerBorderStyle={{ width: 0 }}
-          containerStyle={{ width: 'auto', height: 50, borderWidth: 0, marginTop: 20 }}
-          buttonContainerStyle={{ width: 'auto', height: 'auto', alignItems: 'center' }}
-          buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 50 }}
-          selectedButtonStyle={{ backgroundColor: '#5AB197' }}
-          buttons={[
-            <View>
-              <Image source={require('../../assets/veterinary.png')} />
-            </View>,
-            <View>
-              <Image source={require('../../assets/grooming.png')} />
-            </View>,
-            <View>
-              <Image source={require('../../assets/boarding.png')} />
-            </View>,
-          ]}
-          selectedIndex={selectedIndex}
-          onPress={setSelectedIndex}
-        />
-        <View style={{ flexDirection: 'row', alignSelf: 'center', gap: 55 }}>
-          <Text style={styles.txtButton}>Veterinary</Text>
-          <Text style={styles.txtButton}>Grooming</Text>
-          <Text style={styles.txtButton}>Boarding</Text>
-        </View>
-        <View style={styles.line}></View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems: 'center' }}>
-          {selectedIndex === 0 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby  Veterinarian</Text> : selectedIndex === 1 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby Grooming Room</Text> : <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby Boarding</Text>}
+      <ButtonGroup
+        innerBorderStyle={{ width: 0 }}
+        containerStyle={{ width: 'auto', height: 50, borderWidth: 0, marginTop: 20 }}
+        buttonContainerStyle={{ width: 'auto', height: 'auto', alignItems: 'center' }}
+        buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 50 }}
+        selectedButtonStyle={{ backgroundColor: '#5AB197' }}
+        buttons={[
+          <View>
+            <Image source={require('../../assets/veterinary.png')} />
+          </View>,
+          <View>
+            <Image source={require('../../assets/grooming.png')} />
+          </View>,
+          <View>
+            <Image source={require('../../assets/boarding.png')} />
+          </View>,
+        ]}
+        selectedIndex={selectedIndex}
+        onPress={setSelectedIndex}
+      />
+      <View style={{ flexDirection: 'row', alignSelf: 'center', gap: 55 }}>
+        <Text style={styles.txtButton}>Veterinary</Text>
+        <Text style={styles.txtButton}>Grooming</Text>
+        <Text style={styles.txtButton}>Boarding</Text>
+      </View>
+      <View style={styles.line}></View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems: 'center' }}>
+        {selectedIndex === 0 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby  Veterinarian</Text> : selectedIndex === 1 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby Grooming Room</Text> : <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Nearby Boarding</Text>}
 
-          <Text style={{ color: '#A6A6A6', fontSize: 15, fontWeight: '400' }}>See all</Text>
-        </View>
+        <Text style={{ color: '#A6A6A6', fontSize: 15, fontWeight: '400' }}>See all</Text>
+      </View>
+      {
+        list.map((item) => (
+          <TouchableOpacity key={item.id} style={styles.itemBox}>
+            <View style={{ flexDirection: 'row', gap: 5 }}>
+              <Image resizeMode='cover' style={{ width: '30%', height: '100%', borderRadius: 15 }} source={item.image} />
+              <View style={{ marginLeft: 10 }}>
+                <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>{item.name}</Text>
+                {
+                  selectedIndex === 0 ? <Text style={styles.txtItem}>{item.nameClinic}</Text> : null
+                }
+
+                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                  <Feather name="star" size={20} color="#FFD700" />
+                  <Feather name="star" size={20} color="#FFD700" />
+                  <Feather name="star" size={20} color="#FFD700" />
+                  <Feather name="star" size={20} color="#FFD700" />
+                  <Feather name="star" size={20} color="#FFD700" />
+                  <Text style={{ color: 'black', fontSize: 12, fontWeight: '500', marginLeft: 10 }}>{item.rate}</Text>
+                </View>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
+              {
+                selectedIndex === 0 ? <Text style={styles.txtItem}>{item.experience} years of experience</Text> : <Text style={{ color: '#5CB15A', fontSize: 16, fontWeight: '400' }}>{item.status}</Text>
+              }
+              <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Ionicons name="location-sharp" size={20} color="#A6A6A6" />
+                <Text style={styles.txtItem}>{item.kilometer} km</Text>
+              </View>
+              <View style={{ flexDirection: 'row', gap: 5 }}>
+                <Ionicons name="pricetag" size={20} color="#A6A6A6" />
+                <Text style={styles.txtItem}>{item.price}$</Text>
+              </View>
+            </View>
+            <View style={{ flexDirection: 'row', gap: 5, marginTop: 15 }}>
+              <Ionicons name="time-sharp" size={20} color="#A6A6A6" />
+              <Text style={styles.txtItem}>{item.date}</Text>
+            </View>
+          </TouchableOpacity>
+        ))
+      }
+
+      <View style={styles.line}></View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems: 'center', gap: 5 }}>
+        {selectedIndex === 0 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Veterinarian</Text> : selectedIndex === 1 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Grooming Room</Text> : <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Boarding</Text>}
+
+        <Text style={{ color: '#A6A6A6', fontSize: 15, fontWeight: '400' }}>See all</Text>
+      </View>
+      <View style={{ paddingBottom: 50 }}>
         {
           list.map((item) => (
             <TouchableOpacity key={item.id} style={styles.itemBox}>
@@ -55,7 +104,7 @@ const Discover = () => {
                   {
                     selectedIndex === 0 ? <Text style={styles.txtItem}>{item.nameClinic}</Text> : null
                   }
-
+                  
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Feather name="star" size={20} color="#FFD700" />
                     <Feather name="star" size={20} color="#FFD700" />
@@ -86,55 +135,8 @@ const Discover = () => {
             </TouchableOpacity>
           ))
         }
-
-        <View style={styles.line}></View>
-        <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginHorizontal: '10%', marginTop: '3%', alignItems: 'center', gap: 5}}>
-          {selectedIndex === 0 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Veterinarian</Text> : selectedIndex === 1 ? <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Grooming Room</Text> : <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>Recommended Boarding</Text>}
-
-          <Text style={{ color: '#A6A6A6', fontSize: 15, fontWeight: '400' }}>See all</Text>
-        </View>
-        {
-          list.map((item) => (
-            <TouchableOpacity key={item.id} style={styles.itemBox}>
-              <View style={{ flexDirection: 'row', gap: 5 }}>
-                <Image resizeMode='cover' style={{ width: '30%', height: '100%', borderRadius: 15 }} source={item.image} />
-                <View style={{ marginLeft: 10 }}>
-                  <Text style={{ color: 'black', fontSize: 20, fontWeight: '500' }}>{item.name}</Text>
-                  {
-                    selectedIndex === 0 ? <Text style={styles.txtItem}>{item.nameClinic}</Text> : null
-                  }
-
-                  <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                    <Feather name="star" size={20} color="#FFD700" />
-                    <Feather name="star" size={20} color="#FFD700" />
-                    <Feather name="star" size={20} color="#FFD700" />
-                    <Feather name="star" size={20} color="#FFD700" />
-                    <Feather name="star" size={20} color="#FFD700" />
-                    <Text style={{ color: 'black', fontSize: 12, fontWeight: '500', marginLeft: 10 }}>{item.rate}</Text>
-                  </View>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: 10 }}>
-                {
-                  selectedIndex === 0 ? <Text style={styles.txtItem}>{item.experience} years of experience</Text> : <Text style={{ color: '#5CB15A', fontSize: 16, fontWeight: '400' }}>{item.status}</Text>
-                }
-                <View style={{ flexDirection: 'row', gap: 5 }}>
-                  <Ionicons name="location-sharp" size={20} color="#A6A6A6" />
-                  <Text style={styles.txtItem}>{item.kilometer} km</Text>
-                </View>
-                <View style={{ flexDirection: 'row', gap: 5 }}>
-                  <Ionicons name="pricetag" size={20} color="#A6A6A6" />
-                  <Text style={styles.txtItem}>{item.price}$</Text>
-                </View>
-              </View>
-              <View style={{ flexDirection: 'row', gap: 5, marginTop: 15 }}>
-                <Ionicons name="time-sharp" size={20} color="#A6A6A6" />
-                <Text style={styles.txtItem}>{item.date}</Text>
-              </View>
-            </TouchableOpacity>
-          ))
-        }
-      </ScrollView>
+      </View>
+    </ScrollView>
   )
 }
 
@@ -208,7 +210,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: '#5CB15A',
     width: '100%',
-    height: '8%',
+    height: '5%',
     justifyContent: 'center',
   },
 

@@ -7,25 +7,25 @@ export const getMyPetList = createAsyncThunk('myPets/getMyPetList', async (_, th
         id: 1,
         image:
           'https://images.unsplash.com/photo-1568572933382-74d440642117?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Tri husky',
+        name: 'Tri doggy',
       },
       {
         id: 2,
         image:
           'https://images.unsplash.com/photo-1518717758536-85ae29035b6d?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Duc Minh',
+        name: 'Sang cho',
       },
       {
         id: 3,
         image:
           'https://images.unsplash.com/photo-1598133894008-61f7fdb8cc3a?q=80&w=1588&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Tri giau',
+        name: 'Sang cho real',
       },
       {
         id: 4,
         image:
           'https://images.unsplash.com/photo-1598133894008-61f7fdb8cc3a?q=80&w=1588&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-        name: 'Tri giau',
+        name: 'Sang cho',
       },
     ];
     return ListDogsData;
