@@ -3,6 +3,7 @@ import React from 'react'
 import { Image } from '@rneui/themed';
 import { Feather, Entypo, Fontisto, AntDesign } from '@expo/vector-icons';
 import AddDevice from './AddDevice';
+import AddPets from './AddPets';
 
 const Profile = () => {
     const [nameModal, setNameModal] = React.useState('');
@@ -48,11 +49,14 @@ const Profile = () => {
                 animationType="slide"
                 onRequestClose={() => true} >
                 <View style={{ height: '100%' }}>
-                {
-                    (nameModal === 'AddDevice') ? 
-                    <AddDevice action={{ setModalVisible }} state={{modalVisible}}/> : <AddDevice action={{ setModalVisible }} state={{modalVisible}}/>
-                }
-                    
+                    {
+                        (nameModal === 'AddDevice') ?
+                            <AddDevice action={{ setModalVisible }} state={{ modalVisible }} /> :
+                            (nameModal === 'AddPet') ?
+                                <AddPets action={{ setModalVisible }} state={{ modalVisible }} /> :
+                                <AddDevice action={{ setModalVisible }} state={{ modalVisible }} />
+                    }
+
                 </View>
             </Modal>
 
@@ -61,7 +65,7 @@ const Profile = () => {
                     Data.map((item) => (
                         <View key={item.id} style={{ flexDirection: 'row', justifyContent: 'space-between', marginVertical: '2%' }}>
                             <View style={{ flexDirection: 'row', gap: 15 }}>
-                                <Image resizeMode='cover' style={{ width: 20, height: 20 }} source={item.icon} />
+                                <Image resizeMode='contain' style={{ width: 20, height: 20 }} source={item.icon} />
                                 <Text style={{ color: 'black', fontSize: 14, fontWeight: '600' }}>{item.name}</Text>
                             </View>
                             <TouchableOpacity onPress={() => { setNameModal(item.screen), setModalVisible(true) }}>
@@ -189,7 +193,7 @@ const Data = [
         id: 4,
         icon: require('../../assets/images/PetFoot.png'),
         name: 'Add Pet',
-        screen: '',
+        screen: 'AddPet',
     },
     {
         id: 5,

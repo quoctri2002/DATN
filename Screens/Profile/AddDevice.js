@@ -4,17 +4,14 @@ import { Feather } from '@expo/vector-icons';
 import { Image } from '@rneui/themed';
 import { Button } from '@rneui/base';
 
-
-const AddDevice = (props) => {
-    const { setModalVisible } = props.action;
-    const { modalVisible } = props.state;
+const AddDevice = ({setModalVisible, modalVisible}) => {
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>
                 <Pressable onPress={() => setModalVisible(false)} style={{ flex: 0.5 }}>
                     <Feather style={{ color: '#FFFFFF', paddingLeft: 10, }} name="chevron-left" size={25} />
                 </Pressable>
-                <Text style={styles.text}>Pixel Posse</Text>
+                <Text style={styles.text}>Add Device</Text>
             </View>
             <Button containerStyle={{ width: '40%', marginTop: '3%', alignSelf: 'flex-end', marginRight: '3%', borderRadius: 15, }} buttonStyle={{ backgroundColor: '#5CB15A' }} titleStyle={{ fontWeight: '500', fontSize: 18 }}>
                 Scan Device
