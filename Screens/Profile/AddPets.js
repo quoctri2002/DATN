@@ -4,9 +4,9 @@ import { Feather } from '@expo/vector-icons';
 import { Image, Button, Input } from '@rneui/themed';
 
 
-const AddPets = (props) => {
-    const { setModalVisible } = props.action;
-    const { modalVisible } = props.state;
+const AddPets = ({action, state}) => {
+    const { setModalVisible } = action;
+    const { modalVisible } = state;
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>

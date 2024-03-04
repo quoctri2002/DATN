@@ -4,7 +4,9 @@ import { Feather } from '@expo/vector-icons';
 import { Image } from '@rneui/themed';
 import { Button } from '@rneui/base';
 
-const AddDevice = ({setModalVisible, modalVisible}) => {
+const AddDevice = ({action, state}) => {
+    const { setModalVisible } = action;
+    const { modalVisible } = state;
     return (
         <ScrollView style={styles.container}>
             <View style={styles.header}>

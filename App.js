@@ -8,7 +8,7 @@ import Profile from './Screens/Profile/Profile';
 export default function App() {
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <Profile />
+      <Shop />
     </SafeAreaView>
   )
 }
