@@ -3,13 +3,16 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Discover from './Screens/Discover/Discover';
 import Detail from './Screens/Discover/Detail';
 import Profile from './Screens/Profile/Profile';
-
+import { Provider } from 'react-redux';
+import store from './store';
 
 export default function App() {
   return (
-    <SafeAreaView style={{ flex: 1 }}>
-      <Shop />
-    </SafeAreaView>
+    <Provider store={store}>
+      <SafeAreaView style={{ flex: 1 }}>
+        <Shop />
+      </SafeAreaView>
+    </Provider>
   )
 }
 // import { NavigationContainer } from '@react-navigation/native';

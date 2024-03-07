@@ -104,7 +104,7 @@ const Discover = () => {
                   {
                     selectedIndex === 0 ? <Text style={styles.txtItem}>{item.nameClinic}</Text> : null
                   }
-                  
+
                   <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Feather name="star" size={20} color="#FFD700" />
                     <Feather name="star" size={20} color="#FFD700" />
