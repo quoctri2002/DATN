@@ -1,6 +1,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const getFoodList = createAsyncThunk('food/getFoodList', async (_, thunk) => {
+export const getFoodList = createAsyncThunk('foods/getFoodList', async (_, thunk) => {
   try {
     const ListFood = [
         {

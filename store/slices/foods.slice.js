@@ -15,9 +15,9 @@ const foodsSlice = createSlice({
       .addCase(getFoodList.pending, (state) => {
         state.isLoading = true;
       })
-      .addCase(gegetFoodListtMyPetList.fulfilled, (state, action) => {
+      .addCase(getFoodList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.pets = action.payload;
+        state.foods = action.payload;
       });
   },
 });

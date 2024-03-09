@@ -1,12 +1,21 @@
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, ScrollView, FlatList } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Feather } from '@expo/vector-icons';
 import { SearchBar, ButtonGroup } from '@rneui/themed';
 import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getFoodList } from '../../store/thunkApis';
 
 export const Shop = () => {
-    const myFoodsList = useSelector((state) => state.foods.foods)
+    const dispatch = useDispatch();
+    const myFoodsList = useSelector((state) => state.foods.foods )
+
+    useEffect(() => {
+        dispatch(getFoodList());
+      }, []);
+
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const limitFood = myFoodsList.slice(0, 3);
     const RenderRecommended = ({ item }) => {
         return (
             <View style={styles.box}>
@@ -89,7 +98,7 @@ export const Shop = () => {
                     />
                     <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Recommended Food</Text>
                     <FlatList
-                        data={recommend}
+                        data={myFoodsList}
                         renderItem={RenderRecommended}
                         numColumns={2}
                         columnWrapperStyle={{ columnGap: 10 }}
@@ -102,10 +111,10 @@ export const Shop = () => {
 
                     <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Top Selling </Text>
                     <FlatList
-                        data={selling}
+                        data={limitFood}
                         renderItem={RenderTopSelling}
-                        contentContainerStyle={{ gap: 20, paddingBottom: 5}}
-                        style={{ marginTop: 20 }}
+                        contentContainerStyle={{ gap: 20, paddingBottom: 5 }}
+                        style={{marginTop: 20 }}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
                         scrollEnabled={false}
@@ -222,108 +231,4 @@ const Data = [
         name: 'IOT Device',
     },
 
-]
-
-const recommend = [
-    {
-        id: 1,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 2,
-        image: require('../../assets/images/spFood.png'),
-        sale: '',
-        name: 'Jađâsdasda',
-        kg: '900'
-    },
-    {
-        id: 3,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 4,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 5,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 6,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 7,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 8,
-        image: require('../../assets/images/spFood.png'),
-        sale: '16%',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-]
-
-const selling = [
-    {
-        id: 1,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 2,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 3,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 4,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 5,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
-    {
-        id: 6,
-        image: require('../../assets/images/spFood.png'),
-        brand: 'Royal Cannin',
-        name: 'Josera Mini Deluxe',
-        kg: '900'
-    },
 ]
