@@ -5,15 +5,18 @@ import Detail from './Screens/Discover/Detail';
 import Profile from './Screens/Profile/Profile';
 import { Provider } from 'react-redux';
 import store from './store';
+import Screen1 from './Screens/LayoutDATN/Screen1';
+import { Login } from './Screens/Auth';
+import Register from './Screens/Auth/Register';
 
 export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Shop />
+        <Register />
       </SafeAreaView>
     </Provider>
-  )
+  );
 }
 // import { NavigationContainer } from '@react-navigation/native';
 // import { createStackNavigator } from '@react-navigation/stack';
