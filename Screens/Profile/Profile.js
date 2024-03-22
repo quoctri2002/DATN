@@ -12,7 +12,6 @@ const Profile = () => {
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.back}>
-                    <Feather style={{ color: '#FFFFFF', paddingLeft: 10, }} name="chevron-left" size={25} />
                 </View>
                 <Text style={styles.text}>Pixel Posse</Text>
                 <View style={styles.logo}>
@@ -143,13 +142,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         backgroundColor: '#5CB15A',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingHorizontal: '4%',
+        paddingTop: '7%',
+        paddingBottom: '2%'
     },
     text: {
         color: 'white',
         fontWeight: '600',
-        fontSize: 18,
+        fontSize: 16,
+        paddingLeft: '7%'
     },
     logo: {
         borderRadius: 10,
