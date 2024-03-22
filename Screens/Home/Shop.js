@@ -1,21 +1,27 @@
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, ScrollView, FlatList } from 'react-native'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Feather } from '@expo/vector-icons';
 import { SearchBar, ButtonGroup } from '@rneui/themed';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { getFoodList } from '../../store/thunkApis';
+import { getProductList } from '../../store/thunkApis';
 
 export const Shop = () => {
-    const dispatch = useDispatch();
-    const myFoodsList = useSelector((state) => state.foods.foods )
-
-    useEffect(() => {
-        dispatch(getFoodList());
-      }, []);
-
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const limitFood = myFoodsList.slice(0, 3);
+    const [category, setCategory] = React.useState('');
+    const listcategory = ['food', 'vetItem', 'accessories', 'devices']
+    const dispatch = useDispatch();
+    const productsList = useSelector((state) => state.products.products)
+    useEffect(() => {
+        dispatch(getProductList(category));
+    }, [category]);
+
+    function handleSetSelectedIndex(props) {
+        setSelectedIndex(props)
+        setCategory(listcategory[props])
+    }
+
+    const limitProduct = productsList.slice(0, 3);
     const RenderRecommended = ({ item }) => {
         return (
             <View style={styles.box}>
@@ -94,16 +100,16 @@ export const Shop = () => {
                             ))
                         }
                         selectedIndex={selectedIndex}
-                        onPress={setSelectedIndex}
+                        onPress={(index) => handleSetSelectedIndex(index)}
                     />
                     <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Recommended Food</Text>
                     <FlatList
-                        data={myFoodsList}
+                        data={productsList}
                         renderItem={RenderRecommended}
                         numColumns={2}
                         columnWrapperStyle={{ columnGap: 10 }}
                         contentContainerStyle={{ gap: 10 }}
-                        style={{ marginTop: 20 }}
+                        style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
                         scrollEnabled={false}
@@ -111,16 +117,15 @@ export const Shop = () => {
 
                     <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Top Selling </Text>
                     <FlatList
-                        data={limitFood}
+                        data={limitProduct}
                         renderItem={RenderTopSelling}
                         contentContainerStyle={{ gap: 20, paddingBottom: 5 }}
-                        style={{marginTop: 20 }}
+                        style={{ marginTop: 20 }}
                         keyExtractor={(item) => item.id.toString()}
                         showsVerticalScrollIndicator={false}
                         scrollEnabled={false}
                     />
                 </View>
-
             </ScrollView>
         </View>
     )
@@ -194,7 +199,7 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     header: {
-        height: '2%',
+        height: '3%',
         width: '100%',
         backgroundColor: '#5CB15A',
         flexDirection: 'row',
@@ -214,21 +219,27 @@ const Data = [
         id: 1,
         icon: require('../../assets/images/shop_food.png'),
         name: 'Food',
+        category: 'food',
     },
     {
         id: 2,
         icon: require('../../assets/images/shop_veterinarian.png'),
         name: 'Vet Items',
+        category: 'vetItem'
     },
     {
         id: 3,
         icon: require('../../assets/images/shop_accessories.png'),
         name: 'Accessories',
+        category: 'accessories'
+
     },
     {
         id: 4,
         icon: require('../../assets/images/shop_device.png'),
         name: 'IOT Device',
+        category: 'devices'
+
     },
 
 ]

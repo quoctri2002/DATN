@@ -8,8 +8,6 @@ import AddPets from './AddPets';
 const Profile = () => {
     const [nameModal, setNameModal] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
-
-    console.log(nameModal);
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -78,8 +76,7 @@ const Profile = () => {
         </View>
     )
 }
-
-export default Profile
+export default Profile;
 
 const styles = StyleSheet.create({
     txtContent: {

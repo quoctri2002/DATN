@@ -120,8 +120,8 @@ export const Dashboard = () => {
         <FlatList scrollEnabled={false} data={data} renderItem={Randeritem} keyExtractor={(item) => item.id} />
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {

@@ -1,2 +1,2 @@
 export * from './mypets.slice';
-export * from './foods.slice';
+export * from './products.slice';
