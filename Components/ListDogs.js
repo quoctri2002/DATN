@@ -14,7 +14,6 @@ export const ListDogs = () => {
 
   return (
     <FlatList
-      scrollEnabled={false}
       horizontal
       keyExtractor={(item) => item.id}
       data={myPetList}

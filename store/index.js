@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import myPetsReducer from './slices/mypets.slice';
-import foodsReducer from './slices/foods.slice';
+import productsReducer from './slices/products.slice';
 
 const store = configureStore({
   reducer: {
     myPets: myPetsReducer,
-    foods: foodsReducer,
+    products: productsReducer,
   },
 });
 
