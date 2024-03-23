@@ -1,19 +1,14 @@
-import { Dashboard, Shop } from './Screens/Home';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import Discover from './Screens/Discover/Discover';
-import Detail from './Screens/Discover/Detail';
-import Profile from './Screens/Profile/Profile';
+
 import { Provider } from 'react-redux';
 import store from './store';
+import Account from './Screens/Profile/Account';
 import Screen1 from './Screens/LayoutDATN/Screen1';
-import { Login } from './Screens/Auth';
-import Register from './Screens/Auth/Register';
-
 export default function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={{ flex: 1 }}>
-        <Register />
+        <Account />
       </SafeAreaView>
     </Provider>
   );

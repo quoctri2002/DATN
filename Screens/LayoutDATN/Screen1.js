@@ -41,7 +41,7 @@ const Screen1 = () => {
           <View style={styles.view2in1b}>
             <Text style={styles.view2in1btext}>Recommended For:</Text>
             <View style={styles.view2in1btrong}>
-              <Text style={{ fontWeight: 500, color: '#5F5F63', fontSize: 14 }}>Bella</Text>
+              <Text style={{ fontWeight: '500', color: '#5F5F63', fontSize: 14 }}>Bella</Text>
             </View>
           </View>
           <Pressable style={styles.buttonbook}>
@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
     color: '#FFF',
     textAlign: 'center',
     fontSize: 20,
-    fontWeight: 500,
+    fontWeight: '500',
   },
   view2: {
     position: 'relative',
@@ -127,14 +127,14 @@ const styles = StyleSheet.create({
     // backgroundColor: 'red',
     color: '#141415',
     fontSize: 26,
-    fontWeight: 700,
+    fontWeight: '700',
   },
   textview2in2b: {
     width: '88%',
     // backgroundColor: 'red',
     color: '#064E57',
     fontSize: 17,
-    fontWeight: 500,
+    fontWeight: '500',
   },
   view2in3: {
     width: '55%',
@@ -154,7 +154,7 @@ const styles = StyleSheet.create({
     // width: '88%',
     // backgroundColor: 'red',
     color: '#000000',
-    fontWeight: 500,
+    fontWeight: '500',
   },
   view2in4: {
     marginTop: 12,
@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     // width: '50%',
     // backgroundColor: 'red',
     color: '#5CB15A',
-    fontWeight: 500,
+    fontWeight: '500',
     fontSize: 17,
   },
   view2intexta: {
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     // width: '50%',
     // backgroundColor: 'red',
     color: '#191919',
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 13,
   },
   view2intextb: {
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     // width: '50%',
     // backgroundColor: 'red',
     color: '#191919',
-    fontWeight: 400,
+    fontWeight: '400',
     fontSize: 13,
   },
   view2in1b: {
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     // marginTop: 8,
     fontSize: 16,
     color: '#191919',
-    fontWeight: 500,
+    fontWeight: '500',
   },
   view2in1btrong: {
     alignItems: 'center',
@@ -278,7 +278,7 @@ const styles = StyleSheet.create({
   buttonbooktext: {
     color: '#FFF',
     fontSize: 17,
-    fontWeight: 500,
+    fontWeight: '500',
   },
   bottom: {
     width: '100%',
