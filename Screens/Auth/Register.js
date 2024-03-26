@@ -2,8 +2,11 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Image, Button, Input } from '@rneui/base';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-const Register = () => {
+export function Register(navigation) {
+  navigation = useNavigation();
+  const isLogin = false;
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Image style={styles.logo} source={require('../../assets/images/Logo.png')} />
@@ -34,7 +37,7 @@ const Register = () => {
             <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 18, fontWeight: '400', color: '#747070' }}>
               Have a account?
             </Text>
-            <Pressable>
+            <Pressable onPress={() => navigation.navigate('Login')}>
               <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 19, fontWeight: '600', color: '#5CB15A' }}>Sign in</Text>
             </Pressable>
           </View>
@@ -45,9 +48,7 @@ const Register = () => {
       </View>
     </View>
   );
-};
-
-export default Register;
+}
 
 const styles = StyleSheet.create({
   container: {

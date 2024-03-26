@@ -1,8 +1,13 @@
 import { Text, View, StyleSheet } from 'react-native';
 import { Button, Image, Input } from '@rneui/base';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import React from 'react';
 
-export function Login() {
+export function Login(navigation) {
+  navigation = useNavigation();
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Image style={styles.logo} source={require('../../assets/images/Logo.png')} />
@@ -13,18 +18,31 @@ export function Login() {
             style={styles.input}
             leftIcon={<MaterialCommunityIcons style={{ color: '#A6A6A6', width: '100%' }} name="email-outline" size={25} />}
             inputContainerStyle={styles.inputContainer}
+            onChangeText={setEmail}
           />
-          <Input placeholder="Password" style={styles.input} leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />} inputContainerStyle={styles.inputContainer} />
-          <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 20 }}>Forgot Password?</Text>
+          <Input
+            placeholder="Password"
+            style={styles.input}
+            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />}
+            inputContainerStyle={styles.inputContainer}
+            secureTextEntry={true}
+            onChangeText={setPassword}
+          />
+          <Text style={{ color: '#5CB15A', fontSize: 18, textAlign: 'right', marginBottom: 20 }}>Forgot Password?</Text>
 
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login</Button>
 
-          <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 25, fontWeight: '400', color: '#747070' }}>or connect with</Text>
+          <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 25, fontWeight: '400', color: '#747070' }}>
+            or connect with
+          </Text>
         </View>
         <View style={{ flexDirection: 'column', gap: 16 }}>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Apple</Button>
+          <Button onPress={() => navigation.navigate('Register')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
+            Register
+          </Button>
         </View>
       </View>
       <View style={styles.bottom}>
