@@ -3,7 +3,7 @@ import { Provider, useSelector } from 'react-redux';
 import store from './store';
 import { SafeAreaView } from 'react-native';
 import { AppNavigation } from './Navigations';
-import { Shop } from './Screens/Home';
+import { Account } from './Screens/Profile';
 
 export default function App() {
   return (

@@ -199,13 +199,14 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     header: {
-        height: '3%',
         width: '100%',
         backgroundColor: '#5CB15A',
         flexDirection: 'row',
         alignItems: 'flex-end',
-        paddingBottom: 3,
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        paddingHorizontal: '4%',
+        paddingTop: '7%',
+        paddingBottom: '2%'
     },
     container: {
         flex: 1,

@@ -2,8 +2,10 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { Image, Button, Input } from '@rneui/base';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import React from 'react';
+import { useNavigation } from '@react-navigation/native';
 
-export function Register  ()  {
+export function Register  (navigation)  {
+  navigation = useNavigation();
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Image style={styles.logo} source={require('../../assets/images/Logo.png')} />
@@ -28,13 +30,13 @@ export function Register  ()  {
             inputContainerStyle={styles.inputContainer}
           />
 
-          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
+          <Button onPress={()=> navigation.navigate('Login') } buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 5 }}>
             <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 18, fontWeight: '400', color: '#747070' }}>
               Have a account?
             </Text>
-            <Pressable>
+            <Pressable onPress={()=> navigation.navigate('Login') }>
               <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 19, fontWeight: '600', color: '#5CB15A' }}>Sign in</Text>
             </Pressable>
           </View>

@@ -4,16 +4,18 @@ import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '../../store/thunkApis';
+import { useNavigation } from '@react-navigation/native';
 
 export function Login() {
+  const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispath = useDispatch();
-  const profile = useSelector((state) => state.user.profile);
+
 
   const handleLogin = () => {
-    if (email === '' && password === '') return 
-    dispath(getProfile({email, password}))
+    if (email === '' && password === '') return
+    dispath(getProfile({ email, password }))
   }
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -35,18 +37,20 @@ export function Login() {
             leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />}
             inputContainerStyle={styles.inputContainer}
             onChangeText={setPassword}
-            value={password} />
+            value={password}
+            secureTextEntry={true} />
 
-          <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 20 }}>Forgot Password?</Text>
+          <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
 
           <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login</Button>
-
-          <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 25, fontWeight: '400', color: '#747070' }}>or connect with</Text>
+          <View>
+            <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 20, fontWeight: '400', color: '#747070' }}>or connect with</Text>
+          </View>
         </View>
         <View style={{ flexDirection: 'column', gap: 16 }}>
+          <Button onPress={() => navigation.navigate('Register')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
-          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Apple</Button>
         </View>
       </View>
       <View style={styles.bottom}>
@@ -62,7 +66,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 40,
     width: '100%',
     position: 'relative',
-    marginTop: -30,
+    marginTop: -20,
   },
   button: {
     color: 'white',

@@ -13,6 +13,7 @@ async function mockUser(in4) {
     return (
         {
             id: '',
+            avatar: require('../../assets/images/avartaProfile.png'),
             name: 'minh',
             gender: 'mail',
             phone: '0372711935',
