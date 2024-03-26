@@ -3,7 +3,7 @@ import { Image, Button, Input } from '@rneui/base';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import React from 'react';
 
-const Register = () => {
+export function Register  ()  {
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Image style={styles.logo} source={require('../../assets/images/Logo.png')} />
@@ -47,7 +47,6 @@ const Register = () => {
   );
 };
 
-export default Register;
 
 const styles = StyleSheet.create({
   container: {

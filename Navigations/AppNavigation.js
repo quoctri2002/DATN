@@ -1,14 +1,16 @@
-import { createStackNavigator } from '@react-navigation/stack';
 
-const Stack = createStackNavigator();
+import {AuthNavigation} from './AuthNavigation'
+import {MainContainer} from './MainContainer';
+import { NavigationContainer } from '@react-navigation/native'
+import { useSelector } from 'react-redux';
+
+
 
 export function AppNavigation() {
+  const authenticated = useSelector((state) => state.user.authenticated);
   return (
-    <Stack.Navigator>
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="Notifications" component={Notifications} />
-      <Stack.Screen name="Profile" component={Profile} />
-      <Stack.Screen name="Settings" component={Settings} />
-    </Stack.Navigator>
+    <NavigationContainer>
+    {!authenticated ? <AuthNavigation /> : <MainContainer/>}
+    </NavigationContainer>
   );
 }

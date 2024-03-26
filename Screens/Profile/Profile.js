@@ -4,10 +4,13 @@ import { Image } from '@rneui/themed';
 import { Feather, Entypo, Fontisto, AntDesign } from '@expo/vector-icons';
 import AddDevice from './AddDevice';
 import AddPets from './AddPets';
+import { logout } from '../../store/slices/profile.slice';
+import { useDispatch } from 'react-redux';
 
 const Profile = () => {
     const [nameModal, setNameModal] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
+    const dispatch = useDispatch();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -25,7 +28,7 @@ const Profile = () => {
             <View style={styles.box1}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                     <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>Pixel Posse</Text>
-                    <TouchableOpacity style={{ flexDirection: 'row', gap: 3 }}>
+                    <TouchableOpacity onPress={() => dispatch(logout())} style={{ flexDirection: 'row', gap: 3 }}>
                         <Entypo name="log-out" size={18} color="red" />
                         <Text style={{ color: '#E54D4D', fontSize: 12, fontWeight: '600' }}>Sign out</Text>
                     </TouchableOpacity>

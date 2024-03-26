@@ -8,7 +8,7 @@ import { getProductList } from '../../store/thunkApis';
 
 export const Shop = () => {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const [category, setCategory] = React.useState('');
+    const [category, setCategory] = React.useState('food');
     const listcategory = ['food', 'vetItem', 'accessories', 'devices']
     const dispatch = useDispatch();
     const productsList = useSelector((state) => state.products.products)
