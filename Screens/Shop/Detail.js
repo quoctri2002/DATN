@@ -2,7 +2,7 @@ import { Image, StyleSheet, Text, View, Pressable } from 'react-native';
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
 
-const Screen1 = () => {
+export function Detail  () {
   return (
     <View style={styles.body}>
       <View style={styles.header}>
@@ -13,7 +13,7 @@ const Screen1 = () => {
       </View>
 
       <View style={styles.view2}>
-        <Image style={styles.imageview2} source={require('./media/doctorpet.png')} />
+        <Image style={styles.imageview2} resizeMode='cover' source={require('../../assets/images/spFood.png')} />
         <View style={styles.view2in}>
 
           <View style={styles.view2in1a}>
@@ -24,7 +24,7 @@ const Screen1 = () => {
             </View>
             <View style={styles.view2in3}>
               <Text style={styles.textview2in3a}>4.0</Text>
-              <Image source={require('./media/4sao.png')} />
+              <Image source={require('../../assets/4sao.png')} />
               <Text>(100 review)</Text>
             </View>
           </View>
@@ -48,8 +48,6 @@ const Screen1 = () => {
     </View>
   );
 };
-
-export default Screen1;
 
 const styles = StyleSheet.create({
   txtPrice: {

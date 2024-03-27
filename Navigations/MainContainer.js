@@ -4,8 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons';
 
 //Screens 
-import { Dashboard, Shop } from '../Screens/Home';
+import { Dashboard } from '../Screens/Home';
 import { Profile } from '../Screens/Profile';
+import { Shop } from '../Screens/Shop';
 
 // Screen names
 const homeName = 'Home';
