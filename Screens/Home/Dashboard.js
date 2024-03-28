@@ -120,8 +120,8 @@ export const Dashboard = () => {
         <FlatList scrollEnabled={false} data={data} renderItem={Randeritem} keyExtractor={(item) => item.id} />
       </View>
     </ScrollView>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -132,13 +132,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     backgroundColor: '#5CB15A',
-    paddingHorizontal: 15,
-    paddingVertical: 20,
+    paddingHorizontal: '4%',
+    paddingTop: '7%',
+    paddingBottom: '2%'
   },
   text: {
     color: 'white',
     fontWeight: '600',
-    fontSize: 18,
+    fontSize: 16,
+    marginTop: '3%'
   },
   logo: {
     borderRadius: 10,

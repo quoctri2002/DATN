@@ -3,7 +3,7 @@ import { Image } from '@rneui/themed';
 import React from 'react';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 
-const Detail = () => {
+export function Detail ()  {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -19,7 +19,6 @@ const Detail = () => {
   );
 };
 
-export default Detail;
 
 const styles = StyleSheet.create({
   txtTitle: {

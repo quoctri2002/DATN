@@ -4,42 +4,46 @@ import { Image } from '@rneui/themed';
 import { Feather, Entypo, Fontisto, AntDesign } from '@expo/vector-icons';
 import AddDevice from './AddDevice';
 import AddPets from './AddPets';
+import { logout } from '../../store/slices/profile.slice';
+import { useDispatch } from 'react-redux';
+import { Account } from './Account';
+import { useSelector } from 'react-redux';
 
-const Profile = () => {
+export function Profile () {
     const [nameModal, setNameModal] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
-
-    console.log(nameModal);
+    const dispatch = useDispatch();
+    const profile = useSelector((state) => state.user.profile);
+    
     return (
         <View style={styles.container}>
             <View style={styles.header}>
                 <View style={styles.back}>
-                    <Feather style={{ color: '#FFFFFF', paddingLeft: 10, }} name="chevron-left" size={25} />
                 </View>
-                <Text style={styles.text}>Pixel Posse</Text>
+                <Text style={styles.text}>{profile.name}</Text>
                 <View style={styles.logo}>
                     <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
                 </View>
             </View>
-            <Image style={{ width: '100%', height: '65%' }} resizeMode='cover' source={require('../../assets/images/avartaProfile.png')} />
+            <Image style={{ width: '100%', height: '65%' }} resizeMode='cover' source={profile.avatar} />
             <View style={styles.view2in}>
 
             </View>
             <View style={styles.box1}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>Pixel Posse</Text>
-                    <TouchableOpacity style={{ flexDirection: 'row', gap: 3 }}>
+                    <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>{profile.name}</Text>
+                    <TouchableOpacity onPress={() => dispatch(logout())} style={{ flexDirection: 'row', gap: 3 }}>
                         <Entypo name="log-out" size={18} color="red" />
                         <Text style={{ color: '#E54D4D', fontSize: 12, fontWeight: '600' }}>Sign out</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flexDirection: 'row', gap: 20, marginLeft: 15, alignItems: 'center', marginTop: 7 }}>
                     <Fontisto name="email" size={20} color="#000000" />
-                    <Text style={styles.txtContent}>pixelposse@gmail.com</Text>
+                    <Text style={styles.txtContent}>{profile.email}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', gap: 20, marginLeft: 15, alignItems: 'center', marginTop: 15 }}>
                     <AntDesign name="phone" size={20} color="#000000" />
-                    <Text style={styles.txtContent}>0372711935</Text>
+                    <Text style={styles.txtContent}>{profile.phone}</Text>
                 </View>
             </View>
 
@@ -54,6 +58,8 @@ const Profile = () => {
                             <AddDevice action={{ setModalVisible }} state={{ modalVisible }} /> :
                             (nameModal === 'AddPet') ?
                                 <AddPets action={{ setModalVisible }} state={{ modalVisible }} /> :
+                                (nameModal === 'AboutMe') ? 
+                                <Account action={{ setModalVisible }} />:
                                 <AddDevice action={{ setModalVisible }} state={{ modalVisible }} />
                     }
 
@@ -78,8 +84,6 @@ const Profile = () => {
         </View>
     )
 }
-
-export default Profile
 
 const styles = StyleSheet.create({
     txtContent: {
@@ -146,13 +150,15 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         backgroundColor: '#5CB15A',
-        paddingHorizontal: 10,
-        paddingVertical: 10,
+        paddingHorizontal: '4%',
+        paddingTop: '7%',
+        paddingBottom: '2%'
     },
     text: {
         color: 'white',
         fontWeight: '600',
-        fontSize: 18,
+        fontSize: 16,
+        paddingLeft: '7%'
     },
     logo: {
         borderRadius: 10,
@@ -175,7 +181,7 @@ const Data = [
         id: 1,
         icon: require('../../assets/images/aboutMe.png'),
         name: 'About Me',
-        screen: '',
+        screen: 'AboutMe',
     },
     {
         id: 2,
