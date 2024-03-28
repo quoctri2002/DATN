@@ -1,15 +1,14 @@
-import 'react-native-gesture-handler';
-import { Provider, useSelector } from 'react-redux';
+import { SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+
+import { Provider } from 'react-redux';
 import store from './store';
-import { SafeAreaView } from 'react-native';
-import { AppNavigation } from './Navigations';
-import Screen1 from './Screens/LayoutDATN/Screen1';
+import { AppNavigation } from './Navigations/AppNavigation';
 
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Screen1/>
+      <SafeAreaView style={{ flex: 1 }} >
+        <AppNavigation />
       </SafeAreaView>
     </Provider>
   );

@@ -3,9 +3,10 @@ import { NavigationContainer } from '@react-navigation/native'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { Feather } from '@expo/vector-icons';
 
-//Screens 
+//Screens
 import { Dashboard, Shop } from '../Screens/Home';
 import { Profile } from '../Screens/Profile';
+import { Cart} from '../Screens/Cart/Cart'
 
 // Screen names
 const homeName = 'Home';
@@ -54,7 +55,7 @@ export function MainContainer() {
       <Tab.Screen name={homeName} component={Dashboard} />
       <Tab.Screen name={shopName} component={Shop} />
       <Tab.Screen name={profileName} component={Profile} />
-
+      <Tab.Screen name='Cart' component={Cart} />
     </Tab.Navigator>
   )
 }
