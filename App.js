@@ -1,17 +1,17 @@
-import { Dashboard, Shop } from './Screens/Home';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import Discover from './Screens/Discover/Discover';
-import Detail from './Screens/Discover/Detail';
-import Profile from './Screens/Profile/Profile';
+import { SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+
 import { Provider } from 'react-redux';
 import store from './store';
+import { Cart } from './Screens/Cart/Cart';
 
 export default function App() {
   return (
     <Provider store={store}>
-      <SafeAreaView style={{ flex: 1 }}>
-        <Shop />
-      </SafeAreaView>
+        <SafeAreaProvider>
+          <SafeAreaView style={{ flex: 1 }} >
+              <Cart />
+          </SafeAreaView>
+        </SafeAreaProvider>
     </Provider>
   )
 }
