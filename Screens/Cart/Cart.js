@@ -7,10 +7,6 @@ import { http } from "../../Utilities/axios/http";
 
 export function Cart() {
 
-  useEffect(() => {
-    http.getUri()
-  },[])
-
   return (
     <ScrollView style={styles.container}>
         <View style={styles.header}>
