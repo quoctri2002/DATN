@@ -1,8 +1,22 @@
-import { Image, StyleSheet, Text, View, Pressable } from 'react-native';
-import React from 'react';
+import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 
-export function Detail  () {
+export function Detail() {
+  let [count, setCount] = React.useState(0);
+
+  function plus() {
+    count += 1;
+    return setCount(count);
+  }
+  function minus() {
+    if (count <= 0) {
+      '0' 
+    } else {
+      count -= 1;
+    }
+    return setCount(count);
+  }
   return (
     <View style={styles.body}>
       <View style={styles.header}>
@@ -40,6 +54,16 @@ export function Detail  () {
               <Text style={{ fontWeight: '500', color: '#5F5F63', fontSize: 14 }}>Bella</Text>
             </View>
           </View>
+
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '45%', paddingTop: '2%' }}>
+            <Text style={{ color: '#868889', fontWeight: '500', fontSize: 16 }}>Quantity</Text>
+            <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
+              <TouchableOpacity  onPress={minus}><Feather name="minus" size={25} color={count <= 0 ? "#C7C7C7" : "#6CC51D"} /></TouchableOpacity>
+              <Text style={{ fontWeight: '700', fontSize: 19, borderLeftWidth: 1, borderRightWidth: 1, textAlign: 'center', width: 50, borderColor: '#C7C7C7' }}>{count}</Text>
+              <TouchableOpacity onPress={plus}><Feather name="plus" size={25} color="#6CC51D" /></TouchableOpacity>
+            </View>
+          </View>
+
           <Pressable style={styles.buttonbook}>
             <Text style={styles.buttonbooktext}>Add To Cart</Text>
           </Pressable>
@@ -133,7 +157,7 @@ const styles = StyleSheet.create({
   view2in1a: {
     marginTop: '5%',
     height: 'auto',
-    width: '50%',
+    width: '48%',
     justifyContent: 'space-around',
     backgroundColor: '#FFFFFF',
     borderRadius: 26,
@@ -189,7 +213,7 @@ const styles = StyleSheet.create({
   },
   view2intexta: {
     marginTop: '3%',
-    width: '45%',
+    width: '50%',
     color: '#191919',
     fontWeight: '400',
     fontSize: 13,
@@ -202,7 +226,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   view2in1b: {
-    width: '45%',
+    width: '50%',
     alignItems: 'center',
     flexDirection: 'row',
     marginTop: 8,
@@ -229,7 +253,7 @@ const styles = StyleSheet.create({
     marginTop: '3%',
     height: 60,
     backgroundColor: '#5CB15A',
-    width: '45%',
+    width: '50%',
   },
   buttonbooktext: {
     color: '#FFF',
