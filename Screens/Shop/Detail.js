@@ -1,22 +1,30 @@
 import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
 import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
+import { SliderBox } from "react-native-image-slider-box";
 
 export function Detail() {
   let [count, setCount] = React.useState(0);
 
-  function plus() {
+  function plus () {
     count += 1;
     return setCount(count);
   }
-  function minus() {
+  function minus () {
     if (count <= 0) {
-      '0' 
+      '0'
     } else {
       count -= 1;
     }
     return setCount(count);
   }
+  const images = [
+    require('../../assets/images/spDetail.png'),
+    require('../../assets/images/spDetail.png'),
+    require('../../assets/images/spDetail.png'),
+    require('../../assets/images/spDetail.png'),
+    require('../../assets/images/spDetail.png'),
+  ]
   return (
     <View style={styles.body}>
       <View style={styles.header}>
@@ -27,7 +35,36 @@ export function Detail() {
       </View>
 
       <View style={styles.view2}>
-        <Image style={styles.imageview2} resizeMode='cover' source={require('../../assets/images/spFood.png')} />
+        <SliderBox
+          images={images}
+          style={styles.imageview2}
+          onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
+          dotColor="#6CC51D"
+          inactiveDotColor="#90A4AE"
+          paginationBoxVerticalPadding={20}
+          circleLoop
+          resizeMethod={'resize'}
+          resizeMode={'cover'}
+          paginationBoxStyle={{
+            position: "absolute",
+            bottom: 0,
+            padding: 0,
+            alignItems: "center",
+            alignSelf: "center",
+            justifyContent: "center",
+            paddingVertical: 10
+          }}
+          dotStyle={{
+            width: 10,
+            height: 10,
+            borderRadius: 5,
+            marginHorizontal: 0,
+            backgroundColor: "rgba(128, 128, 128, 0.92)",
+            marginBottom: 480,
+          }}
+          ImageComponentStyle={{ borderRadius: 15, width: '97%', marginTop: 5 }}
+          imageLoadingColor="#6CC51D"
+        />
         <View style={styles.view2in}>
 
           <View style={styles.view2in1a}>
@@ -58,9 +95,9 @@ export function Detail() {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '45%', paddingTop: '2%' }}>
             <Text style={{ color: '#868889', fontWeight: '500', fontSize: 16 }}>Quantity</Text>
             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <TouchableOpacity  onPress={minus}><Feather name="minus" size={25} color={count <= 0 ? "#C7C7C7" : "#6CC51D"} /></TouchableOpacity>
+              <TouchableOpacity onPress={minus}><Feather name="minus" size={22} color={count <= 0 ? "#C7C7C7" : "#6CC51D"} /></TouchableOpacity>
               <Text style={{ fontWeight: '700', fontSize: 19, borderLeftWidth: 1, borderRightWidth: 1, textAlign: 'center', width: 50, borderColor: '#C7C7C7' }}>{count}</Text>
-              <TouchableOpacity onPress={plus}><Feather name="plus" size={25} color="#6CC51D" /></TouchableOpacity>
+              <TouchableOpacity onPress={plus}><Feather name="plus" size={22} color="#6CC51D" /></TouchableOpacity>
             </View>
           </View>
 
@@ -136,13 +173,9 @@ const styles = StyleSheet.create({
   },
   view2: {
     position: 'relative',
-    height: '84%', // 787
+    height: '85%', // 787
     width: '100%',
     alignItems: 'center',
-  },
-  imageview2: {
-    height: '84%', // 787
-    width: '100%',
   },
   view2in: {
     alignItems: 'center',
