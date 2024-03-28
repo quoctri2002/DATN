@@ -2,8 +2,15 @@ import { Avatar, Text } from "@rneui/themed";
 import { FlatList, ScrollView, StyleSheet, View } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { ListItem, Button } from '@rneui/themed';
+import { useEffect } from "react";
+import { http } from "../../Utilities/axios/http";
 
 export function Cart() {
+
+  useEffect(() => {
+    http.getUri()
+  },[])
+
   return (
     <ScrollView style={styles.container}>
         <View style={styles.header}>
@@ -36,14 +43,13 @@ export function Cart() {
             </View>
         </View>
 
-        <View style={{ backgroundColor: '#5CB15A', height: 54, maxHeight: 54, width: '100%', marginTop: 'auto' }}></View>
     </ScrollView>
   )
 }
 
 function MinusAndPlus() {
   return (
-    <View style={{ flexDirection: 'column', justifyContent: 'center' }}>
+    <View style={{ flexDirection: 'column', justifyContent: 'center', gap: 4, alignItems: 'center' }}>
       <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
       <ListItem.Input inputContainerStyle={styles.inputQuantityContainerStyle} inputStyle={styles.inputQuantityStyle} inputMode="numeric" placeholder="1" />
       <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
@@ -53,7 +59,18 @@ function MinusAndPlus() {
 
 function CartProductList() {
   const renderItem = () => (
-    <ListItem containerStyle={styles.cartItem}>
+    <ListItem.Swipeable
+      rightStyle={{marginRight: 15 }}
+      leftWidth={0}
+      rightWidth={60}
+      rightContent={(reset) => (
+        <Button
+          onPress={() => reset()}
+          icon={() => <MaterialCommunityIcons name="trash-can-outline" size={28} color="white" />}
+          buttonStyle={styles.buttonSwipeable}
+        />)}
+      containerStyle={styles.cartItem}
+    >
       <Avatar containerStyle={{ margin: 0 }} size={42} avatarStyle={styles.avatarStyle} source={{ uri: "https://images.unsplash.com/photo-1707343848655-a196bfe88861?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8" }} />
       <ListItem.Content style={styles.itemContent}>
         <ListItem.Subtitle style={styles.cartSubtitleTop}>Rs 7850.00 x 3</ListItem.Subtitle>
@@ -61,12 +78,13 @@ function CartProductList() {
         <ListItem.Subtitle style={styles.cartSubtitleBottom}>3kg</ListItem.Subtitle>
       </ListItem.Content>
       <MinusAndPlus />
-    </ListItem>
+    </ListItem.Swipeable>
   );
 
   return (
     <FlatList
-      style={{ paddingTop: 48}}
+      style={{ paddingTop: 48 }}
+      ItemSeparatorComponent={() => <View style={{height: 12}} />}
       scrollEnabled={false}
       keyExtractor={(item) => item}
       data={[1,2,3,4]}
@@ -75,7 +93,6 @@ function CartProductList() {
     />
   )
 }
-
 
 const styles = StyleSheet.create({
   container: {
@@ -113,9 +130,8 @@ const styles = StyleSheet.create({
     fontWeight: 500
   },
   cartItem: {
-    elevation: 4,
+    elevation: 8,
     borderRadius: 8,
-    marginBottom: 12,
     paddingVertical: 12,
     paddingHorizontal: 15,
     marginHorizontal: 15,
@@ -152,6 +168,7 @@ const styles = StyleSheet.create({
   },
   inputQuantityStyle: {
     textAlign: 'center',
+    fontSize: 14,
     margin: 0,
     padding: 0,
   },
@@ -165,5 +182,7 @@ const styles = StyleSheet.create({
   inputQuantityContainerStyle: {
     margin: 0,
     padding: 0,
-  }
+    height: 2
+  },
+  buttonSwipeable: { height: '100%', borderRadius: 8, marginLeft: 7, backgroundColor: '#E54D4D' }
 })

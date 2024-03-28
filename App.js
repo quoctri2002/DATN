@@ -2,16 +2,14 @@ import { SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 
 import { Provider } from 'react-redux';
 import store from './store';
-import { Cart } from './Screens/Cart/Cart';
+import { AppNavigation } from './Navigations/AppNavigation';
 
 export default function App() {
   return (
     <Provider store={store}>
-        <SafeAreaProvider>
-          <SafeAreaView style={{ flex: 1 }} >
-              <Cart />
-          </SafeAreaView>
-        </SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }} >
+        <AppNavigation />
+      </SafeAreaView>
     </Provider>
   );
 }
