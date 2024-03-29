@@ -5,8 +5,10 @@ import { SearchBar, ButtonGroup } from '@rneui/themed';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getProductList } from '../../store/thunkApis';
+import { useNavigation } from '@react-navigation/native';
 
 export const Shop = () => {
+    const navigation = useNavigation();
     const [selectedIndex, setSelectedIndex] = React.useState(0);
     const [category, setCategory] = React.useState('food');
     const listcategory = ['food', 'vetItem', 'accessories', 'devices']
@@ -72,7 +74,7 @@ export const Shop = () => {
                 <View style={styles.header}>
                     <Feather style={{ color: 'white', }} name="chevron-left" size={25} />
                     <Text style={styles.txtTitle}>Shop</Text>
-                    <Pressable style={{ paddingRight: 20 }}>
+                    <Pressable onPress={() => navigation.navigate('Cart')} style={{ paddingRight: 20 }}>
                         <Feather style={{ color: 'white' }} name="shopping-cart" size={25} />
                     </Pressable>
                 </View>

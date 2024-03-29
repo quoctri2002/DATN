@@ -1,4 +1,5 @@
 import {AuthNavigation} from './AuthNavigation'
+import { CartNavigation } from './CartNavigation';
 import {MainContainer} from './MainContainer';
 import { NavigationContainer } from '@react-navigation/native'
 import { useSelector } from 'react-redux';

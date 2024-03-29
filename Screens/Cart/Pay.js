@@ -1,15 +1,17 @@
-import { StyleSheet, Text, View, Pressable } from 'react-native'
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 import { Input, Button } from '@rneui/base';
+import { useNavigation } from '@react-navigation/native';
 
 export function Pay() {
+    const navigation = useNavigation();
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Pressable style={styles.back}>
-                    <Feather name="chevron-left" size={25} color="white" />
-                </Pressable>
+                <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.back}>
+                    <Feather name="chevron-left" size={30} color="white" />
+                </TouchableOpacity>
                 <Text style={styles.text}>Payment</Text>
             </View>
             <View style={styles.boxInput}>
@@ -105,8 +107,9 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 20,
         marginVertical: 'auto',
-        width: '100%',
+        width: '90%',
         textAlign: 'center',
+         marginLeft: '6%'
     },
 
     header: {

@@ -1,51 +1,55 @@
 import { Avatar, Text } from "@rneui/themed";
-import { FlatList, ScrollView, StyleSheet, View } from "react-native";
+import { FlatList, ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { ListItem, Button } from '@rneui/themed';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { http } from "../../Utilities/axios/http";
+import { useNavigation } from "@react-navigation/native";
 
 export function Cart() {
-
+  const navigation = useNavigation();
   return (
     <ScrollView style={styles.container}>
-        <View style={styles.header}>
-          <MaterialIcons name="arrow-back-ios" size={24} color="white" />
-          <Text style={styles.headerText}>Cart</Text>
-          <MaterialCommunityIcons name="cart-variant" size={24} color="white" />
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={{justifyContent: 'flex-end'}}>
+          <MaterialIcons name="arrow-back-ios" size={25} color="white" />
+        </TouchableOpacity>
+        <Text style={styles.headerText}>Cart</Text>
+        <MaterialCommunityIcons name="cart-variant" size={25} color="white" />
+      </View>
+
+      <CartProductList />
+
+      <View style={styles.totalContainer}>
+        <View style={{ paddingBottom: 80 }}>
         </View>
+        <View style={{ marginTop: 'auto', marginBottom: 15 }}>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalSubText}>Subtotal</Text>
+            <Text style={styles.totalSubText}>53,340.00$
+            </Text>
+          </View>
+          <View style={styles.totalRow}>
+            <Text style={styles.totalSubText}>Shipping charges</Text>
+            <Text style={styles.totalSubText}>520.00$</Text>
+          </View>
+          <View style={{ ...styles.totalRow, marginTop: 30 }}>
+            <Text style={styles.totalText}>Total</Text>
+            <Text style={styles.totalText}>53,860$</Text>
+          </View>
 
-        <CartProductList />
-
-        <View style={styles.totalContainer}>
-            <View style={{ paddingBottom: 80 }}>
-            </View>
-            <View style={{ marginTop: 'auto', marginBottom: 15 }}>
-              <View style={styles.totalRow}>
-                <Text style={styles.totalSubText}>Subtotal</Text>
-                <Text style={styles.totalSubText}>Rs 53,340.00
-              </Text>
-              </View>
-              <View style={styles.totalRow}>
-                <Text style={styles.totalSubText}>Shipping charges</Text>
-                <Text style={styles.totalSubText}>Rs 520.00</Text>
-              </View>
-              <View style={{ ...styles.totalRow, marginTop: 30 }}>
-                <Text style={styles.totalText}>Total</Text>
-                <Text style={styles.totalText}>Rs 53,860</Text>
-              </View>
-
-              <Button containerStyle={styles.buttonContainerStyle} buttonStyle={styles.buttonStyle} titleStyle={styles.buttonTitleStyle}>Checkout</Button>
-            </View>
+          <Button onPress={() => navigation.navigate('Pay')} containerStyle={styles.buttonContainerStyle} buttonStyle={styles.buttonStyle} titleStyle={styles.buttonTitleStyle}>Checkout</Button>
         </View>
+      </View>
 
     </ScrollView>
   )
 }
 
 function MinusAndPlus() {
+  let [count, setCount] = useState();
   return (
-    <View style={{ flexDirection: 'column', justifyContent: 'center', gap: 4, alignItems: 'center' }}>
+    <View style={{ gap: 4 }}>
       <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
       <ListItem.Input inputContainerStyle={styles.inputQuantityContainerStyle} inputStyle={styles.inputQuantityStyle} inputMode="numeric" placeholder="1" />
       <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
@@ -56,7 +60,7 @@ function MinusAndPlus() {
 function CartProductList() {
   const renderItem = () => (
     <ListItem.Swipeable
-      rightStyle={{marginRight: 15 }}
+      rightStyle={{ marginRight: 15 }}
       leftWidth={0}
       rightWidth={60}
       rightContent={(reset) => (
@@ -69,7 +73,7 @@ function CartProductList() {
     >
       <Avatar containerStyle={{ margin: 0 }} size={42} avatarStyle={styles.avatarStyle} source={{ uri: "https://images.unsplash.com/photo-1707343848655-a196bfe88861?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8" }} />
       <ListItem.Content style={styles.itemContent}>
-        <ListItem.Subtitle style={styles.cartSubtitleTop}>Rs 7850.00 x 3</ListItem.Subtitle>
+        <ListItem.Subtitle style={styles.cartSubtitleTop}>7850.00$ x 3</ListItem.Subtitle>
         <ListItem.Title style={styles.cartTitle} >Royal Canin Rottweiler Puppy</ListItem.Title>
         <ListItem.Subtitle style={styles.cartSubtitleBottom}>3kg</ListItem.Subtitle>
       </ListItem.Content>
@@ -80,10 +84,10 @@ function CartProductList() {
   return (
     <FlatList
       style={{ paddingTop: 48 }}
-      ItemSeparatorComponent={() => <View style={{height: 12}} />}
+      ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
       scrollEnabled={false}
       keyExtractor={(item) => item}
-      data={[1,2,3,4]}
+      data={[1, 2, 3, 4]}
       renderItem={renderItem}
       showsHorizontalScrollIndicator={false}
     />
@@ -97,16 +101,20 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
   header: {
-    backgroundColor: '#5CB15A',
     flexDirection: 'row',
+    backgroundColor: '#5CB15A',
+    paddingHorizontal: '4%',
+    paddingTop: '6%',
+    paddingBottom: '2%',
+    alignSelf: 'center',
+    width: '100%',
     justifyContent: 'space-between',
-    paddingHorizontal: 15,
-    paddingVertical: 8,
   },
+
   headerText: {
     color: 'white',
-    fontSize: 18,
-    fontWeight: 500
+    fontWeight: '600',
+    fontSize: 20,
   },
   totalContainer: {
     paddingHorizontal: 15,
@@ -163,7 +171,7 @@ const styles = StyleSheet.create({
     fontWeight: 600
   },
   inputQuantityStyle: {
-    textAlign: 'center',
+    textAlign: 'left',
     fontSize: 14,
     margin: 0,
     padding: 0,
@@ -173,7 +181,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   buttonQuantityTitleStyle: {
-    color: '#5CB15A'
+    color: '#5CB15A',
   },
   inputQuantityContainerStyle: {
     margin: 0,

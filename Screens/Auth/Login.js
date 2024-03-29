@@ -48,7 +48,7 @@ export function Login() {
           </View>
         </View>
         <View style={{ flexDirection: 'column', gap: 16 }}>
-          <Button onPress={() => navigation.navigate('Register')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
+          <Button onPress={() => navigation.navigate('Detail')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
         </View>
