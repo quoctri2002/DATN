@@ -1,16 +1,15 @@
-import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity } from 'react-native';
-import React, { useState } from 'react';
+import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, TextInput } from 'react-native';
+import React from 'react';
 import { Feather } from '@expo/vector-icons';
-import { SliderBox } from "react-native-image-slider-box";
 
 export function Detail() {
   let [count, setCount] = React.useState(0);
 
-  function plus () {
+  function plus() {
     count += 1;
     return setCount(count);
   }
-  function minus () {
+  function minus() {
     if (count <= 0) {
       '0'
     } else {
@@ -19,11 +18,26 @@ export function Detail() {
     return setCount(count);
   }
   const images = [
-    require('../../assets/images/spDetail.png'),
-    require('../../assets/images/spDetail.png'),
-    require('../../assets/images/spDetail.png'),
-    require('../../assets/images/spDetail.png'),
-    require('../../assets/images/spDetail.png'),
+    {
+      id: 1,
+      image: require('../../assets/images/spDetail.png')
+    },
+    {
+      id: 2,
+      image: require('../../assets/images/spDetail.png')
+    },
+    {
+      id: 3,
+      image: require('../../assets/images/spDetail.png')
+    },
+    {
+      id: 4,
+      image: require('../../assets/images/spDetail.png')
+    },
+    {
+      id: 5,
+      image: require('../../assets/images/spDetail.png')
+    },
   ]
   return (
     <View style={styles.body}>
@@ -35,35 +49,16 @@ export function Detail() {
       </View>
 
       <View style={styles.view2}>
-        <SliderBox
-          images={images}
+        <FlatList
+          keyExtractor={(item) => item.id}
           style={styles.imageview2}
-          onCurrentImagePressed={index => console.warn(`image ${index} pressed`)}
-          dotColor="#6CC51D"
-          inactiveDotColor="#90A4AE"
-          paginationBoxVerticalPadding={20}
-          circleLoop
-          resizeMethod={'resize'}
-          resizeMode={'cover'}
-          paginationBoxStyle={{
-            position: "absolute",
-            bottom: 0,
-            padding: 0,
-            alignItems: "center",
-            alignSelf: "center",
-            justifyContent: "center",
-            paddingVertical: 10
-          }}
-          dotStyle={{
-            width: 10,
-            height: 10,
-            borderRadius: 5,
-            marginHorizontal: 0,
-            backgroundColor: "rgba(128, 128, 128, 0.92)",
-            marginBottom: 480,
-          }}
-          ImageComponentStyle={{ borderRadius: 15, width: '97%', marginTop: 5 }}
-          imageLoadingColor="#6CC51D"
+          data={images}
+          renderItem={({ item }) =>
+            <Image source={item.image} />
+          }
+          horizontal
+          pagingEnabled
+          snapToAlignment='center'
         />
         <View style={styles.view2in}>
 
@@ -100,7 +95,6 @@ export function Detail() {
               <TouchableOpacity onPress={plus}><Feather name="plus" size={22} color="#6CC51D" /></TouchableOpacity>
             </View>
           </View>
-
           <Pressable style={styles.buttonbook}>
             <Text style={styles.buttonbooktext}>Add To Cart</Text>
           </Pressable>
