@@ -1,24 +1,23 @@
-import React from 'react'
-import { NavigationContainer } from '@react-navigation/native'
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
+import React from 'react';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
-//Screens 
+//Screens
 import { Dashboard } from '../Screens/Home';
 import { Profile } from '../Screens/Profile';
-import { Shop } from '../Screens/Cart';
+import { CartNavigation } from './CartNavigation';
 
 // Screen names
 const homeName = 'Home';
 const profileName = 'Profile';
-const shopName = 'Shop';
+const shopName = 'Purchase';
 
 const Tab = createBottomTabNavigator();
 
 export function MainContainer() {
   return (
     <Tab.Navigator
-      initialRouteName='homeName'
+      initialRouteName="homeName"
       screenOptions={({ route }) => ({
         tabBarHideOnKeyboard: 'true',
         tabBarActiveBackgroundColor: '#327030',
@@ -40,22 +39,19 @@ export function MainContainer() {
           let iconName;
           let rn = route.name;
           if (rn === homeName) {
-            iconName = 'home'
+            iconName = 'home';
           } else if (rn === profileName) {
-            iconName = 'user'
-          } else if ( rn === shopName) {
-            iconName = 'shopping-bag'
+            iconName = 'user';
+          } else if (rn === shopName) {
+            iconName = 'shopping-bag';
           }
 
-          return <Feather name={iconName} size={25} color="#FFFFFF" />
-        }
-      })}
-    >
-
+          return <Feather name={iconName} size={25} color="#FFFFFF" />;
+        },
+      })}>
       <Tab.Screen name={homeName} component={Dashboard} />
-      <Tab.Screen name={shopName} component={Shop} />
+      <Tab.Screen name={shopName} component={CartNavigation} />
       <Tab.Screen name={profileName} component={Profile} />
-
     </Tab.Navigator>
-  )
+  );
 }

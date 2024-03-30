@@ -1,8 +1,10 @@
 import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, TextInput } from 'react-native';
 import React from 'react';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
 
 export function Detail() {
+  const navigation = useNavigation();
   let [count, setCount] = React.useState(0);
 
   function plus() {
@@ -11,7 +13,7 @@ export function Detail() {
   }
   function minus() {
     if (count <= 0) {
-      '0'
+      ('0');
     } else {
       count -= 1;
     }
@@ -20,29 +22,29 @@ export function Detail() {
   const images = [
     {
       id: 1,
-      image: require('../../assets/images/spDetail.png')
+      image: require('../../assets/images/spDetail.png'),
     },
     {
       id: 2,
-      image: require('../../assets/images/spDetail.png')
+      image: require('../../assets/images/spDetail.png'),
     },
     {
       id: 3,
-      image: require('../../assets/images/spDetail.png')
+      image: require('../../assets/images/spDetail.png'),
     },
     {
       id: 4,
-      image: require('../../assets/images/spDetail.png')
+      image: require('../../assets/images/spDetail.png'),
     },
     {
       id: 5,
-      image: require('../../assets/images/spDetail.png')
+      image: require('../../assets/images/spDetail.png'),
     },
-  ]
+  ];
   return (
     <View style={styles.body}>
       <View style={styles.header}>
-        <Pressable style={styles.back}>
+        <Pressable onPress={() => navigation.navigate('Shop')} style={styles.back}>
           <Feather name="chevron-left" size={25} color="white" />
         </Pressable>
         <Text style={styles.text}>Josi Dog Master Mix</Text>
@@ -53,15 +55,12 @@ export function Detail() {
           keyExtractor={(item) => item.id}
           style={styles.imageview2}
           data={images}
-          renderItem={({ item }) =>
-            <Image source={item.image} />
-          }
+          renderItem={({ item }) => <Image source={item.image} />}
           horizontal
           pagingEnabled
-          snapToAlignment='center'
+          snapToAlignment="center"
         />
         <View style={styles.view2in}>
-
           <View style={styles.view2in1a}>
             <Text style={styles.textview2in2a}>Josi Dog Master Mix</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
@@ -90,19 +89,34 @@ export function Detail() {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '45%', paddingTop: '2%' }}>
             <Text style={{ color: '#868889', fontWeight: '500', fontSize: 16 }}>Quantity</Text>
             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <TouchableOpacity onPress={minus}><Feather name="minus" size={22} color={count <= 0 ? "#C7C7C7" : "#6CC51D"} /></TouchableOpacity>
-              <Text style={{ fontWeight: '700', fontSize: 19, borderLeftWidth: 1, borderRightWidth: 1, textAlign: 'center', width: 50, borderColor: '#C7C7C7' }}>{count}</Text>
-              <TouchableOpacity onPress={plus}><Feather name="plus" size={22} color="#6CC51D" /></TouchableOpacity>
+              <TouchableOpacity onPress={minus}>
+                <Feather name="minus" size={22} color={count <= 0 ? '#C7C7C7' : '#6CC51D'} />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  fontWeight: '700',
+                  fontSize: 19,
+                  borderLeftWidth: 1,
+                  borderRightWidth: 1,
+                  textAlign: 'center',
+                  width: 50,
+                  borderColor: '#C7C7C7',
+                }}>
+                {count}
+              </Text>
+              <TouchableOpacity onPress={plus}>
+                <Feather name="plus" size={22} color="#6CC51D" />
+              </TouchableOpacity>
             </View>
           </View>
-          <Pressable style={styles.buttonbook}>
+          <TouchableOpacity style={styles.buttonbook}>
             <Text style={styles.buttonbooktext}>Add To Cart</Text>
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   txtPrice: {
@@ -125,8 +139,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
     paddingLeft: '7%',
     marginVertical: 'auto',
-    width: '100%',
+    width: '90%',
     textAlign: 'center',
+    marginLeft: '4%',
   },
 
   header: {
@@ -142,7 +157,7 @@ const styles = StyleSheet.create({
   body: {
     width: '100%',
     height: '100%',
-    backgroundColor: '#F3F2F5'
+    backgroundColor: '#F3F2F5',
   },
   view1: {
     marginTop: 20,
@@ -208,7 +223,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   textview2in3a: {
-
     color: '#000000',
     fontWeight: '500',
   },

@@ -12,17 +12,15 @@ export function Login() {
   const [password, setPassword] = useState('');
   const dispath = useDispatch();
 
-
   const handleLogin = () => {
-    if (email === '' && password === '') return
-    dispath(getProfile({ email, password }))
-  }
+    if (email === '' && password === '') return;
+    dispath(getProfile({ email, password }));
+  };
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
       <Image style={styles.logo} source={require('../../assets/images/Logo.png')} />
       <View style={styles.container}>
         <View style={{ width: '100%' }}>
-
           <Input
             placeholder="Email address"
             style={styles.input}
@@ -32,23 +30,31 @@ export function Login() {
             value={email}
           />
 
-          <Input placeholder="Password"
+          <Input
+            placeholder="Password"
             style={styles.input}
             leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />}
             inputContainerStyle={styles.inputContainer}
             onChangeText={setPassword}
             value={password}
-            secureTextEntry={true} />
+            secureTextEntry={true}
+          />
 
           <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
 
-          <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login</Button>
+          <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
+            Login
+          </Button>
           <View>
-            <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 20, fontWeight: '400', color: '#747070' }}>or connect with</Text>
+            <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 20, fontWeight: '400', color: '#747070' }}>
+              or connect with
+            </Text>
           </View>
         </View>
         <View style={{ flexDirection: 'column', gap: 16 }}>
-          <Button onPress={() => navigation.navigate('Detail')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
+          <Button onPress={() => navigation.navigate('Register')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
+            Register
+          </Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
           <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
         </View>
