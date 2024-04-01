@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
   },
   back: {
     backgroundColor: '#5CB15A',
-    flex: 1,
+    flex: 1.2,
   },
 
   text: {
@@ -118,7 +118,6 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
     backgroundColor: '#5CB15A',
     paddingHorizontal: '4%',
-    paddingTop: '6%',
     paddingBottom: '2%',
   },
 

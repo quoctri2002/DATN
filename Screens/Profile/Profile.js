@@ -1,20 +1,19 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native'
-import React from 'react'
+import React, { useState } from 'react'
 import { Image } from '@rneui/themed';
 import { Feather, Entypo, Fontisto, AntDesign } from '@expo/vector-icons';
-import AddDevice from './AddDevice';
-import AddPets from './AddPets';
 import { logout } from '../../store/slices/profile.slice';
 import { useDispatch } from 'react-redux';
 import { Account } from './Account';
 import { useSelector } from 'react-redux';
+import { Adress } from './Adress';
+import { Order } from './Order';
 
 export function Profile () {
     const [nameModal, setNameModal] = React.useState('');
     const [modalVisible, setModalVisible] = React.useState(false);
     const dispatch = useDispatch();
     const profile = useSelector((state) => state.user.profile);
-    
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -54,15 +53,12 @@ export function Profile () {
                 onRequestClose={() => true} >
                 <View style={{ height: '100%' }}>
                     {
-                        (nameModal === 'AddDevice') ?
-                            <AddDevice action={{ setModalVisible }} state={{ modalVisible }} /> :
-                            (nameModal === 'AddPet') ?
-                                <AddPets action={{ setModalVisible }} state={{ modalVisible }} /> :
+                        (nameModal === 'Address') ?
+                            <Adress action={{ setModalVisible }} state={{ modalVisible, profile }} /> :
                                 (nameModal === 'AboutMe') ? 
-                                <Account action={{ setModalVisible }} />:
-                                <AddDevice action={{ setModalVisible }} state={{ modalVisible }} />
+                                <Account action={{ setModalVisible }} />: 
+                                <Order action={{ setModalVisible }} state={{ modalVisible }} />
                     }
-
                 </View>
             </Modal>
 
@@ -192,19 +188,7 @@ const Data = [
     {
         id: 3,
         icon: require('../../assets/images/address.png'),
-        name: 'Add Address',
-        screen: '',
-    },
-    {
-        id: 4,
-        icon: require('../../assets/images/PetFoot.png'),
-        name: 'Add Pet',
-        screen: 'AddPet',
-    },
-    {
-        id: 5,
-        icon: require('../../assets/images/device.png'),
-        name: 'Add Device',
-        screen: 'AddDevice',
+        name: 'Address',
+        screen: 'Address',
     },
 ]

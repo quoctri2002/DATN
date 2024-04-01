@@ -19,5 +19,6 @@ async function mockUser(in4) {
     birthday: '21-2-2003',
     email: 'quoctri@gmail.com',
     password: '123',
+    adress: 'Hoang Bat Dat, phường 15,Q.Tân Bình,Tp.HCM',
   };
 }
