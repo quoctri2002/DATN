@@ -1,9 +1,8 @@
-import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, TurboModuleRegistry } from 'react-native'
 import React, { useState } from 'react'
 import { Image } from '@rneui/themed';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
-import { FlashList } from "@shopify/flash-list";
 
 export function HomeScreen() {
   const screenWith = Dimensions.get('window').width;
@@ -95,7 +94,7 @@ export function HomeScreen() {
           contentContainerStyle={{ gap: 10 }}
           style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
           keyExtractor={(item) => item.id.toString()}
-          estimatedItemSize={200}
+          scrollEnabled={true}
         />
       </View>
     </View>
