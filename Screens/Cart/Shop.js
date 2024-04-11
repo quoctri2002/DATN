@@ -14,6 +14,7 @@ export const Shop = () => {
   const listcategory = ['food', 'vetItem', 'accessories', 'devices'];
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.products.products);
+  console.log(productsList);
   useEffect(() => {
     dispatch(getProductList(category));
   }, [category]);

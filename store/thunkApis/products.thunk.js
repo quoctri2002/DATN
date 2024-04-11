@@ -2,13 +2,14 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 
 export const getProductList = createAsyncThunk('products/getProductList', async (category, thunk) => {
     try {
-        return await mockProductList(category);
+        return await mockProductListByCategory(category);
     } catch (error) {
         return thunk.rejectWithValue(error);
     }
 });
 
-async function mockProductList(category) {
+
+async function mockProductListByCategory(category) {
     new Promise((resolve) => setTimeout(resolve, 1000))
     return (
         [
