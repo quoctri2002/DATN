@@ -17,6 +17,7 @@ const productsSlice = createSlice({
       })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.isLoading = false;
+        state.products = [];
         state.products = action.payload;
       });
   },

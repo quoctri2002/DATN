@@ -10,20 +10,29 @@ import { useNavigation } from '@react-navigation/native';
 export const Shop = () => {
   const navigation = useNavigation();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [category, setCategory] = React.useState('food');
-  const listcategory = ['food', 'vetItem', 'accessories', 'devices'];
+  const [id, setId] = React.useState(1);
+  const [listCategory, setListCategory] = React.useState([]);
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.products.products);
-  useEffect(() => {
-    dispatch(getProductList(category));
-  }, [category]);
 
-  function handleSetSelectedIndex(props) {
-    setSelectedIndex(props);
-    setCategory(listcategory[props]);
-  }
+  useEffect(async () => {
+    const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
+    const resJson = await response.json();
+    console.log(resJson.data);
+    setListCategory(resJson.data);
+  }, []);
+
+  useEffect(() => {
+    dispatch(getProductList(id));
+  }, [id]);
+
+  // function handleSetSelectedIndex(props) {
+  //   setSelectedIndex(props);
+  //   setId(listCategory[props]);
+  // }
 
   const limitProduct = productsList.slice(0, 3);
+
   const RenderRecommended = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Detail')} style={styles.box}>
@@ -32,9 +41,14 @@ export const Shop = () => {
             <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
           </View>
         )}
-        <Image resizeMode="cover" source={item.image} />
-        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Rs 2900.00</Text>
-        <Text style={styles.txtNameProduct}>{item.name}</Text>
+        <Image resizeMode="cover" style={{
+          width: '100%',
+          height: 100,
+          borderRadius: 20,
+          overflow: 'hidden',
+        }} source={{ uri: item.image_link }} />
+        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>{item.product_price}</Text>
+        <Text style={styles.txtNameProduct}>{item.product_name}</Text>
         <Text style={styles.txtkg}>{item.kg}kg</Text>
         <Text style={styles.line}></Text>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 5 }}>
@@ -106,21 +120,41 @@ export const Shop = () => {
             platform="android"
           />
 
-          <ButtonGroup
-            innerBorderStyle={{ width: 0 }}
-            containerStyle={{ width: '100%', height: 70, borderWidth: 0, marginTop: 20 }}
-            buttonContainerStyle={{ width: 'auto', height: 'auto' }}
-            buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 70 }}
-            selectedButtonStyle={{ backgroundColor: '#5CB15A' }}
-            buttons={Data.map((item) => (
-              <View key={item.id} style={{ justifyContent: 'center', alignItems: 'center' }}>
-                <Image source={item.icon} />
-                <Text style={styles.txtButton}>{item.name}</Text>
+          {/*<ButtonGroup*/}
+          {/*  innerBorderStyle={{ width: 0 }}*/}
+          {/*  containerStyle={{ width: '100%', height: 70, borderWidth: 0, marginTop: 20 }}*/}
+          {/*  buttonContainerStyle={{ width: 'auto', height: 'auto' }}*/}
+          {/*  buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 70 }}*/}
+          {/*  selectedButtonStyle={{ backgroundColor: '#5CB15A' }}*/}
+          {/*  buttons={Array.isArray(listCategory) ? listCategory.map((item) => (*/}
+          {/*    <View key={item.id} style={{ justifyContent: 'center', alignItems: 'center' }}>*/}
+          {/*      <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>*/}
+          {/*    </View>*/}
+          {/*  )) : []}*/}
+          {/*  selectedIndex={selectedIndex}*/}
+          {/*  onPress={(index) => handleSetSelectedIndex(index)}*/}
+          {/*/>*/}
+
+          <FlatList
+            data={listCategory}
+            style={{
+              width: '100%',
+              height: 70,
+              borderWidth: 0,
+              marginTop: 20,
+            }}
+            renderItem={({ item }) => (
+              <Pressable onPress={() => setId(item.PRODUCTCATEGORY_ID)}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8 }}>
+                <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>
               </View>
-            ))}
-            selectedIndex={selectedIndex}
-            onPress={(index) => handleSetSelectedIndex(index)}
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.PRODUCTCATEGORY_ID}
+            showsHorizontalScrollIndicator={false}
+            horizontal={true}
           />
+
           <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Recommended Food</Text>
           <FlatList
             data={productsList}
@@ -129,7 +163,7 @@ export const Shop = () => {
             columnWrapperStyle={{ columnGap: 10 }}
             contentContainerStyle={{ gap: 10 }}
             style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(index) => index.id}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
           />
@@ -140,7 +174,7 @@ export const Shop = () => {
             renderItem={RenderTopSelling}
             contentContainerStyle={{ gap: 20, paddingBottom: 5 }}
             style={{ marginTop: 20 }}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(index) => index.id}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
           />
@@ -232,29 +266,30 @@ const styles = StyleSheet.create({
   },
 });
 
-const Data = [
-  {
-    id: 1,
-    icon: require('../../assets/images/shop_food.png'),
-    name: 'Food',
-    category: 'food',
-  },
-  {
-    id: 2,
-    icon: require('../../assets/images/shop_veterinarian.png'),
-    name: 'Vet Items',
-    category: 'vetItem',
-  },
-  {
-    id: 3,
-    icon: require('../../assets/images/shop_accessories.png'),
-    name: 'Accessories',
-    category: 'accessories',
-  },
-  {
-    id: 4,
-    icon: require('../../assets/images/shop_device.png'),
-    name: 'IOT Device',
-    category: 'devices',
-  },
-];
+
+// const Data = [
+//   {
+//     id: 1,
+//     icon: require('../../assets/images/shop_food.png'),
+//     name: 'Food',
+//     category: 'food',
+//   },
+//   {
+//     id: 2,
+//     icon: require('../../assets/images/shop_veterinarian.png'),
+//     name: 'Vet Items',
+//     category: 'vetItem',
+//   },
+//   {
+//     id: 3,
+//     icon: require('../../assets/images/shop_accessories.png'),
+//     name: 'Accessories',
+//     category: 'accessories',
+//   },
+//   {
+//     id: 4,
+//     icon: require('../../assets/images/shop_device.png'),
+//     name: 'IOT Device',
+//     category: 'devices',
+//   },
+// ];
