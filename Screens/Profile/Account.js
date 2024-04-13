@@ -12,33 +12,15 @@ export function Account({action}) {
   const Data = [
     {
       id: 1,
-      icon: 'transgender',
-      title: 'Gender',
-      content: profile.gender,
+      icon: 'envelope-o',
+      title: 'Email',
+      content: profile.ADMIN_EMAIL,
     },
     {
       id: 2,
-      icon: 'birthday-cake',
-      title: 'Birthday',
-      content: profile.birthday,
-    },
-    {
-      id: 3,
-      icon: 'envelope-o',
-      title: 'Email',
-      content: profile.email,
-    },
-    {
-      id: 4,
       icon: 'phone',
       title: 'Phone',
-      content: profile.phone,
-    },
-    {
-      id: 5,
-      icon: 'lock',
-      title: 'Password',
-      content: profile.password,
+      content: profile.ADMIN_PHONE,
     },
   ]
 
@@ -54,11 +36,11 @@ export function Account({action}) {
         <Avatar
           size={90}
           rounded
-          source={profile.avatar}
+          source={{ uri: profile.ADMIN_IMAGE }}
         />
         <View>
-          <Text style={styles.textName}>{profile.name}</Text>
-          <Text style={styles.textEmail}>{profile.email}</Text>
+          <Text style={styles.textName}>{profile.ADMIN_NAME}</Text>
+          <Text style={styles.textEmail}>{profile.ADMIN_EMAIL}</Text>
         </View>
       </View>
       <View style={{ paddingTop: '10%', paddingHorizontal: 40, gap: 20}}>

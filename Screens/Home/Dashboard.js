@@ -3,12 +3,13 @@ import { Image } from '@rneui/themed';
 import { Article, ListDogs } from '../../Components';
 import PetStatusList from '../../Components/PetStatusList';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { getMyPetList } from '../../store/thunkApis';
 
 export const Dashboard = () => {
   const dispatch = useDispatch();
-  const Randeritem = (item) => {
+  const profile = useSelector((state) => state.user.profile);
+  const RenderItem = (item) => {
     item = data;
     return (
       <Article title="Pet Food" icon={require('../../assets/images/Food.png')}>
@@ -97,7 +98,7 @@ export const Dashboard = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Hey Pixel Posse,</Text>
+        <Text style={styles.text}>Chào {profile.ADMIN_NAME || 'bạn'},</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>
@@ -117,7 +118,7 @@ export const Dashboard = () => {
           </Article>
         </View>
 
-        <FlatList scrollEnabled={false} data={data} renderItem={Randeritem} keyExtractor={(item) => item.id} />
+        <FlatList scrollEnabled={false} data={data} renderItem={RenderItem} keyExtractor={(item) => item.id} />
       </View>
     </ScrollView>
   )
