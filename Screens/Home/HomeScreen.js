@@ -1,13 +1,24 @@
 import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { Image } from '@rneui/themed';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { getProductListfull } from '../../store/thunkApis';
 
 export function HomeScreen() {
   const screenWith = Dimensions.get('window').width;
   const { height, width } = Dimensions.get('window');
   const profile = useSelector((state) => state.user.profile);
+  const dispatch = useDispatch();
+  const productsList = useSelector((state) => state.products.products);
+  const topSaleProduct = [...productsList].sort((a , b) => b.sale - a.sale);
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    dispatch(getProductListfull());
+  }, []);
+
   const imagesPanner = [
     {
       id: 1,
@@ -24,16 +35,16 @@ export function HomeScreen() {
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const RenderRecommended = ({item}) => {
+  const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity key={item.id} style={styles.box}>
+      <TouchableOpacity onPress={() => navigation.navigate('Purchase',{screen: 'Detail'})} key={item.id} style={styles.box}>
         {item.sale === '' ? null : (
           <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
-            <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
+            <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}%</Text>
           </View>
         )}
-        <Image resizeMode="cover" style={{width: 100, height: 100, marginTop: 10}} source={item.image} />
-        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Rs 2900.00</Text>
+        <Image resizeMode="cover" style={{ width: 100, height: 100, marginTop: 10 }} source={item.image} />
+        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Price {2900.00*item.sale}$</Text>
         <Text style={styles.txtNameProduct}>{item.name}</Text>
         <Text style={styles.txtkg}>{item.kg}kg</Text>
         <Text style={styles.line}></Text>
@@ -58,7 +69,7 @@ export function HomeScreen() {
           keyExtractor={(item) => item.id}
           style={styles.slideShow}
           data={imagesPanner}
-          renderItem={({ item }) => <Image style={{ width: screenWith, height: 200 }} source={item.image} />}
+          renderItem={({ item }) => <Image style={{ width: screenWith, height: 200, marginRight: 5 }} source={item.image} />}
           horizontal
           pagingEnabled
           snapToAlignment="center"
@@ -84,10 +95,10 @@ export function HomeScreen() {
           }
         </View>
 
-        <Text style={{fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left'}}>List Recommended</Text>
+        <Text style={{ fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left' }}>List Recommended</Text>
 
         <FlatList
-          data={data}
+          data={topSaleProduct.slice(0 ,10)}
           renderItem={RenderRecommended}
           numColumns={2}
           columnWrapperStyle={{ columnGap: 10 }}
@@ -166,86 +177,3 @@ const styles = StyleSheet.create({
     objectFit: 'cover',
   },
 })
-
-const data = [
-  {
-    id: 1,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '16%',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 2,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '16%',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 3,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 4,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '16%',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 5,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 6,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '16%',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 7,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-  {
-    id: 8,
-    category: 'food',
-    image: require('../../assets/images/spFood.png'),
-    sale: '16%',
-    brand: '123',
-    name: 'Josera Mini Deluxe',
-    kg: '900',
-    review: '5',
-  },
-]

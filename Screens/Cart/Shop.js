@@ -13,7 +13,10 @@ export const Shop = () => {
   const [id, setId] = React.useState(1);
   const [listCategory, setListCategory] = React.useState([]);
   const dispatch = useDispatch();
-  const productsList = useSelector((state) => state.products.products);
+  const productsList = useSelector((state) => state.products.productsByCategory);
+  useEffect(() => {
+    dispatch(getProductList(category));
+  }, [category]);
 
   useEffect(async () => {
     const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');

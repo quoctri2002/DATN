@@ -3,7 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Feather } from '@expo/vector-icons';
 
 //Screens
-import { Dashboard } from '../Screens/Home';
+import { HomeScreen } from '../Screens/Home';
 import { Profile } from '../Screens/Profile';
 import { CartNavigation } from './CartNavigation';
 
@@ -49,7 +49,7 @@ export function MainContainer() {
           return <Feather name={iconName} size={25} color="#FFFFFF" />;
         },
       })}>
-      <Tab.Screen name={homeName} component={Dashboard} />
+      <Tab.Screen name={homeName} component={HomeScreen} />
       <Tab.Screen name={shopName} component={CartNavigation} />
       <Tab.Screen name={profileName} component={Profile} />
     </Tab.Navigator>
