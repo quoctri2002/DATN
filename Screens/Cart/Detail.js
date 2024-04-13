@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, TextInput } from 'react-native';
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
