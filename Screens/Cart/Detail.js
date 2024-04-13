@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export function Detail({route}) {
+export function Detail({ route }) {
   const { id } = route.params;
   console.log(id);
   const navigation = useNavigation();
@@ -15,8 +15,8 @@ export function Detail({route}) {
     const resJson = await response.json();
     console.log(resJson.data);
     setProduct(resJson.data[0]);
-  //   neu tra ve mang thi them [0], con khong thi xoa di.
-  //   cai nay bao thang Tuyen sua lai
+    //   neu tra ve mang thi them [0], con khong thi xoa di.
+    //   cai nay bao thang Tuyen sua lai
   }, [id]);
 
   function plus() {
@@ -86,9 +86,7 @@ export function Detail({route}) {
             </View>
           </View>
 
-          <Text style={styles.view2intexta}>
-            {product?.product_describe}
-          </Text>
+          <Text style={styles.view2intexta}>{product?.product_describe}</Text>
           <View style={styles.view2in1b}>
             <Text style={styles.view2in1btext}>Recommended For:</Text>
             <View style={styles.view2in1btrong}>
