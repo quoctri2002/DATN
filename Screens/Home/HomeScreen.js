@@ -37,7 +37,7 @@ export function HomeScreen() {
 
   const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Detail')} key={item.id} style={styles.box}>
+      <TouchableOpacity onPress={() => navigation.navigate('Purchase',{screen: 'Detail'})} key={item.id} style={styles.box}>
         {item.sale === '' ? null : (
           <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
             <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}%</Text>

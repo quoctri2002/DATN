@@ -7,11 +7,13 @@ import { http } from "../../Utilities/axios/http";
 import { useNavigation } from "@react-navigation/native";
 
 export function Cart() {
+
+
   const navigation = useNavigation();
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={{justifyContent: 'flex-end'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={{ justifyContent: 'flex-end' }}>
           <MaterialIcons name="arrow-back-ios" size={25} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Cart</Text>
@@ -47,12 +49,16 @@ export function Cart() {
 }
 
 function MinusAndPlus() {
-  let [count, setCount] = useState();
+
+  const [count, setCount] = useState(1);
+  const increase = () => setCount(count+1) 
+  const decrease = () => count > 1 && setCount(count-1) 
+
   return (
-    <View style={{ gap: 4 }}>
-      <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
-      <ListItem.Input inputContainerStyle={styles.inputQuantityContainerStyle} inputStyle={styles.inputQuantityStyle} inputMode="numeric" placeholder="1" />
-      <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
+    <View style={{ gap: 4, alignSelf: 'center' }}>
+      <Button onPress={increase} buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
+      <ListItem.Input onChangeText={setCount} inputContainerStyle={styles.inputQuantityContainerStyle} inputStyle={styles.inputQuantityStyle} inputMode="numeric" value={count.toString()} />
+      <Button onPress={decrease} buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
     </View>
   )
 }
@@ -186,7 +192,7 @@ const styles = StyleSheet.create({
   inputQuantityContainerStyle: {
     margin: 0,
     padding: 0,
-    height: 2
+    height: 10,
   },
   buttonSwipeable: { height: '100%', borderRadius: 8, marginLeft: 7, backgroundColor: '#E54D4D' }
 })

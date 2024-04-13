@@ -7,18 +7,9 @@ export function Detail() {
   const navigation = useNavigation();
   let [count, setCount] = React.useState(0);
 
-  function plus() {
-    count += 1;
-    return setCount(count);
-  }
-  function minus() {
-    if (count <= 0) {
-      ('0');
-    } else {
-      count -= 1;
-    }
-    return setCount(count);
-  }
+  const increase = () => setCount(count+1) 
+  const decrease = () => count >= 1 && setCount(count-1) 
+
   const images = [
     {
       id: 1,
@@ -45,7 +36,7 @@ export function Detail() {
     <View style={styles.body}>
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Shop')} style={styles.back}>
-          <Feather name="chevron-left" size={25} color="white" />
+          <Feather name="chevron-left" size={30} color="white" />
         </Pressable>
         <Text style={styles.text}>Josi Dog Master Mix</Text>
       </View>
@@ -89,7 +80,7 @@ export function Detail() {
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '45%', paddingTop: '2%' }}>
             <Text style={{ color: '#868889', fontWeight: '500', fontSize: 16 }}>Quantity</Text>
             <View style={{ flexDirection: 'row', gap: 10, alignItems: 'center' }}>
-              <TouchableOpacity onPress={minus}>
+              <TouchableOpacity onPress={decrease}>
                 <Feather name="minus" size={22} color={count <= 0 ? '#C7C7C7' : '#6CC51D'} />
               </TouchableOpacity>
               <Text
@@ -104,7 +95,7 @@ export function Detail() {
                 }}>
                 {count}
               </Text>
-              <TouchableOpacity onPress={plus}>
+              <TouchableOpacity onPress={increase}>
                 <Feather name="plus" size={22} color="#6CC51D" />
               </TouchableOpacity>
             </View>
