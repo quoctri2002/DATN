@@ -6,5 +6,6 @@ import { useSelector } from 'react-redux';
 
 export function AppNavigation() {
   const authenticated = useSelector((state) => state.user.authenticated);
+  console.log("Is auth: ", authenticated);
   return <NavigationContainer>{!authenticated ? <AuthNavigation /> : <MainContainer />}</NavigationContainer>;
 }

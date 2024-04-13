@@ -1,24 +1,24 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
+import { http } from '../../Utilities/axios/http';
+import axios from 'axios';
 
-export const getProfile = createAsyncThunk('user/getProfile', async (in4, thunk) => {
+export const getProfile = createAsyncThunk('user/getProfile', async (in4, {rejectWithValue}) => {
   try {
-    return await mockUser(in4);
+    const response = await fetch('http://206.189.45.141/api/login-admin.php', {
+      method: 'POST',
+      body: JSON.stringify(in4),
+    });
+
+    const responseJson = await response.json();
+    console.log(responseJson);
+
+    if (responseJson.status === false){
+      return rejectWithValue({ message: responseJson.message });
+    } else {
+      return responseJson.user;
+    }
   } catch (error) {
-    return thunk.rejectWithValue(error);
+    console.error(error);
+    return rejectWithValue({ message: error.message });
   }
 });
-
-async function mockUser(in4) {
-  new Promise((resolve) => setTimeout(resolve, 1000));
-  return {
-    id: '',
-    avatar: require('../../assets/images/avartaProfile.png'),
-    name: 'Quoc Tri',
-    gender: 'mail',
-    phone: '0372711935',
-    birthday: '21-2-2003',
-    email: 'quoctri@gmail.com',
-    password: '123',
-    adress: 'Hoang Bat Dat, phường 15,Q.Tân Bình,Tp.HCM',
-  };
-}

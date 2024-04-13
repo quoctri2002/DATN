@@ -5,6 +5,7 @@ const initialState = {
   profile: {},
   isLoading: false,
   authenticated: false,
+  error: null,
 };
 
 const profileSlice = createSlice({
@@ -19,6 +20,11 @@ const profileSlice = createSlice({
     builder
       .addCase(getProfile.pending, (state) => {
         state.isLoading = true;
+      })
+      .addCase(getProfile.rejected, (state, action) => {
+        state.isLoading = false;
+        state.authenticated = false;
+        state.error = action.payload.message;
       })
       .addCase(getProfile.fulfilled, (state, action) => {
         state.isLoading = false;

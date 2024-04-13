@@ -1,7 +1,7 @@
 import axios from "axios";
 
 class Http {
-    baseUrl = "http://localhost:8080/api/v1/";
+    baseUrl = "http://206.189.45.141/api/";
     instance
 
     constructor() {
