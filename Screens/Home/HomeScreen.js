@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { Image } from '@rneui/themed';
 import { useSelector, useDispatch } from 'react-redux';
@@ -11,8 +11,8 @@ export function HomeScreen() {
   const { height, width } = Dimensions.get('window');
   const profile = useSelector((state) => state.user.profile);
   const dispatch = useDispatch();
-  const productsList = useSelector((state) => state.products.products);
-  const topSaleProduct = [...productsList].sort((a , b) => b.sale - a.sale);
+  const productsList = useSelector((state) => state.products.productsFull);
+  const topSaleProduct = [...productsList].sort((a, b) => b.sale - a.sale);
   const navigation = useNavigation();
 
   useEffect(() => {
@@ -37,14 +37,14 @@ export function HomeScreen() {
 
   const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Purchase',{screen: 'Detail'})} key={item.id} style={styles.box}>
+      <TouchableOpacity onPress={() => navigation.navigate('Purchase', { screen: 'Detail' })} key={item.id} style={styles.box}>
         {item.sale === '' ? null : (
           <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
             <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}%</Text>
           </View>
         )}
         <Image resizeMode="cover" style={{ width: 100, height: 100, marginTop: 10 }} source={item.image} />
-        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Price {2900.00*item.sale}$</Text>
+        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Price {2900.0 * item.sale}$</Text>
         <Text style={styles.txtNameProduct}>{item.name}</Text>
         <Text style={styles.txtkg}>{item.kg}kg</Text>
         <Text style={styles.line}></Text>
@@ -53,8 +53,8 @@ export function HomeScreen() {
           <Text style={{ fontSize: 14, fontWeight: '500' }}>Add to cart</Text>
         </TouchableOpacity>
       </TouchableOpacity>
-    )
-  }
+    );
+  };
 
   return (
     <ScrollView style={styles.container}>
@@ -73,32 +73,33 @@ export function HomeScreen() {
           horizontal
           pagingEnabled
           snapToAlignment="center"
-          onScroll={e => {
+          onScroll={(e) => {
             const x = e.nativeEvent.contentOffset.x;
             setCurrentIndex((x / width).toFixed(0));
           }}
         />
 
         <View style={{ flexDirection: 'row', width: width, justifyContent: 'center', alignItems: 'center' }}>
-          {
-            imagesPanner.map((item, index) => {
-              return <View key={item.id} style={{
-                width: Number(currentIndex) === index ? 20 : 8,
-                height: 8,
-                borderRadius: 4,
-                backgroundColor: Number(currentIndex) === index ? '#5CB15A' : 'gray',
-                marginTop: 5,
-                marginHorizontal: 5,
-              }}>
-              </View>
-            })
-          }
+          {imagesPanner.map((item, index) => {
+            return (
+              <View
+                key={item.id}
+                style={{
+                  width: Number(currentIndex) === index ? 20 : 8,
+                  height: 8,
+                  borderRadius: 4,
+                  backgroundColor: Number(currentIndex) === index ? '#5CB15A' : 'gray',
+                  marginTop: 5,
+                  marginHorizontal: 5,
+                }}></View>
+            );
+          })}
         </View>
 
         <Text style={{ fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left' }}>List Recommended</Text>
 
         <FlatList
-          data={topSaleProduct.slice(0 ,10)}
+          data={topSaleProduct.slice(0, 10)}
           renderItem={RenderRecommended}
           numColumns={2}
           columnWrapperStyle={{ columnGap: 10 }}
@@ -109,9 +110,8 @@ export function HomeScreen() {
         />
       </View>
     </ScrollView>
-  )
+  );
 }
-
 
 const styles = StyleSheet.create({
   line: {
@@ -154,13 +154,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#5CB15A',
     paddingHorizontal: '4%',
     paddingTop: '7%',
-    paddingBottom: '2%'
+    paddingBottom: '2%',
   },
   text: {
     color: 'white',
     fontWeight: '600',
     fontSize: 16,
-    marginTop: '3%'
+    marginTop: '3%',
   },
   logo: {
     borderRadius: 10,
@@ -176,4 +176,4 @@ const styles = StyleSheet.create({
     height: 62,
     objectFit: 'cover',
   },
-})
+});

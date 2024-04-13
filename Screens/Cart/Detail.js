@@ -1,5 +1,5 @@
 import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, TextInput } from 'react-native';
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,9 +19,8 @@ export function Detail({ route }) {
     //   cai nay bao thang Tuyen sua lai
   }, [id]);
 
-  const increase = () => setCount(count+1) 
-  const decrease = () => count >= 1 && setCount(count-1) 
-
+  const increase = () => setCount(count + 1);
+  const decrease = () => count >= 1 && setCount(count - 1);
   // const images = [
   //   {
   //     id: 1,
@@ -44,12 +43,11 @@ export function Detail({ route }) {
   //     image: require('../../assets/images/spDetail.png'),
   //   },
   // ];
-
   return (
     <View style={styles.body}>
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Shop')} style={styles.back}>
-          <Feather name="chevron-left" size={30} color="white" />
+          <Feather name="chevron-left" size={25} color="white" />
         </Pressable>
         <Text style={styles.text}>{product?.product_name}</Text>
       </View>

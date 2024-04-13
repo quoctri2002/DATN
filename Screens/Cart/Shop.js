@@ -13,10 +13,7 @@ export const Shop = () => {
   const [id, setId] = React.useState(1);
   const [listCategory, setListCategory] = React.useState([]);
   const dispatch = useDispatch();
-  const productsList = useSelector((state) => state.products.productsByCategory);
-  useEffect(() => {
-    dispatch(getProductList(category));
-  }, [category]);
+  const productsList = useSelector((state) => state.products.products);
 
   useEffect(async () => {
     const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
@@ -38,22 +35,28 @@ export const Shop = () => {
 
   const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity onPress={() => navigation.navigate('Detail',
-        {
-          id: item.product_id
+      <TouchableOpacity
+        onPress={() =>
+          navigation.navigate('Detail', {
+            id: item.product_id,
+          })
         }
-        )} style={styles.box}>
+        style={styles.box}>
         {item.sale === '' ? null : (
           <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
             <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
           </View>
         )}
-        <Image resizeMode="cover" style={{
-          width: '100%',
-          height: 100,
-          borderRadius: 20,
-          overflow: 'hidden',
-        }} source={{ uri: item.image_link }} />
+        <Image
+          resizeMode="cover"
+          style={{
+            width: '100%',
+            height: 100,
+            borderRadius: 20,
+            overflow: 'hidden',
+          }}
+          source={{ uri: item.image_link }}
+        />
         <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>{item.product_price}</Text>
         <Text style={styles.txtNameProduct}>{item.product_name}</Text>
         <Text style={styles.txtkg}>{item.kg}kg</Text>
@@ -152,9 +155,9 @@ export const Shop = () => {
             }}
             renderItem={({ item }) => (
               <Pressable onPress={() => setId(item.PRODUCTCATEGORY_ID)}>
-              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8 }}>
-                <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>
-              </View>
+                <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8 }}>
+                  <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>
+                </View>
               </Pressable>
             )}
             keyExtractor={(item) => item.PRODUCTCATEGORY_ID}
@@ -272,7 +275,6 @@ const styles = StyleSheet.create({
     width: '100%',
   },
 });
-
 
 // const Data = [
 //   {

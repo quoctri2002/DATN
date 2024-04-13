@@ -1,9 +1,9 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { getProductList, getProductListfull, getProductListById} from '../thunkApis';
+import { getProductList, getProductListfull } from '../thunkApis';
 
 const initialState = {
   products: [],
-  productsByCategory: [],
+  productsFull: [],
   isLoading: false,
 };
 
@@ -18,15 +18,15 @@ const productsSlice = createSlice({
       })
       .addCase(getProductList.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.productsByCategory = action.payload;
+        state.products = action.payload;
       })
       .addCase(getProductListfull.pending, (state) => {
         state.isLoading = true;
       })
       .addCase(getProductListfull.fulfilled, (state, action) => {
         state.isLoading = false;
-        state.products = action.payload;
-      })
+        state.productsFull = action.payload;
+      });
   },
 });
 
