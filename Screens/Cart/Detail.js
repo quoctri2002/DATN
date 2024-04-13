@@ -1,11 +1,23 @@
 import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, TextInput } from 'react-native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export function Detail() {
+export function Detail({route}) {
+  const { id } = route.params;
+  console.log(id);
   const navigation = useNavigation();
+  const [product, setProduct] = React.useState(null);
   let [count, setCount] = React.useState(0);
+
+  useEffect(async () => {
+    const response = await fetch(`http://206.189.45.141/api/Appgetdetailproduct.php?id=${id}`);
+    const resJson = await response.json();
+    console.log(resJson.data);
+    setProduct(resJson.data[0]);
+  //   neu tra ve mang thi them [0], con khong thi xoa di.
+  //   cai nay bao thang Tuyen sua lai
+  }, [id]);
 
   function plus() {
     count += 1;
@@ -19,53 +31,53 @@ export function Detail() {
     }
     return setCount(count);
   }
-  const images = [
-    {
-      id: 1,
-      image: require('../../assets/images/spDetail.png'),
-    },
-    {
-      id: 2,
-      image: require('../../assets/images/spDetail.png'),
-    },
-    {
-      id: 3,
-      image: require('../../assets/images/spDetail.png'),
-    },
-    {
-      id: 4,
-      image: require('../../assets/images/spDetail.png'),
-    },
-    {
-      id: 5,
-      image: require('../../assets/images/spDetail.png'),
-    },
-  ];
+  // const images = [
+  //   {
+  //     id: 1,
+  //     image: require('../../assets/images/spDetail.png'),
+  //   },
+  //   {
+  //     id: 2,
+  //     image: require('../../assets/images/spDetail.png'),
+  //   },
+  //   {
+  //     id: 3,
+  //     image: require('../../assets/images/spDetail.png'),
+  //   },
+  //   {
+  //     id: 4,
+  //     image: require('../../assets/images/spDetail.png'),
+  //   },
+  //   {
+  //     id: 5,
+  //     image: require('../../assets/images/spDetail.png'),
+  //   },
+  // ];
   return (
     <View style={styles.body}>
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Shop')} style={styles.back}>
           <Feather name="chevron-left" size={25} color="white" />
         </Pressable>
-        <Text style={styles.text}>Josi Dog Master Mix</Text>
+        <Text style={styles.text}>{product?.product_name}</Text>
       </View>
 
       <View style={styles.view2}>
-        <FlatList
-          keyExtractor={(item) => item.id}
-          style={styles.imageview2}
-          data={images}
-          renderItem={({ item }) => <Image source={item.image} />}
-          horizontal
-          pagingEnabled
-          snapToAlignment="center"
-        />
+        {/*<FlatList*/}
+        {/*  keyExtractor={(item) => item.id}*/}
+        {/*  style={styles.imageview2}*/}
+        {/*  data={product?.image_links}*/}
+        {/*  renderItem={({ item }) => <Image source={item.image} />}*/}
+        {/*  horizontal*/}
+        {/*  pagingEnabled*/}
+        {/*  snapToAlignment="center"*/}
+        {/*/>*/}
         <View style={styles.view2in}>
           <View style={styles.view2in1a}>
-            <Text style={styles.textview2in2a}>Josi Dog Master Mix</Text>
+            <Text style={styles.textview2in2a}>{product?.product_name}</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
               <Text style={styles.textview2in2b}>Brand: Josera</Text>
-              <Text style={styles.txtPrice}>Price: 1500.00$</Text>
+              <Text style={styles.txtPrice}>Price: {product?.product_price}</Text>
             </View>
             <View style={styles.view2in3}>
               <Text style={styles.textview2in3a}>4.0</Text>
@@ -75,9 +87,7 @@ export function Detail() {
           </View>
 
           <Text style={styles.view2intexta}>
-            Dr. Shehan, one of the most skilled and experienced veterinarians and the owner of the most convenient animal clinic “Petz & Vetz” Our
-            paradise is situated in the heart of the town with a pleasant environment. We are ready to treat your beloved doggos & puppers with love
-            and involvement. Book the appointment now !
+            {product?.product_describe}
           </Text>
           <View style={styles.view2in1b}>
             <Text style={styles.view2in1btext}>Recommended For:</Text>
@@ -236,10 +246,6 @@ const styles = StyleSheet.create({
   view2in5: {
     alignItems: 'center',
     backgroundColor: 'white',
-    flexDirection: 'row',
-  },
-  view2in6: {
-    alignItems: 'center',
     flexDirection: 'row',
   },
   view2in6: {
