@@ -5,16 +5,18 @@ import { useNavigation } from '@react-navigation/native';
 
 export function Detail({ route }) {
   const { id } = route.params;
-  console.log(id);
   const navigation = useNavigation();
   const [product, setProduct] = React.useState(null);
   let [count, setCount] = React.useState(0);
 
-  useEffect(async () => {
-    const response = await fetch(`http://206.189.45.141/api/Appgetdetailproduct.php?id=${id}`);
-    const resJson = await response.json();
-    console.log(resJson.data);
-    setProduct(resJson.data[0]);
+  useEffect(() => {
+    const getDetailProduct = async () => {
+      const response = await fetch(`http://206.189.45.141/api/Appgetdetailproduct.php?id=${id}`);
+      const resJson = await response.json();
+      console.log(resJson.data);
+      setProduct(resJson.data[0]);
+    };
+    getDetailProduct();
     //   neu tra ve mang thi them [0], con khong thi xoa di.
     //   cai nay bao thang Tuyen sua lai
   }, [id]);

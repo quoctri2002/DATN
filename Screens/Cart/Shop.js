@@ -15,11 +15,13 @@ export const Shop = () => {
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.products.products);
 
-  useEffect(async () => {
-    const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
-    const resJson = await response.json();
-    console.log(resJson.data);
-    setListCategory(resJson.data);
+  useEffect(() => {
+    const getProduct = async () => {
+      const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
+      const resJson = await response.json();
+      setListCategory(resJson.data);
+    };
+    getProduct();
   }, []);
 
   useEffect(() => {
@@ -33,9 +35,10 @@ export const Shop = () => {
 
   const limitProduct = productsList.slice(0, 3);
 
-  const RenderRecommended = ({ item }) => {
+  const RenderRecommended = ({ item }, index) => {
     return (
       <TouchableOpacity
+        key={index}
         onPress={() =>
           navigation.navigate('Detail', {
             id: item.product_id,
@@ -173,7 +176,7 @@ export const Shop = () => {
             columnWrapperStyle={{ columnGap: 10 }}
             contentContainerStyle={{ gap: 10 }}
             style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
-            keyExtractor={(index) => index.id}
+            keyExtractor={(_, index) => index}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
           />
@@ -184,7 +187,7 @@ export const Shop = () => {
             renderItem={RenderTopSelling}
             contentContainerStyle={{ gap: 20, paddingBottom: 5 }}
             style={{ marginTop: 20 }}
-            keyExtractor={(index) => index.id}
+            keyExtractor={(_, index) => index}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
           />

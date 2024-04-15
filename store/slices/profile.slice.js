@@ -12,9 +12,9 @@ const profileSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    logout : (state, action) => {
+    logout: (state, action) => {
       state.authenticated = false;
-    }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -34,5 +34,5 @@ const profileSlice = createSlice({
   },
 });
 
-export const {logout} = profileSlice.actions;
+export const { logout } = profileSlice.actions;
 export default profileSlice.reducer;
