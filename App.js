@@ -13,5 +13,6 @@ export default function App() {
           <AppNavigation />
         </SafeAreaView>
       </PersistGate>
-    </Provider>);
+    </Provider>
+  );
 }

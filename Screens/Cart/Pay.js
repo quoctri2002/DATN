@@ -1,104 +1,128 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
-import React from 'react';
+import React, { useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { Input, Button } from '@rneui/base';
 import { useNavigation } from '@react-navigation/native';
+import { rows } from 'deprecated-react-native-prop-types/DeprecatedTextInputPropTypes';
 
 export function Pay() {
   const navigation = useNavigation();
+  const [isSelected, setSelection] = useState(1);
+  console.log(isSelected);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Cart')} style={styles.back}>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('Cart'), setSelection(1);
+          }}
+          style={styles.back}>
           <Feather name="chevron-left" size={30} color="white" />
         </TouchableOpacity>
         <Text style={styles.text}>Payment</Text>
       </View>
-      <View style={styles.boxInput}>
-        <Text style={styles.txtTitle}>Full Name</Text>
-        <Input containerStyle={styles.input} />
-        <Text style={styles.txtTitle}>Email</Text>
-        <Input containerStyle={styles.input} />
-        <Text style={styles.txtTitle}>Phone</Text>
-        <Input containerStyle={styles.input} />
-        <Text style={styles.txtTitle}>Address</Text>
-        <Input containerStyle={styles.input} />
+      <View style={{ flexDirection: 'row', width: '80%', gap: 20, justifyContent: 'center' }}>
+        <Button
+          onPress={() => setSelection(2)}
+          containerStyle={styles.buttonCategoryContainerStyle}
+          buttonStyle={isSelected === 2 ? styles.buttonClickedStyle : styles.buttonStyle}
+          titleStyle={styles.buttonTitleCategoryStyle}>
+          Payment on delivery
+        </Button>
+        <Button
+          onPress={() => setSelection(3)}
+          containerStyle={styles.buttonCategoryContainerStyle}
+          buttonStyle={isSelected === 3 ? styles.buttonClickedStyle : styles.buttonStyle}
+          titleStyle={styles.buttonTitleCategoryStyle}>
+          Payment with Card
+        </Button>
       </View>
-      <View style={styles.boxTotal}>
-        <View style={styles.content}>
-          <Text style={styles.txtTitle}>Total Item</Text>
-          <Text style={styles.txtTotal}>3</Text>
+      {isSelected !== 1 && (
+        <View style={{ width: '80%', justifyContent: 'center', marginTop: 10 }}>
+          <Text style={styles.txtTitle}>Full name</Text>
+          <Input style={styles.input} inputContainerStyle={styles.inputContainer}></Input>
+          <Text style={styles.txtTitle}>Adress</Text>
+          <Input style={styles.input} inputContainerStyle={styles.inputContainer}></Input>
+          <Text style={styles.txtTitle}>Phone Number</Text>
+          <Input style={styles.input} inputContainerStyle={styles.inputContainer}></Input>
+          {isSelected === 3 && (
+            <View>
+              <Text style={styles.txtTitle}>Name on Card</Text>
+              <Input style={styles.input} inputContainerStyle={styles.inputContainer}></Input>
+              <Text style={styles.txtTitle}>Card Number</Text>
+              <Input style={styles.input} inputContainerStyle={styles.inputContainer}></Input>
+            </View>
+          )}
+          <Button
+            onPress={() => navigation.navigate('Shop')}
+            containerStyle={styles.buttonContainerStyle}
+            buttonStyle={styles.buttonStyle}
+            titleStyle={styles.buttonTitleStyle}>
+            Pay Now(2 item) 465$
+          </Button>
         </View>
-        <View style={styles.content}>
-          <Text style={styles.txtTitle}>Total Price</Text>
-          <Text style={styles.txtTotal}>1500 $</Text>
-        </View>
-      </View>
-      <Button
-        onPress={() => navigation.navigate('Shop')}
-        containerStyle={styles.buttonContainerStyle}
-        buttonStyle={styles.buttonStyle}
-        titleStyle={styles.buttonTitleStyle}>
-        Pay Now
-      </Button>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  inputContainer: {
+    backgroundColor: 'white',
+    borderRadius: 8,
+    borderWidth: 2,
+    borderColor: '#C4C4C4',
+    paddingHorizontal: 20,
+    color: '#A6A6A6',
+    width: '100%',
+  },
+  input: {
+    width: '100%',
+    paddingLeft: 10,
+    backgroundColor: '#D4D4D4',
+    borderRadius: 8,
+    color: '#A6A6A6',
+    elevation: 5,
+  },
+  buttonCategoryContainerStyle: {
+    marginTop: '10%',
+    elevation: 4,
+    width: '50%',
+  },
   buttonContainerStyle: {
     marginTop: '10%',
     elevation: 4,
-    width: '85%',
+    width: '100%',
+  },
+  buttonClickedStyle: {
+    backgroundColor: 'grey',
+    paddingVertical: 16,
+    borderRadius: 8,
   },
   buttonStyle: {
     backgroundColor: '#5CB15A',
     paddingVertical: 16,
     borderRadius: 8,
   },
+  buttonTitleCategoryStyle: {
+    fontSize: 14,
+    fontWeight: 400,
+  },
   buttonTitleStyle: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 600,
   },
-  txtTotal: {
-    color: '#707070',
-    fontWeight: '500',
-    fontSize: 16,
-  },
-  content: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  boxTotal: {
-    marginTop: 40,
-    paddingHorizontal: 30,
-    width: '85%',
-    height: 'auto',
-    borderRadius: 20,
-    backgroundColor: '#ECECEC',
-    gap: 20,
-    paddingVertical: '3%',
-    alignSelf: 'center',
-    elevation: 4,
-  },
-  boxInput: {
-    marginTop: 30,
-    paddingHorizontal: 30,
-    width: '80%',
-    height: 'auto',
-    paddingTop: 10,
-    borderRadius: 20,
-    backgroundColor: '#ECECEC',
-    elevation: 4,
-  },
+
   input: {
     alignItems: 'center',
     height: 'auto',
   },
   txtTitle: {
-    color: 'black',
-    fontSize: 18,
+    color: 'grey',
+    fontSize: 14,
     fontWeight: '600',
+    marginHorizontal: 10,
+    marginVertical: 3,
   },
   back: {
     flex: 1,
@@ -132,5 +156,6 @@ const styles = StyleSheet.create({
     height: 'auto',
     width: '100%',
     alignItems: 'center',
+    backgroundColor: 'white',
   },
 });
