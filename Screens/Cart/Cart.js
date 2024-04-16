@@ -2,94 +2,141 @@ import { Avatar, Text } from "@rneui/themed";
 import { FlatList, ScrollView, StyleSheet, View, TouchableOpacity } from "react-native";
 import { MaterialCommunityIcons, MaterialIcons } from '@expo/vector-icons';
 import { ListItem, Button } from '@rneui/themed';
+import { useSelector } from 'react-redux';
 import { useEffect, useState } from "react";
 import { http } from "../../Utilities/axios/http";
 import { useNavigation } from "@react-navigation/native";
 
+import { useDispatch } from 'react-redux';
+import { removeFromCartAction } from '../../store/test/actionsAddproductcart';
+
+import { updateQuantity } from '../../store/test/actionsAddproductcart';
+
 export function Cart() {
   const navigation = useNavigation();
+
+  const cartItems = useSelector(state => state.cart.cartItems); // Giả sử reducer của giỏ hàng được lưu dưới tên "cart"
+  const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  // const cartItems = []; // Thay [] bằng giá trị thực tế của cartItems nếu sử dụng Redux hoặc React Context
+  // console.log("cartItems:", cartItems); // Kiểm tra giá trị của cartItems
+
+
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={styles.container} scrollEnabled={false}>
       <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={{justifyContent: 'flex-end'}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Shop')} style={{ justifyContent: 'flex-end' }}>
           <MaterialIcons name="arrow-back-ios" size={25} color="white" />
         </TouchableOpacity>
         <Text style={styles.headerText}>Cart</Text>
         <MaterialCommunityIcons name="cart-variant" size={25} color="white" />
       </View>
-
-      <CartProductList />
+      <View style={styles.container2}>
+        <ScrollView style={{ paddingBottom: 6, }} scrollEnabled={true}>
+          <CartProductList cartItems={cartItems} />
+        </ScrollView>
+      </View>
 
       <View style={styles.totalContainer}>
-        <View style={{ paddingBottom: 80 }}>
+        <View>
         </View>
         <View style={{ marginTop: 'auto', marginBottom: 15 }}>
           <View style={styles.totalRow}>
             <Text style={styles.totalSubText}>Subtotal</Text>
-            <Text style={styles.totalSubText}>53,340.00$
+            <Text style={styles.totalSubText}>{totalPrice.toFixed(2)}$
             </Text>
           </View>
           <View style={styles.totalRow}>
-            <Text style={styles.totalSubText}>Shipping charges</Text>
-            <Text style={styles.totalSubText}>520.00$</Text>
+            <Text style={styles.totalSubText}>Promotion Price</Text>
+            <Text style={styles.totalSubText}>0$</Text>
           </View>
           <View style={{ ...styles.totalRow, marginTop: 30 }}>
             <Text style={styles.totalText}>Total</Text>
-            <Text style={styles.totalText}>53,860$</Text>
+            <Text style={styles.totalText}>{totalPrice.toFixed(2)}$</Text>
           </View>
 
           <Button onPress={() => navigation.navigate('Pay')} containerStyle={styles.buttonContainerStyle} buttonStyle={styles.buttonStyle} titleStyle={styles.buttonTitleStyle}>Checkout</Button>
         </View>
       </View>
-
     </ScrollView>
+
   )
 }
 
-function MinusAndPlus() {
-  let [count, setCount] = useState();
+function MinusAndPlus({ quantity, onUpdateQuantity }) {
+  const [count, setCount] = useState(quantity);
+
+  const increaseCount = () => {
+    const newCount = count + 1;
+    setCount(newCount);
+    onUpdateQuantity(newCount);
+  };
+
+  const decreaseCount = () => {
+    if (count > 0) {
+      const newCount = count - 1;
+      setCount(newCount);
+      onUpdateQuantity(newCount);
+    }
+  };
+
   return (
-    <View style={{ gap: 4 }}>
-      <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
-      <ListItem.Input inputContainerStyle={styles.inputQuantityContainerStyle} inputStyle={styles.inputQuantityStyle} inputMode="numeric" placeholder="1" />
-      <Button buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
+    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+      <Button onPress={increaseCount} buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="+" />
+      <Text>{count}</Text>
+      <Button onPress={decreaseCount} buttonStyle={styles.buttonQuantityStyle} titleStyle={styles.buttonQuantityTitleStyle} title="-" />
     </View>
-  )
+  );
 }
 
-function CartProductList() {
-  const renderItem = () => (
-    <ListItem.Swipeable
-      rightStyle={{ marginRight: 15 }}
-      leftWidth={0}
-      rightWidth={60}
-      rightContent={(reset) => (
-        <Button
-          onPress={() => reset()}
-          icon={() => <MaterialCommunityIcons name="trash-can-outline" size={28} color="white" />}
-          buttonStyle={styles.buttonSwipeable}
-        />)}
-      containerStyle={styles.cartItem}
-    >
-      <Avatar containerStyle={{ margin: 0 }} size={42} avatarStyle={styles.avatarStyle} source={{ uri: "https://images.unsplash.com/photo-1707343848655-a196bfe88861?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxfHx8ZW58MHx8fHx8" }} />
-      <ListItem.Content style={styles.itemContent}>
-        <ListItem.Subtitle style={styles.cartSubtitleTop}>7850.00$ x 3</ListItem.Subtitle>
-        <ListItem.Title style={styles.cartTitle} >Royal Canin Rottweiler Puppy</ListItem.Title>
-        <ListItem.Subtitle style={styles.cartSubtitleBottom}>3kg</ListItem.Subtitle>
-      </ListItem.Content>
-      <MinusAndPlus />
-    </ListItem.Swipeable>
-  );
+
+function CartProductList({ cartItems }) {
+  const dispatch = useDispatch();
+
+  const handleDeleteItem = (productId) => {
+    dispatch(removeFromCartAction(productId)); // Gọi action xóa sản phẩm với productId
+  };
+  const handleUpdateQuantity = (productId, newQuantity) => {
+    dispatch(updateQuantity(productId, newQuantity));
+  };
+  const renderItem = ({ item }) => {
+    return (
+      <ListItem.Swipeable
+        rightStyle={{ marginRight: 15 }}
+        leftWidth={0}
+        rightWidth={60}
+        rightContent={(reset) => (
+          <Button
+            onPress={() => {
+              handleDeleteItem(item.productId); // Gọi hàm handleDeleteItem với productId của sản phẩm
+              reset(); // Reset swipeable sau khi xử lý xóa
+            }}
+            icon={() => <MaterialCommunityIcons name="trash-can-outline" size={28} color="white" />}
+            buttonStyle={styles.buttonSwipeable}
+          />
+        )}
+        containerStyle={styles.cartItem}
+      >
+        <Avatar containerStyle={{ margin: 0 }} size={42} avatarStyle={styles.avatarStyle} source={{ uri: item.image }} />
+        <ListItem.Content style={styles.itemContent}>
+          <ListItem.Subtitle style={styles.cartSubtitleTop}>{item.price}$</ListItem.Subtitle>
+          <ListItem.Title style={styles.cartTitle} >{item.name}</ListItem.Title>
+          {/* Hiển thị thông tin sản phẩm khác tại đây */}
+        </ListItem.Content>
+        <MinusAndPlus quantity={item.quantity} onUpdateQuantity={(newQuantity) => handleUpdateQuantity(item.productId, newQuantity)} />
+      </ListItem.Swipeable>
+    );
+  };
+
 
   return (
     <FlatList
-      style={{ paddingTop: 48 }}
+      style={{ paddingTop: 24 }}
       ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
-      scrollEnabled={false}
-      keyExtractor={(item) => item}
-      data={[1, 2, 3, 4]}
+      // scrollEnabled={true}
+      keyExtractor={(item) => item.product_id}
+      data={cartItems}
       renderItem={renderItem}
-      showsHorizontalScrollIndicator={false}
+    // showsHorizontalScrollIndicator={false}
     />
   )
 }
@@ -100,11 +147,15 @@ const styles = StyleSheet.create({
     display: 'flex',
     flexDirection: 'column',
   },
+  container2: {
+    flex: 1,
+    height: 400, // Chiều cao cố định
+  },
   header: {
     flexDirection: 'row',
     backgroundColor: '#5CB15A',
     paddingHorizontal: '4%',
-    paddingTop: '6%',
+    paddingTop: '10%',
     paddingBottom: '2%',
     alignSelf: 'center',
     width: '100%',
@@ -117,9 +168,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   totalContainer: {
+    marginTop: 6,
+    paddingTop: 10,
     paddingHorizontal: 15,
     flexDirection: 'column',
-    flex: 1
   },
   totalRow: {
     flexDirection: 'row',
@@ -142,6 +194,7 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOffset: 0,
     shadowOpacity: 0.2,
+    marginBottom: 4
   },
   cartTitle: {
     fontWeight: 600,
@@ -188,5 +241,5 @@ const styles = StyleSheet.create({
     padding: 0,
     height: 2
   },
-  buttonSwipeable: { height: '100%', borderRadius: 8, marginLeft: 7, backgroundColor: '#E54D4D' }
+  buttonSwipeable: { height: '97%', borderRadius: 8, marginLeft: 7, backgroundColor: '#E54D4D' }
 })

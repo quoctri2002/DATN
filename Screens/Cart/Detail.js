@@ -3,20 +3,25 @@ import React, { useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
 
-export function Detail({route}) {
+export function Detail({ route }) {
   const { id } = route.params;
-  console.log(id);
+  // console.log(id);
   const navigation = useNavigation();
   const [product, setProduct] = React.useState(null);
+  const [image, setImage] = React.useState(null);
   let [count, setCount] = React.useState(0);
 
   useEffect(async () => {
     const response = await fetch(`http://206.189.45.141/api/Appgetdetailproduct.php?id=${id}`);
     const resJson = await response.json();
-    console.log(resJson.data);
+    // console.log(resJson.data);
     setProduct(resJson.data[0]);
-  //   neu tra ve mang thi them [0], con khong thi xoa di.
-  //   cai nay bao thang Tuyen sua lai
+    // console.log();
+    // setImage(resJson.data[0].image_links)
+    // console.log(image)
+
+    //   neu tra ve mang thi them [0], con khong thi xoa di.
+    //   cai nay bao thang Tuyen sua lai
   }, [id]);
 
   function plus() {
@@ -42,7 +47,7 @@ export function Detail({route}) {
   //   },
   //   {
   //     id: 3,
-  //     image: require('../../assets/images/spDetail.png'),
+      // image: require('../../assets/images/spDetail.png'),
   //   },
   //   {
   //     id: 4,
@@ -63,20 +68,22 @@ export function Detail({route}) {
       </View>
 
       <View style={styles.view2}>
-        {/*<FlatList*/}
-        {/*  keyExtractor={(item) => item.id}*/}
-        {/*  style={styles.imageview2}*/}
-        {/*  data={product?.image_links}*/}
-        {/*  renderItem={({ item }) => <Image source={item.image} />}*/}
-        {/*  horizontal*/}
-        {/*  pagingEnabled*/}
-        {/*  snapToAlignment="center"*/}
-        {/*/>*/}
+        <FlatList
+          keyExtractor={(item) => item.image_id.toString()}
+          style={styles.imageview2}
+          data={product?.image_links}
+          renderItem={({ item }) => (
+            <Image source={{ uri: item.url }} style={styles.image} />
+          )}
+          horizontal
+          pagingEnabled
+          snapToAlignment="center"
+        />
         <View style={styles.view2in}>
           <View style={styles.view2in1a}>
             <Text style={styles.textview2in2a}>{product?.product_name}</Text>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <Text style={styles.textview2in2b}>Brand: Josera</Text>
+              <Text style={styles.textview2in2b}>{product?.productcategory_name}</Text>
               <Text style={styles.txtPrice}>Price: {product?.product_price}</Text>
             </View>
             <View style={styles.view2in3}>
@@ -89,12 +96,7 @@ export function Detail({route}) {
           <Text style={styles.view2intexta}>
             {product?.product_describe}
           </Text>
-          <View style={styles.view2in1b}>
-            <Text style={styles.view2in1btext}>Recommended For:</Text>
-            <View style={styles.view2in1btrong}>
-              <Text style={{ fontWeight: '500', color: '#5F5F63', fontSize: 14 }}>Bella</Text>
-            </View>
-          </View>
+        
 
           <View style={{ flexDirection: 'row', justifyContent: 'space-between', width: '45%', paddingTop: '2%' }}>
             <Text style={{ color: '#868889', fontWeight: '500', fontSize: 16 }}>Quantity</Text>
@@ -133,6 +135,16 @@ const styles = StyleSheet.create({
     color: '#5CB15A',
     fontWeight: '400',
     fontSize: 14,
+  },
+  imageview2: {
+    flex: 1,
+    width: '100%',
+  },
+  image: {
+    flex: 1,
+    width: '100%',
+    height: undefined, // Để chiều cao tự động tính toán dựa trên chiều rộng và tỷ lệ hình ảnh
+    aspectRatio: 1, // Đảm bảo tỷ lệ hình ảnh không bị thay đổi
   },
 
   back: {

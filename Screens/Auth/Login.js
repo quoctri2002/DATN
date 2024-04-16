@@ -99,8 +99,6 @@ export function Login() {
                   buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
             Register
           </Button>
-          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
-          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
         </View>
       </View>
       <View style={styles.bottom}>

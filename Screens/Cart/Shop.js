@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, Pressable, TouchableOpacity, ScrollView, FlatList } from 'react-native';
+
 import React, { useEffect, useState } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { SearchBar, ButtonGroup } from '@rneui/themed';
@@ -6,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getProductList } from '../../store/thunkApis';
 import { useNavigation } from '@react-navigation/native';
+import { addToCartAction } from '../../store/test/actionsAddproductcart';
 
 export const Shop = () => {
   const navigation = useNavigation();
@@ -15,47 +17,55 @@ export const Shop = () => {
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.products.products);
 
-  useEffect(async () => {
-    const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
-    const resJson = await response.json();
-    console.log(resJson.data);
-    setListCategory(resJson.data);
+  useEffect(() => {
+    async function fetchProductCategories() {
+      try {
+        const response = await fetch('http://206.189.45.141/api/Appgetlistproductcategory.php');
+        const resJson = await response.json();
+        console.log(resJson.data);
+        setListCategory(resJson.data);
+      } catch (error) {
+        console.error('Error fetching product categories:', error);
+      }
+    }
+    fetchProductCategories();
   }, []);
 
   useEffect(() => {
     dispatch(getProductList(id));
   }, [id]);
 
-  // function handleSetSelectedIndex(props) {
-  //   setSelectedIndex(props);
-  //   setId(listCategory[props]);
-  // }
-
+  function handleSetSelectedIndex(props) {
+    if (listCategory.length > props) {
+      setSelectedIndex(props);
+      const categoryId = listCategory[props].PRODUCTCATEGORY_ID;
+      setId(categoryId);
+    }
+  }
+  const addToCart = (product) => {
+    const { product_id, product_name, image_link, product_price } = product;
+    dispatch(addToCartAction({ productId: product_id, product_name, image_link, product_price }));
+    console.log('Add to cart:', product);
+    navigation.navigate('Cart');
+  };
   const limitProduct = productsList.slice(0, 3);
-
   const RenderRecommended = ({ item }) => {
     return (
       <TouchableOpacity onPress={() => navigation.navigate('Detail',
         {
           id: item.product_id
         }
-        )} style={styles.box}>
-        {item.sale === '' ? null : (
-          <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
-            <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
-          </View>
-        )}
+      )} style={styles.box}>
         <Image resizeMode="cover" style={{
-          width: '100%',
+          width: '70%',
           height: 100,
           borderRadius: 20,
           overflow: 'hidden',
         }} source={{ uri: item.image_link }} />
         <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>{item.product_price}</Text>
         <Text style={styles.txtNameProduct}>{item.product_name}</Text>
-        <Text style={styles.txtkg}>{item.kg}kg</Text>
         <Text style={styles.line}></Text>
-        <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 5 }}>
+        <TouchableOpacity onPress={() => addToCart(item)} style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 5 }} >
           <Feather name="shopping-bag" size={20} color="#5CB15A" />
           <Text style={{ fontSize: 14, fontWeight: '500' }}>Add to cart</Text>
         </TouchableOpacity>
@@ -124,32 +134,33 @@ export const Shop = () => {
             platform="android"
           />
 
-          {/*<ButtonGroup*/}
-          {/*  innerBorderStyle={{ width: 0 }}*/}
-          {/*  containerStyle={{ width: '100%', height: 70, borderWidth: 0, marginTop: 20 }}*/}
-          {/*  buttonContainerStyle={{ width: 'auto', height: 'auto' }}*/}
-          {/*  buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 70 }}*/}
-          {/*  selectedButtonStyle={{ backgroundColor: '#5CB15A' }}*/}
-          {/*  buttons={Array.isArray(listCategory) ? listCategory.map((item) => (*/}
-          {/*    <View key={item.id} style={{ justifyContent: 'center', alignItems: 'center' }}>*/}
-          {/*      <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>*/}
-          {/*    </View>*/}
-          {/*  )) : []}*/}
-          {/*  selectedIndex={selectedIndex}*/}
-          {/*  onPress={(index) => handleSetSelectedIndex(index)}*/}
-          {/*/>*/}
+          <ButtonGroup
+            innerBorderStyle={{ width: 0 }}
+            containerStyle={{ height: 70, borderWidth: 0, marginTop: 20 }}
+            buttonContainerStyle={{ width: 'auto', alignItems: 'center' }}
+            buttonStyle={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 120 }}
+            selectedButtonStyle={{ backgroundColor: '#5CB15A' }}
+            buttons={Array.isArray(listCategory) ? listCategory.map((item, index) => (
+              <View key={item.PRODUCTCATEGORY_ID} style={{ justifyContent: 'center', alignItems: 'center' }}>
+                <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>
+              </View>
+            )) : []}
+            selectedIndex={selectedIndex}
+            onPress={(index) => handleSetSelectedIndex(index)}
+          />
 
-          <FlatList
+          {/* <FlatList
             data={listCategory}
             style={{
               width: '100%',
               height: 70,
               borderWidth: 0,
               marginTop: 20,
+              backgroundColor: 'red',
             }}
             renderItem={({ item }) => (
               <Pressable onPress={() => setId(item.PRODUCTCATEGORY_ID)}>
-              <View style={{ justifyContent: 'center', alignItems: 'center', padding: 8 }}>
+              <View style={{ backgroundColor: '#D0D7D5', borderRadius: 15, width: 70, height: 70}}>
                 <Text style={styles.txtButton}>{item.PRODUCTCATEGORY_NAME}</Text>
               </View>
               </Pressable>
@@ -157,7 +168,7 @@ export const Shop = () => {
             keyExtractor={(item) => item.PRODUCTCATEGORY_ID}
             showsHorizontalScrollIndicator={false}
             horizontal={true}
-          />
+          /> */}
 
           <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Recommended Food</Text>
           <FlatList
@@ -238,6 +249,7 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 3,
+    borderRadius: 8,
   },
 
   txtButton: {

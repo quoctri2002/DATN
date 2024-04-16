@@ -4,7 +4,7 @@ import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import React from 'react';
 import { useNavigation } from '@react-navigation/native';
 
-export function Register  (navigation)  {
+export function Register(navigation) {
   navigation = useNavigation();
   return (
     <View style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -18,25 +18,32 @@ export function Register  (navigation)  {
             inputContainerStyle={styles.inputContainer}
           />
           <Input
+            placeholder="Phone"
+            style={styles.input}
+            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="phone" size={20} />}
+            inputContainerStyle={styles.inputContainer}
+          />
+          <Input
             placeholder="Password"
             style={styles.input}
-            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />}
+            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={20} />}
             inputContainerStyle={styles.inputContainer}
           />
           <Input
             placeholder="Password Again"
             style={styles.input}
-            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={25} />}
+            leftIcon={<Feather style={{ color: '#A6A6A6' }} name="lock" size={20} />}
             inputContainerStyle={styles.inputContainer}
           />
 
-          <Button onPress={()=> navigation.navigate('Login') } buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
+
+          <Button onPress={() => navigation.navigate('Login')} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Register</Button>
 
           <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 5 }}>
             <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 18, fontWeight: '400', color: '#747070' }}>
               Have a account?
             </Text>
-            <Pressable onPress={()=> navigation.navigate('Login') }>
+            <Pressable onPress={() => navigation.navigate('Login')}>
               <Text style={{ marginTop: 24, textAlign: 'center', marginBottom: 40, fontSize: 19, fontWeight: '600', color: '#5CB15A' }}>Sign in</Text>
             </Pressable>
           </View>

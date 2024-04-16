@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Pressable, FlatList } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
-import { SelectList } from 'react-native-dropdown-select-list'
+// import { SelectList } from 'react-native-dropdown-select-list'
 import { Input, Button } from '@rneui/base';
 
 export function Adress({ action }) {
