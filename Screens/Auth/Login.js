@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getProfile } from '../../store/thunkApis';
 import { useNavigation } from '@react-navigation/native';
-
+import Detail_fix from '../Cart/Detail_fix';
 export function Login() {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
@@ -42,7 +42,7 @@ export function Login() {
 
           <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
 
-          <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
+          <Button onPress={Detail_fix} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
             Login
           </Button>
           <View>
