@@ -35,9 +35,10 @@ export function Login() {
     }
 
     const data = {
-      phone: email,
+      email,
       password
     };
+
     try {
       dispatch(getProfile(data));
     } catch (e) {

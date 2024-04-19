@@ -4,7 +4,7 @@ import axios from 'axios';
 
 export const getProfile = createAsyncThunk('user/getProfile', async (in4, {rejectWithValue}) => {
   try {
-    const response = await fetch('http://206.189.45.141/api/login-admin.php', {
+    const response = await fetch('http://206.189.45.141/api/auth/login-user.php', {
       method: 'POST',
       body: JSON.stringify(in4),
     });

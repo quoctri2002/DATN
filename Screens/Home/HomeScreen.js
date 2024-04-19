@@ -59,7 +59,7 @@ export function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Hey {profile.name},</Text>
+        <Text style={styles.text}>Hey {profile?.CUSTOMER_NAME || 'customer'},</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>

@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Image } from '@rneui/themed';
 import { Feather, Entypo, Fontisto, AntDesign } from '@expo/vector-icons';
 import { logout } from '../../store/slices/profile.slice';
@@ -14,23 +14,26 @@ export function Profile() {
   const [modalVisible, setModalVisible] = React.useState(false);
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
+  const setModalVisibleCallback = useCallback(() => {
+    setModalVisible(false);
+  }, [setModalVisible]);
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <View style={styles.back}>
         </View>
-        <Text style={styles.text}>{profile.ADMIN_NAME}</Text>
+        <Text style={styles.text}>{profile?.CUSTOMER_NAME}</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>
       </View>
-      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile.ADMIN_IMAGE }} />
+      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile?.CUSTOMER_IMAGE }} />
       <View style={styles.view2in}>
 
       </View>
       <View style={styles.box1}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>{profile.ADMIN_NAME}</Text>
+          <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>{profile?.CUSTOMER_NAME}</Text>
           <TouchableOpacity onPress={() => dispatch(logout())} style={{ flexDirection: 'row', gap: 3 }}>
             <Entypo name="log-out" size={18} color="red" />
             <Text style={{ color: '#E54D4D', fontSize: 12, fontWeight: '600' }}>Sign out</Text>
@@ -38,11 +41,11 @@ export function Profile() {
         </View>
         <View style={{ flexDirection: 'row', gap: 20, marginLeft: 15, alignItems: 'center', marginTop: 7 }}>
           <Fontisto name="email" size={20} color="#000000" />
-          <Text style={styles.txtContent}>{profile.ADMIN_EMAIL}</Text>
+          <Text style={styles.txtContent}>{profile?.CUSTOMER_EMAIL}</Text>
         </View>
         <View style={{ flexDirection: 'row', gap: 20, marginLeft: 15, alignItems: 'center', marginTop: 15 }}>
           <AntDesign name="phone" size={20} color="#000000" />
-          <Text style={styles.txtContent}>{profile.ADMIN_PHONE}</Text>
+          <Text style={styles.txtContent}>{profile?.CUSTOMER_PHONE}</Text>
         </View>
       </View>
 
@@ -56,7 +59,7 @@ export function Profile() {
             (nameModal === 'Address') ?
               <Adress action={{ setModalVisible }} state={{ modalVisible, profile }} /> :
               (nameModal === 'AboutMe') ?
-                <Account action={{ setModalVisible }} /> :
+                <Account action={{ setModalVisible: setModalVisibleCallback }} /> :
                 <Order action={{ setModalVisible }} state={{ modalVisible }} />
           }
         </View>
