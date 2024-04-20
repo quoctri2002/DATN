@@ -6,53 +6,89 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesome } from '@expo/vector-icons';
 import { Button, Input } from '@rneui/base';
 import { getProfile } from '../../store/thunkApis';
+import * as ImagePicker from 'expo-image-picker';
 
 export function Account({ action }) {
   const { setModalVisible } = action;
-  const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
-  const [user, setUser] = useState({
-    name: profile.CUSTOMER_NAME, phone: profile.CUSTOMER_PHONE, address: profile.CUSTOMER_ADDRESS, password: ''
-  });
-
-  const updateField = (field, value) => {
-    setUser({
-      ...user, [field]: value
-    });
-  };
   const [editModalVisible, setEditModalVisible] = useState(false);
 
-  async function updateUser() {
-    const data = {
-      CUSTOMER_EMAIL: profile.CUSTOMER_EMAIL,
-      CUSTOMER_NAME: user.name,
-      CUSTOMER_PHONE: user.phone,
-      CUSTOMER_ADDRESS: user.address,
-      CUSTOMER_PASSWORD: user.password
-    };
-    console.log(data);
-
-    const response = await fetch('http://206.189.45.141/api/auth/update-user.php', {
-      method: 'POST', body: JSON.stringify(data)
+  const EditProfile = () => {
+    const dispatch = useDispatch();
+    const [avatar, setAvatar] = useState(profile.customer_image);
+    const [user, setUser] = useState({
+      name: profile.customer_name, phone: profile.CUSTOMER_PHONE, address: profile.customer_address, password: ''
     });
 
-    const responseJson = await response.json();
-    console.log(responseJson);
+    const updateField = (field, value) => {
+      setUser({
+        ...user, [field]: value
+      });
+    };
 
-    if (responseJson.status === true) {
-      const userLogin = {
-        email: profile.CUSTOMER_EMAIL, password: user.password
+    async function updateUser() {
+      const data = {
+        CUSTOMER_EMAIL: profile.CUSTOMER_EMAIL,
+        CUSTOMER_NAME: user.name,
+        CUSTOMER_PHONE: user.phone,
+        CUSTOMER_ADDRESS: user.address,
+        CUSTOMER_PASSWORD: user.password
       };
-      dispatch(getProfile(userLogin));
-      setEditModalVisible(false);
-      setModalVisible(false);
-      ToastAndroid.showWithGravity('Update successfully', ToastAndroid.LONG, ToastAndroid.CENTER);
-    } else {
-      ToastAndroid.showWithGravity('Update failed', ToastAndroid.LONG, ToastAndroid.CENTER);
-    }
-  }
+      console.log(data);
 
-  const EditProfile = () => {
+      const response = await fetch('http://206.189.45.141/api/auth/update-user.php', {
+        method: 'POST', body: JSON.stringify(data)
+      });
+
+      const responseJson = await response.json();
+      console.log(responseJson);
+
+      if (responseJson.status === true) {
+        const userLogin = {
+          email: profile.CUSTOMER_EMAIL, password: user.password || profile.customer_password
+        };
+        dispatch(getProfile(userLogin));
+        setEditModalVisible(false);
+        setModalVisible(false);
+        ToastAndroid.showWithGravity('Update successfully', ToastAndroid.LONG, ToastAndroid.CENTER);
+      } else {
+        ToastAndroid.showWithGravity('Update failed', ToastAndroid.LONG, ToastAndroid.CENTER);
+      }
+    }
+
+    async function handleUploadAvatar() {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images, allowsEditing: true, aspect: [3, 4], quality: 0.5
+      });
+
+      console.log(result);
+
+      if (!result.canceled) {
+        setAvatar(result.uri);
+        let formData = new FormData();
+        formData.append('avatar', {
+          uri: result.uri, name: 'avatar.jpg', type: 'image/jpg'
+        });
+        formData.append('email', profile.CUSTOMER_EMAIL);
+        formData.append('CUSTOMER_ID', profile.CUSTOMER_ID);
+
+        const response = await fetch('http://206.189.45.141/api/auth/upload-avt.php', {
+          method: 'POST', body: formData, headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+
+        const responseJson = await response.json();
+        console.log(responseJson);
+
+        if (responseJson.status === true) {
+          ToastAndroid.showWithGravity('Avatar uploaded successfully', ToastAndroid.LONG, ToastAndroid.CENTER);
+        } else {
+          ToastAndroid.showWithGravity('Upload failed', ToastAndroid.LONG, ToastAndroid.CENTER);
+        }
+      }
+    }
+
     return (<View style={styles.container}>
       <View style={styles.header}>
         <Pressable onPress={() => setEditModalVisible(false)} style={styles.back}>
@@ -69,12 +105,15 @@ export function Account({ action }) {
         alignItems: 'center',
         gap: 20
       }}>
-        <Avatar
-          size={90}
-          rounded
-          source={{ uri: profile.CUSTOMER_IMAGE }}
-        />
+        <Pressable onPress={handleUploadAvatar}>
+          <Avatar
+            size={90}
+            rounded
+            source={{ uri: avatar }}
+          />
+        </Pressable>
         <View>
+          <Text style={styles.textEmail}>Click avatar to upload image</Text>
           <Text style={styles.textEmail}>{profile.CUSTOMER_EMAIL}</Text>
         </View>
       </View>
@@ -154,7 +193,7 @@ export function Account({ action }) {
   }, {
     id: 2, icon: 'phone', title: 'Phone', content: profile.CUSTOMER_PHONE
   }, {
-    id: 3, icon: 'map-marker', title: 'Address', content: profile.CUSTOMER_ADDRESS
+    id: 3, icon: 'map-marker', title: 'Address', content: profile.customer_address
   }];
 
   return (<View style={styles.container}>
@@ -176,10 +215,10 @@ export function Account({ action }) {
       <Avatar
         size={90}
         rounded
-        source={{ uri: profile.CUSTOMER_IMAGE }}
+        source={{ uri: profile.customer_image }}
       />
       <View>
-        <Text style={styles.textName}>{profile.CUSTOMER_NAME}</Text>
+        <Text style={styles.textName}>{profile.customer_name}</Text>
         <Text style={styles.textEmail}>{profile.CUSTOMER_EMAIL}</Text>
       </View>
     </View>

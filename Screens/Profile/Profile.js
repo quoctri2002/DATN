@@ -22,18 +22,18 @@ export function Profile() {
       <View style={styles.header}>
         <View style={styles.back}>
         </View>
-        <Text style={styles.text}>{profile?.CUSTOMER_NAME}</Text>
+        <Text style={styles.text}>{profile?.customer_name}</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>
       </View>
-      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile?.CUSTOMER_IMAGE }} />
+      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile?.customer_image }} />
       <View style={styles.view2in}>
 
       </View>
       <View style={styles.box1}>
         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-          <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>{profile?.CUSTOMER_NAME}</Text>
+          <Text style={{ color: '#141415', fontSize: 25, fontWeight: '700' }}>{profile?.customer_name}</Text>
           <TouchableOpacity onPress={() => dispatch(logout())} style={{ flexDirection: 'row', gap: 3 }}>
             <Entypo name="log-out" size={18} color="red" />
             <Text style={{ color: '#E54D4D', fontSize: 12, fontWeight: '600' }}>Sign out</Text>
