@@ -69,7 +69,7 @@ export function Order({ action }) {
                                 </View>
                                 <View style={styles.Content}>
                                     <Text style={styles.txtTitle}>Orderer: </Text>
-                                    <Text style={styles.txtContent}>{item.BILL_STATUS}</Text>
+                                    <Text style={styles.txtContent}>{item.CUSTOMER_NAME}</Text>
                                 </View>
                                 <View style={styles.Content}>
                                     <Text style={styles.txtTitle}>Address: </Text>
