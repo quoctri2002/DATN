@@ -27,7 +27,7 @@ export function Pay() {
   const [note, setNote] = useState('');
   const profile = useSelector((state) => state.user.profile.ADMIN_ID); // chuyển qua id người dùng
   console.log("totalPrice:", totalPrice);
-  console.log(addressData.ADDRESS_ID);
+  // console.log(addressData.ADDRESS_ID);
   console.log(cartItems);
   // console.log(profile);
   console.log("selectedPaymentMethod:", selectedPaymentMethod1)
