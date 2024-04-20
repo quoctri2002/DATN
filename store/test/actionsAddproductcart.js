@@ -18,10 +18,15 @@ export const updateQuantity = (productId, newQuantity) => ({
     payload: { productId, newQuantity },
 });
 
+export const setAddress = (addressData) => ({
+    type: 'SET_ADDRESS',
+    payload: addressData,
+});
 
 // Trong file store/reducers/cartReducer.js
 const initialState = {
     cartItems: [], // Danh sách các sản phẩm trong giỏ hàng
+    addressData: null, // Dữ liệu địa chỉ
 };
 
 // Trong file store/reducers/cartReducer.js
@@ -64,6 +69,11 @@ const cartReducer = (state = initialState, action) => {
                 cartItems: state.cartItems.map(item =>
                     item.productId === action.payload.productId ? { ...item, quantity: action.payload.newQuantity } : item
                 ),
+            };
+        case 'SET_ADDRESS':
+            return {
+                ...state,
+                addressData: action.payload,
             };
         default:
             return state;

@@ -17,9 +17,9 @@ export function Cart() {
 
   const cartItems = useSelector(state => state.cart.cartItems); // Giả sử reducer của giỏ hàng được lưu dưới tên "cart"
   const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
+  const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);
   // const cartItems = []; // Thay [] bằng giá trị thực tế của cartItems nếu sử dụng Redux hoặc React Context
-  // console.log("cartItems:", cartItems); // Kiểm tra giá trị của cartItems
-
+  console.log("cartItems:", cartItems); // Kiểm tra giá trị của cartItems
 
   return (
     <ScrollView style={styles.container} scrollEnabled={false}>
@@ -54,7 +54,7 @@ export function Cart() {
             <Text style={styles.totalText}>{totalPrice.toFixed(2)}$</Text>
           </View>
 
-          <Button onPress={() => navigation.navigate('Pay')} containerStyle={styles.buttonContainerStyle} buttonStyle={styles.buttonStyle} titleStyle={styles.buttonTitleStyle}>Checkout</Button>
+          <Button  onPress={() => navigation.navigate('Pay', { totalItems, totalPrice })} containerStyle={styles.buttonContainerStyle} buttonStyle={styles.buttonStyle} titleStyle={styles.buttonTitleStyle}>Checkout</Button>
         </View>
       </View>
     </ScrollView>
@@ -107,7 +107,7 @@ function CartProductList({ cartItems }) {
         rightContent={(reset) => (
           <Button
             onPress={() => {
-              handleDeleteItem(item.productId); // Gọi hàm handleDeleteItem với productId của sản phẩm
+              handleDeleteItem(item.productId, console.log(item.productId)); // Gọi hàm handleDeleteItem với productId của sản phẩm
               reset(); // Reset swipeable sau khi xử lý xóa
             }}
             icon={() => <MaterialCommunityIcons name="trash-can-outline" size={28} color="white" />}
@@ -133,7 +133,7 @@ function CartProductList({ cartItems }) {
       style={{ paddingTop: 24 }}
       ItemSeparatorComponent={() => <View style={{ height: 12 }} />}
       // scrollEnabled={true}
-      keyExtractor={(item) => item.product_id}
+      keyExtractor={(item) => item.productId}
       data={cartItems}
       renderItem={renderItem}
     // showsHorizontalScrollIndicator={false}

@@ -1,12 +1,15 @@
-import { StyleSheet, Text, View, Pressable, FlatList, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Pressable, FlatList, ScrollView, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Feather } from '@expo/vector-icons';
 import { SelectList } from 'react-native-dropdown-select-list'
+import { useNavigation } from "@react-navigation/native";
 import { Input, Button } from '@rneui/base';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { setAddress } from '../../store/test/actionsAddproductcart';
 
 export function Adress({ action }) {
-    const { setModalVisible } = action;
+    const navigation = useNavigation();
+    // const { setModalVisible } = action;
     const [selectedProvince, setSelectedProvince] = React.useState("");
     const [selectedCity, setSelectedCity] = React.useState("");
     const [streetAddress, setStreetAddress] = React.useState("");
@@ -14,6 +17,8 @@ export function Adress({ action }) {
     const [nameAddress, setnameAddress] = React.useState("");
     const [addAdress, setAddAdress] = React.useState(false);
     const [dataAddress, setdataAddress] = React.useState([]);
+
+    const dispatch = useDispatch();
 
 
     let fullAddress = "";
@@ -78,7 +83,7 @@ export function Adress({ action }) {
             }
             const updatedResJson = await updatedResponse.json();
             setdataAddress(updatedResJson.data);
-            
+
             // Set addAdress to false to hide the form
             alert(response.message);
             setAddAdress(false);
@@ -92,11 +97,15 @@ export function Adress({ action }) {
             console.error('Error adding address:', error);
         }
     };
+    const handleItemPress = (item) => {
+        dispatch(setAddress(item));
+        navigation.navigate('Pay');
+    };
 
     return (
         <View style={styles.container}>
             <View style={styles.header}>
-                <Pressable onPress={() => setModalVisible(false)} style={styles.back}>
+                <Pressable onPress={() => navigation.navigate('Pay')} style={styles.back}>
                     <Feather name="chevron-left" size={25} color="white" />
                 </Pressable>
                 <Text style={styles.text}>Adress</Text>
@@ -109,21 +118,23 @@ export function Adress({ action }) {
                     <FlatList
                         keyExtractor={(item) => item.ADDRESS_ID}
                         renderItem={({ item }) =>
-                            <View style={styles.boxAdress}>
-                                <Text style={styles.txtTitleAdress}>Adress {item.ADDRESS_ID}</Text>
-                                <Text>
-                                    <Text style={{ fontWeight: 'bold', color: 'black' }}>Recipient: </Text>
-                                    {item.ADDRESS_NAME}
-                                </Text>
-                                <Text>
-                                    <Text style={{ fontWeight: 'bold', color: 'black' }}>Phone: </Text>
-                                    {item.ADDRESS_PHONE}
-                                </Text>
-                                <Text>
-                                    <Text style={{ fontWeight: 'bold', color: 'black' }}>Address:</Text>
-                                    {item.ADDRESS_DETAIL}
-                                </Text>
-                            </View>
+                            <TouchableOpacity onPress={() => handleItemPress(item)}>
+                                <View style={styles.boxAdress}>
+                                    <Text style={styles.txtTitleAdress}>Adress {item.ADDRESS_ID}</Text>
+                                    <Text>
+                                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Recipient: </Text>
+                                        {item.ADDRESS_NAME}
+                                    </Text>
+                                    <Text>
+                                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Phone: </Text>
+                                        {item.ADDRESS_PHONE}
+                                    </Text>
+                                    <Text>
+                                        <Text style={{ fontWeight: 'bold', color: 'black' }}>Address:</Text>
+                                        {item.ADDRESS_DETAIL}
+                                    </Text>
+                                </View>
+                            </TouchableOpacity>
                         }
                         pagingEnabled
                         snapToAlignment="center"
@@ -154,7 +165,7 @@ export function Adress({ action }) {
                                 />
                                 <Text style={styles.txtTitle}>Province/City</Text>
                                 <SelectList
-                                     setSelected={(val) => {
+                                    setSelected={(val) => {
                                         const Province = getProvinceNameById(val); // Lấy chuỗi tương ứng từ mảng dataCity
                                         setSelectedProvince(Province); // Truyền chuỗi đã lấy vào state selectedCity
                                     }}
@@ -258,8 +269,9 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'flex-end',
         backgroundColor: '#5CB15A',
+        paddingTop: '8%',
         paddingHorizontal: '4%',
-        paddingBottom: '2%',
+        paddingBottom: '4%',
     },
 
     container: {

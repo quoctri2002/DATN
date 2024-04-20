@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import { persistor, store } from './store';
 import { SafeAreaView } from 'react-native';
 import { AppNavigation } from './Navigations';
+import { AppNavigation1 } from './Screens/Cart/Pay';
 import { PersistGate } from 'redux-persist/integration/react';
 
 export default function App() {
