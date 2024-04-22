@@ -40,14 +40,17 @@ export function Detail({ route }) {
     }
   }
   function addToCart() {
-    const item = {
-      productId: product.id,
-      product_name: product.product_name,
-      image_link: product.image_link,
-      product_price: product.product_price,
-    };  
-    dispatch(addToCartWithQuantity(item, count));
-    navigation.navigate('Cart');
+    if (product) {
+      const item = {
+        productId: id,
+        product_name: product.product_name,
+        image_link: product.image_links[0].url,
+        product_price: product.product_price,
+      };
+      // const clonedItem = { ...item }; // Tạo một bản sao của sản phẩm
+      dispatch(addToCartWithQuantity(item, count));
+      navigation.navigate('Cart');
+    }
   }
   // const images = [
   //   {

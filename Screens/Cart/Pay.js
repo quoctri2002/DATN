@@ -6,10 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 import { ScrollView } from 'react-native-gesture-handler';
 import { useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/Ionicons';
-// import { addres } from '../../store/test/actionsAddproductcart';
+import { useDispatch } from 'react-redux';
+import { clearCartAndAddress } from '../../store/test/actionsAddproductcart';
 import { Paymentmethod } from './Paymentmethod'; // Import Paymentmethod component
 
 export function Pay() {
+  const dispatch = useDispatch(); // Di chuyển dispatch ra đầu component
   const cartItems = useSelector(state => {
     // Tính toán totalPrice cho mỗi sản phẩm trong cartItems
     return state.cart.cartItems.map(item => ({
@@ -70,6 +72,7 @@ export function Pay() {
   
       // Chuyển hướng sau khi đặt hàng thành công
       console.log(response)
+      dispatch(clearCartAndAddress());
       navigation.navigate('Shop');
     } catch (error) {
       console.error('Error ordering:', error);

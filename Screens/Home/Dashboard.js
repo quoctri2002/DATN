@@ -9,6 +9,7 @@ import { getMyPetList } from '../../store/thunkApis';
 export const Dashboard = () => {
   const dispatch = useDispatch();
   const profile = useSelector((state) => state.user.profile);
+  console.log(profile)
   const RenderItem = (item) => {
     item = data;
     return (
@@ -98,7 +99,7 @@ export const Dashboard = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Chào {profile.ADMIN_NAME || 'bạn'},</Text>
+        <Text style={styles.text}>Chào {profile.customer_name || 'bạn'},</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>

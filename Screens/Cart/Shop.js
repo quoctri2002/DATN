@@ -12,9 +12,9 @@ import { addToCartAction } from '../../store/test/actionsAddproductcart';
 export const Shop = () => {
   const [searchValue, setSearchValue] = useState(""); // State để lưu giá trị của input search
 
-const handleSearchInputChange = (text) => {
-  setSearchValue(text);
-};
+  const handleSearchInputChange = (text) => {
+    setSearchValue(text);
+  };
 
 
   const navigation = useNavigation();
@@ -124,7 +124,7 @@ const handleSearchInputChange = (text) => {
         stickyHeaderIndices={[2]}
         scrollEventThrottle={16}>
         <View style={styles.header}>
-          <Feather style={{ color: 'white' }} name="chevron-left" size={25} />
+          <Text style={styles.txtTitle1}></Text>
           <Text style={styles.txtTitle}>Shop</Text>
           <Pressable onPress={() => navigation.navigate('Cart')} style={{ paddingRight: 20 }}>
             <Feather style={{ color: 'white' }} name="shopping-cart" size={25} />
@@ -134,7 +134,7 @@ const handleSearchInputChange = (text) => {
           <SearchBar
             placeholder="Search keywords..."
             lightTheme
-            
+
             containerStyle={{
               backgroundColor: '#F4F5F9',
               width: '100%',
@@ -283,6 +283,9 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '500',
     textAlign: 'center',
+  },
+  txtTitle1: {
+    marginLeft: '10%',
   },
   header: {
     width: '100%',

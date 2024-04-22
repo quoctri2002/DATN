@@ -12,12 +12,13 @@ export const removeFromCartAction = (productId) => {
     };
 };
 
-export const addToCartWithQuantity = (product, quantity) => {
-    return {
-        type: 'ADD_TO_CART_WITH_QUANTITY',
-        payload: { product, quantity },
-    };
-};
+export const addToCartWithQuantity = (product, quantity) => ({
+    type: 'ADD_TO_CART_WITH_QUANTITY',
+    payload: {
+        product: product,
+        quantity: quantity,
+    },
+});
 
 export const UPDATE_QUANTITY = 'UPDATE_QUANTITY';
 export const updateQuantity = (productId, newQuantity) => ({
@@ -28,6 +29,10 @@ export const updateQuantity = (productId, newQuantity) => ({
 export const setAddress = (addressData) => ({
     type: 'SET_ADDRESS',
     payload: addressData,
+});
+
+export const clearCartAndAddress = () => ({
+    type: 'CLEAR_CART_AND_ADDRESS',
 });
 
 // Trong file store/reducers/cartReducer.js
@@ -82,31 +87,37 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 addressData: action.payload,
             };
-            case 'ADD_TO_CART_WITH_QUANTITY':
-                // Xử lý thêm sản phẩm vào giỏ hàng với số lượng cụ thể
-                const { quantity } = action.payload;
-    if (existingProductIndex !== -1) {
-        const updatedCartItems = [...state.cartItems];
-        updatedCartItems[existingProductIndex] = {
-            ...updatedCartItems[existingProductIndex],
-            quantity: updatedCartItems[existingProductIndex].quantity + quantity
-        };
-        return {
-            ...state,
-            cartItems: updatedCartItems,
-        };
-    } else {
-        return {
-            ...state,
-            cartItems: [...state.cartItems, {
-                productId: product.productId,
-                quantity: quantity,
-                name: product.product_name,
-                image: product.image_link,
-                price: product.product_price,
-            }],
-        };
-    }
+        case 'ADD_TO_CART_WITH_QUANTITY':
+            const { product: addedProduct, quantity: addedQuantity } = action.payload;
+            const existingProductIndex1 = state.cartItems.findIndex(item => item.productId === addedProduct.productId);
+            if (existingProductIndex1 !== -1) {
+                const updatedCartItems = [...state.cartItems];
+                updatedCartItems[existingProductIndex1] = {
+                    ...updatedCartItems[existingProductIndex1],
+                    quantity: updatedCartItems[existingProductIndex1].quantity + addedQuantity
+                };
+                return {
+                    ...state,
+                    cartItems: updatedCartItems,
+                };
+            } else {
+                return {
+                    ...state,
+                    cartItems: [...state.cartItems, {
+                        productId: addedProduct.productId,
+                        quantity: addedQuantity,
+                        name: addedProduct.product_name,
+                        image: addedProduct.image_link,
+                        price: addedProduct.product_price,
+                    }],
+                };
+            }
+        case 'CLEAR_CART_AND_ADDRESS':
+            return {
+                ...state,
+                cartItems: [],
+                addressData: null,
+            };
         default:
             return state;
     }
