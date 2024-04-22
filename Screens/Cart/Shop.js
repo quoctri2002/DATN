@@ -10,12 +10,20 @@ import { useNavigation } from '@react-navigation/native';
 import { addToCartAction } from '../../store/test/actionsAddproductcart';
 
 export const Shop = () => {
+  const [searchValue, setSearchValue] = useState(""); // State để lưu giá trị của input search
+
+const handleSearchInputChange = (text) => {
+  setSearchValue(text);
+};
+
+
   const navigation = useNavigation();
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [id, setId] = React.useState(1);
   const [listCategory, setListCategory] = React.useState([]);
   const dispatch = useDispatch();
   const productsList = useSelector((state) => state.products.products);
+  const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
     async function fetchProductCategories() {
@@ -34,6 +42,15 @@ export const Shop = () => {
   useEffect(() => {
     dispatch(getProductList(id));
   }, [id]);
+
+  useEffect(() => {
+    if (productsList.length > 0) {
+      const filtered = productsList.filter(item =>
+        item.product_name.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setFilteredProducts(filtered);
+    }
+  }, [searchValue, productsList]);
 
   function handleSetSelectedIndex(props) {
     if (listCategory.length > props) {
@@ -117,6 +134,7 @@ export const Shop = () => {
           <SearchBar
             placeholder="Search keywords..."
             lightTheme
+            
             containerStyle={{
               backgroundColor: '#F4F5F9',
               width: '100%',
@@ -132,6 +150,7 @@ export const Shop = () => {
               color: '#868889',
             }}
             platform="android"
+            onChangeText={handleSearchInputChange}
           />
 
           <ButtonGroup
@@ -172,19 +191,19 @@ export const Shop = () => {
 
           <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Recommended Food</Text>
           <FlatList
-            data={productsList}
+            data={filteredProducts}
             renderItem={RenderRecommended}
             numColumns={2}
             columnWrapperStyle={{ columnGap: 10 }}
             contentContainerStyle={{ gap: 10 }}
             style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
-            keyExtractor={(index) => index.id}
+            keyExtractor={(index) => index.product_id}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
           />
 
           <Text style={{ color: 'black', fontSize: 20, fontWeight: '500', marginTop: 20 }}>Top Selling </Text>
-          <FlatList
+          {/* <FlatList
             data={limitProduct}
             renderItem={RenderTopSelling}
             contentContainerStyle={{ gap: 20, paddingBottom: 5 }}
@@ -192,7 +211,7 @@ export const Shop = () => {
             keyExtractor={(index) => index.id}
             showsVerticalScrollIndicator={false}
             scrollEnabled={false}
-          />
+          /> */}
         </View>
       </ScrollView>
     </View>

@@ -9,8 +9,8 @@ import axios from 'axios';
 
 export function Login() {
   const navigation = useNavigation();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('usertuyendz@gmail.com');
+  const [password, setPassword] = useState('123');
   const dispatch = useDispatch();
 
   const { isLoading, error } = useSelector((state) => state.user);
@@ -35,9 +35,10 @@ export function Login() {
     }
 
     const data = {
-      phone: email,
+      email,
       password
     };
+
     try {
       dispatch(getProfile(data));
     } catch (e) {
@@ -99,6 +100,8 @@ export function Login() {
                   buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
             Register
           </Button>
+          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Google</Button>
+          <Button buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>Login with Facebook</Button>
         </View>
       </View>
       <View style={styles.bottom}>

@@ -118,7 +118,7 @@ export const Dashboard = () => {
           </Article>
         </View>
 
-        <FlatList scrollEnabled={false} data={data} renderItem={RenderItem} keyExtractor={(item) => item.id} />
+        {/* <FlatList scrollEnabled={false} data={data} renderItem={RenderItem} keyExtractor={(item) => item.id} /> */}
       </View>
     </ScrollView>
   )

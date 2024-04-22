@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 export function Order({ action }) {
     const { setModalVisible } = action;
     const [selectedOrder, setSelectedOrder] = useState(null);
-    const profile = useSelector((state) => state.user.profile.ADMIN_ID); // chuyển qua id người dùng
+    const profile = useSelector((state) => state.user.profile.CUSTOMER_ID); // chuyển qua id người dùng
     const [data, setData] = useState([]);
 
     // Function to handle click on an order item

@@ -2,14 +2,20 @@ import { Image, StyleSheet, Text, View, Pressable, TouchableOpacity, FlatList, T
 import React, { useEffect } from 'react';
 import { Feather } from '@expo/vector-icons';
 import { useNavigation } from '@react-navigation/native';
+import { useDispatch, useSelector } from 'react-redux';
+import { addToCartWithQuantity } from '../../store/test/actionsAddproductcart';
 
 export function Detail({ route }) {
   const { id } = route.params;
+  const dispatch = useDispatch();
+  const cartItems = useSelector(state => state.cart.cartItems);
   // console.log(id);
   const navigation = useNavigation();
   const [product, setProduct] = React.useState(null);
   const [image, setImage] = React.useState(null);
   let [count, setCount] = React.useState(0);
+
+  console.log(product)
 
   useEffect(async () => {
     const response = await fetch(`http://206.189.45.141/api/Appgetdetailproduct.php?id=${id}`);
@@ -25,16 +31,23 @@ export function Detail({ route }) {
   }, [id]);
 
   function plus() {
-    count += 1;
-    return setCount(count);
+    setCount(count + 1);
   }
+
   function minus() {
-    if (count <= 0) {
-      ('0');
-    } else {
-      count -= 1;
+    if (count > 0) {
+      setCount(count - 1);
     }
-    return setCount(count);
+  }
+  function addToCart() {
+    const item = {
+      productId: product.id,
+      product_name: product.product_name,
+      image_link: product.image_link,
+      product_price: product.product_price,
+    };  
+    dispatch(addToCartWithQuantity(item, count));
+    navigation.navigate('Cart');
   }
   // const images = [
   //   {
@@ -121,7 +134,7 @@ export function Detail({ route }) {
               </TouchableOpacity>
             </View>
           </View>
-          <TouchableOpacity style={styles.buttonbook}>
+          <TouchableOpacity onPress={addToCart}  style={styles.buttonbook}>
             <Text style={styles.buttonbooktext}>Add To Cart</Text>
           </TouchableOpacity>
         </View>

@@ -25,11 +25,11 @@ export function Pay() {
   const [selectedPaymentMethodIconOrImage, setSelectedPaymentMethodIconOrImage] = useState('cash');
   const [selectedPaymentMethod1, setSelectedPaymentMethod1] = useState(2);
   const [note, setNote] = useState('');
-  const profile = useSelector((state) => state.user.profile.ADMIN_ID); // chuyển qua id người dùng
+  const profile = useSelector((state) => state.user.profile.CUSTOMER_ID); // chuyển qua id người dùng
   console.log("totalPrice:", totalPrice);
   // console.log(addressData.ADDRESS_ID);
   console.log(cartItems);
-  // console.log(profile);
+  console.log(profile);
   console.log("selectedPaymentMethod:", selectedPaymentMethod1)
 
   const handlePaymentMethodSelect = (paymentMethodId) => {

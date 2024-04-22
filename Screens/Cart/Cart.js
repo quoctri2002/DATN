@@ -15,6 +15,12 @@ import { updateQuantity } from '../../store/test/actionsAddproductcart';
 export function Cart() {
   const navigation = useNavigation();
 
+
+
+ 
+
+  // Lọc dữ liệu dựa trên giá trị của input search
+
   const cartItems = useSelector(state => state.cart.cartItems); // Giả sử reducer của giỏ hàng được lưu dưới tên "cart"
   const totalPrice = cartItems.reduce((total, item) => total + (item.price * item.quantity), 0);
   const totalItems = cartItems.reduce((total, item) => total + item.quantity, 0);

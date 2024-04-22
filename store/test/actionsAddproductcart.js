@@ -12,6 +12,13 @@ export const removeFromCartAction = (productId) => {
     };
 };
 
+export const addToCartWithQuantity = (product, quantity) => {
+    return {
+        type: 'ADD_TO_CART_WITH_QUANTITY',
+        payload: { product, quantity },
+    };
+};
+
 export const UPDATE_QUANTITY = 'UPDATE_QUANTITY';
 export const updateQuantity = (productId, newQuantity) => ({
     type: UPDATE_QUANTITY,
@@ -75,6 +82,31 @@ const cartReducer = (state = initialState, action) => {
                 ...state,
                 addressData: action.payload,
             };
+            case 'ADD_TO_CART_WITH_QUANTITY':
+                // Xử lý thêm sản phẩm vào giỏ hàng với số lượng cụ thể
+                const { quantity } = action.payload;
+    if (existingProductIndex !== -1) {
+        const updatedCartItems = [...state.cartItems];
+        updatedCartItems[existingProductIndex] = {
+            ...updatedCartItems[existingProductIndex],
+            quantity: updatedCartItems[existingProductIndex].quantity + quantity
+        };
+        return {
+            ...state,
+            cartItems: updatedCartItems,
+        };
+    } else {
+        return {
+            ...state,
+            cartItems: [...state.cartItems, {
+                productId: product.productId,
+                quantity: quantity,
+                name: product.product_name,
+                image: product.image_link,
+                price: product.product_price,
+            }],
+        };
+    }
         default:
             return state;
     }
