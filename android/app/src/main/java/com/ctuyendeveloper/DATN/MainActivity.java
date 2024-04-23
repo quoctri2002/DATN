@@ -9,6 +9,8 @@ import com.facebook.react.defaults.DefaultNewArchitectureEntryPoint;
 import com.facebook.react.defaults.DefaultReactActivityDelegate;
 
 import expo.modules.ReactActivityDelegateWrapper;
+import vn.zalopay.sdk.Environment;
+import vn.zalopay.sdk.ZaloPaySDK;
 
 public class MainActivity extends ReactActivity {
   @Override
@@ -17,8 +19,14 @@ public class MainActivity extends ReactActivity {
     // coloring the background, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
+    ZaloPaySDK.init(<2554>, Environment.SANDBOX);
+
+    //Khởi tạo lại ZPDK nếu bạn muốn thanh toán bằng AppID khác
+    ZaloPaySDK.tearDown();
+    ZaloPaySDK.init(<2554>, Environment.SANDBOX);
     super.onCreate(null);
   }
+
 
   /**
    * Returns the name of the main component registered from JavaScript.

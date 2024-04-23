@@ -4,7 +4,8 @@ import { NavigationContainer } from '@react-navigation/native';
 
 const Stack = createStackNavigator();
 
-import { Cart, Shop, Detail, Pay, Adress, Paymentmethod } from '../Screens/Cart';
+import { Cart, Shop, Detail, Pay, Adress, Paymentmethod, Zalopay } from '../Screens/Cart';
+import ZaloPay from '../Screens/Cart/Zalopay';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +21,7 @@ export function CartNavigation() {
       <Stack.Screen name="Pay" component={Pay} />
       <Stack.Screen name="Address" component={Adress} />
       <Stack.Screen name="Paymentmethod" component={Paymentmethod} />
+      <Stack.Screen name="zalo" component={ZaloPay} />
     </Stack.Navigator>
   );
 }
