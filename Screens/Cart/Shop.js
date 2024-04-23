@@ -273,7 +273,7 @@ const styles = StyleSheet.create({
 
   txtButton: {
     color: '#5F5F63',
-    fontSize: 10,
+    fontSize: 16,
     fontWeight: '700',
     lineHeight: 19.5,
     textAlign: 'center',
