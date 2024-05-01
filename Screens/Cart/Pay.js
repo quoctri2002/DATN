@@ -73,7 +73,7 @@ export function Pay() {
       // Chuyển hướng sau khi đặt hàng thành công
       console.log(response)
       dispatch(clearCartAndAddress());
-      navigation.navigate('zalo');
+      navigation.navigate('Shop');
     } catch (error) {
       console.error('Error ordering:', error);
     }

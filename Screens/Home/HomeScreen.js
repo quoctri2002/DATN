@@ -1,10 +1,14 @@
 import { StyleSheet, Text, View, FlatList, Dimensions, TouchableOpacity, ScrollView } from 'react-native'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Image } from '@rneui/themed';
 import { useSelector } from 'react-redux';
 import { Feather } from '@expo/vector-icons';
+import { useNavigation } from '@react-navigation/native';
+import { screen } from '../Cart/Cart'
 
 export function HomeScreen() {
+  
+  const navigation = useNavigation();
   const screenWith = Dimensions.get('window').width;
   const { height, width } = Dimensions.get('window');
   const profile = useSelector((state) => state.user.profile);
@@ -24,15 +28,33 @@ export function HomeScreen() {
   ];
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const RenderRecommended = ({item}) => {
+  useEffect(() => {
+    async function fetchProductCategories() {
+      try {
+        const response = await fetch('http://206.189.45.141/api/testproduct5.php');
+        const resJson = await response.json();
+        console.log(resJson);
+        setListCategory(resJson.data);
+      } catch (error) {
+        console.error('Error fetching product categories:', error);
+      }
+    }
+    fetchProductCategories();
+  }, []);
+
+  const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity key={item.id} style={styles.box}>
+      <TouchableOpacity key={item.id} onPress={() => navigation.navigate('Cart',
+        {
+          id: item.product_id
+        }
+      )} style={styles.box}>
         {item.sale === '' ? null : (
           <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
             <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
           </View>
         )}
-        <Image resizeMode="cover" style={{width: 100, height: 100, marginTop: 10}} source={item.image} />
+        <Image resizeMode="cover" style={{ width: 100, height: 100, marginTop: 10 }} source={item.image} />
         <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Rs 2900.00</Text>
         <Text style={styles.txtNameProduct}>{item.name}</Text>
         <Text style={styles.txtkg}>{item.kg}kg</Text>
@@ -48,7 +70,7 @@ export function HomeScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Hey {profile.name},</Text>
+        <Text style={styles.text}>Hey {profile.customer_name},</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>
@@ -84,7 +106,7 @@ export function HomeScreen() {
           }
         </View>
 
-        <Text style={{fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left'}}>List Recommended</Text>
+        <Text style={{ fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left' }}>Top Selling</Text>
 
         <FlatList
           data={data}

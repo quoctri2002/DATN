@@ -99,7 +99,7 @@ export const Dashboard = () => {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.text}>Chào {profile.customer_name || 'bạn'},</Text>
+        <Text style={styles.text}>Chào {profile.CUSTOMER_NAME || 'bạn'},</Text>
         <View style={styles.logo}>
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>

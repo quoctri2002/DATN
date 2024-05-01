@@ -38,12 +38,13 @@ export function Adress({ action }) {
         return ProvinceObject ? ProvinceObject.value : ""; // Trả về giá trị value nếu tìm thấy đối tượng, ngược lại trả về chuỗi rỗng
     };
 
-    // const profile = useSelector((state) => state.user.profile.ADMIN_ID); chuyển qua id người dùng
+    const profile = useSelector((state) => state.user.profile.CUSTOMER_ID); // chuyển qua id người dùng
+    console.log(profile)
 
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${1}`); // chuyển qua id người dùng
+                const response = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${profile}`); // chuyển qua id người dùng
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -53,7 +54,6 @@ export function Adress({ action }) {
                 console.error('Error fetching data:', error);
             }
         };
-
         fetchData();
     }, []);
 
@@ -69,18 +69,19 @@ export function Adress({ action }) {
                     addressdetail: fullAddress,
                     addressphone: phoneAddress,
                     addresname: nameAddress,
-                    customerid: 1 // chuyển qua id người dùng.
+                    customerid: profile // chuyển qua id người dùng.
                 }),
             });
-            const updatedResponse = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${1}`);
+            const updatedResponse = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${profile}`);
             if (!updatedResponse.ok) {
                 throw new Error('Failed to fetch updated data');
             }
             const updatedResJson = await updatedResponse.json();
+            // console.log(updatedResJson.data)
             setdataAddress(updatedResJson.data);
             
             // Set addAdress to false to hide the form
-            alert(response.message);
+            // alert(response.message);
             setAddAdress(false);
 
             if (!response.ok) {
@@ -120,7 +121,7 @@ export function Adress({ action }) {
                                     {item.ADDRESS_PHONE}
                                 </Text>
                                 <Text>
-                                    <Text style={{ fontWeight: 'bold', color: 'black' }}>Address:</Text>
+                                    <Text style={{ fontWeight: 'bold', color: 'black' }}>Address: </Text>
                                     {item.ADDRESS_DETAIL}
                                 </Text>
                             </View>

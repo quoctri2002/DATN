@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { Input, Button } from '@rneui/base';
 import { useDispatch } from 'react-redux';
 import { setAddress } from '../../store/test/actionsAddproductcart';
+import { useSelector } from 'react-redux';
 
 export function Adress({ action }) {
     const navigation = useNavigation();
@@ -43,12 +44,12 @@ export function Adress({ action }) {
         return ProvinceObject ? ProvinceObject.value : ""; // Trả về giá trị value nếu tìm thấy đối tượng, ngược lại trả về chuỗi rỗng
     };
 
-    // const profile = useSelector((state) => state.user.profile.ADMIN_ID); chuyển qua id người dùng
+    const profile = useSelector((state) => state.user.profile.CUSTOMER_ID); // chuyển qua id người dùng
 
     React.useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${1}`); // chuyển qua id người dùng
+                const response = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${profile}`); // chuyển qua id người dùng
                 if (!response.ok) {
                     throw new Error('Failed to fetch data');
                 }
@@ -74,10 +75,10 @@ export function Adress({ action }) {
                     addressdetail: fullAddress,
                     addressphone: phoneAddress,
                     addresname: nameAddress,
-                    customerid: 1 // chuyển qua id người dùng.
+                    customerid: profile // chuyển qua id người dùng.
                 }),
             });
-            const updatedResponse = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${1}`);
+            const updatedResponse = await fetch(`http://206.189.45.141/api/getinfoaddress.php?id=${profile}`);
             if (!updatedResponse.ok) {
                 throw new Error('Failed to fetch updated data');
             }
