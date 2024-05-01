@@ -2,7 +2,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 const Stack = createStackNavigator();
 
-import { Login, Register } from '../Screens/Auth';
+import { Login, Register, ForgotPassword } from '../Screens/Auth';
 import { NavigationContainer } from '@react-navigation/native';
 
 export function AuthNavigation() {
@@ -14,6 +14,7 @@ export function AuthNavigation() {
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Register" component={Register} />
+        <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
       </Stack.Navigator>
   );
 }

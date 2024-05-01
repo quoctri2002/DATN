@@ -13,8 +13,11 @@ const profileSlice = createSlice({
   initialState,
   reducers: {
     logout: (state, action) => {
-      state.authenticated = false;
+      return initialState;
     },
+    updateAvatar: (state, action) => {
+      state.profile = { ...state.profile, customer_image: action.payload };
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -34,5 +37,5 @@ const profileSlice = createSlice({
   },
 });
 
-export const { logout } = profileSlice.actions;
+export const { logout, updateAvatar } = profileSlice.actions;
 export default profileSlice.reducer;

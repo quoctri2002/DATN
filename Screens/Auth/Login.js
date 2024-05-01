@@ -1,4 +1,4 @@
-import { Text, View, StyleSheet, ToastAndroid, ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, ToastAndroid, ActivityIndicator, Pressable } from 'react-native';
 import { Button, Image, Input } from '@rneui/base';
 import { MaterialCommunityIcons, Feather } from '@expo/vector-icons';
 import { useEffect, useState } from 'react';
@@ -77,7 +77,11 @@ export function Login() {
             secureTextEntry={true}
           />
 
-          <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
+          <Pressable
+            onPress={() => navigation.navigate('ForgotPassword')}>
+            <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot
+              Password?</Text>
+          </Pressable>
 
           <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
             Login
