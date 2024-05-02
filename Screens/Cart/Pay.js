@@ -56,7 +56,7 @@ export function Pay() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          billStatus: selectedPaymentMethod1,
+          billStatus: 1,
           billPaymentMethod: selectedPaymentMethod1,
           billNote: note,
           addressId: addressData.ADDRESS_ID,
@@ -73,6 +73,7 @@ export function Pay() {
       // Chuyển hướng sau khi đặt hàng thành công
       console.log(response)
       dispatch(clearCartAndAddress());
+      alert("Order Successfully");
       navigation.navigate('Shop');
     } catch (error) {
       console.error('Error ordering:', error);

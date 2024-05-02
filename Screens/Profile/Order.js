@@ -8,6 +8,7 @@ export function Order({ action }) {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const profile = useSelector((state) => state.user.profile.CUSTOMER_ID); // chuyển qua id người dùng
     const [data, setData] = useState([]);
+    console.log(selectedOrder)
 
     // Function to handle click on an order item
     const handleOrderItemPress = (order) => {
@@ -21,24 +22,60 @@ export function Order({ action }) {
     };
 
     // Function to handle click on the confirm button
-    const handleConfirmButtonPress = () => {
-        // Perform navigation or any other action you want
-        console.log("Order confirmed:", selectedOrder);
+    const handleConfirmButtonPress = async (orderId) => {
+        try {
+            const response = await fetch(`http://206.189.45.141/api/updateorder2.php?id=${orderId}`, {
+                method: 'PUT', // Phương thức HTTP
+                headers: {
+                    Accept: 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                // body: JSON.stringify(data), // Dữ liệu gửi đi (nếu có)
+            });
+            const json = await response.json();
+            alert(json.message);
+            setModalVisible(false);
+            // Xử lý kết quả sau khi gọi API
+        } catch (error) {
+            console.error('Error updating order:', error);
+        }
+    };
+    const mapStatusToString = (status) => {
+        switch (status) {
+            case 1:
+                return "Pending approval";
+            case 2:
+                return "Shipping";
+            case 3:
+                return "Delivered";
+            default:
+                return "Unknown";
+        }
+    };
+    const mapStatusToString2 = (status) => {
+        switch (status) {
+            case 1:
+                return "Momo";
+            case 2:
+                return "Cash";
+            default:
+                return "Unknown";
+        }
     };
 
     useEffect(() => {
         async function fetchProductCategories() {
-          try {
-            const response = await fetch(`http://206.189.45.141/api/testdetail.php?id=${profile}`);
-            const resJson = await response.json();
-            console.log(resJson.data);
-            setData(resJson.data);
-          } catch (error) {
-            console.error('Error fetching product categories:', error);
-          }
+            try {
+                const response = await fetch(`http://206.189.45.141/api/testdetail.php?id=${profile}`);
+                const resJson = await response.json();
+                console.log(resJson.data);
+                setData(resJson.data);
+            } catch (error) {
+                console.error('Error fetching product categories:', error);
+            }
         }
         fetchProductCategories();
-      }, [profile]);
+    }, [profile]);
 
     return (
         <View style={styles.container}>
@@ -61,11 +98,11 @@ export function Order({ action }) {
                                 </View>
                                 <View style={styles.Content}>
                                     <Text style={styles.txtTitle}>Status: </Text>
-                                    <Text style={styles.txtContent}>{item.BILL_STATUS}</Text>
+                                    <Text style={styles.txtContent}>{mapStatusToString(item.BILL_STATUS)}</Text>
                                 </View>
                                 <View style={styles.Content}>
                                     <Text style={styles.txtTitle}>Paymentmethod: </Text>
-                                    <Text style={styles.txtContent}>{item.BILL_PAYMENTMETHOD}</Text>
+                                    <Text style={styles.txtContent}>{mapStatusToString2(item.BILL_PAYMENTMETHOD)}</Text>
                                 </View>
                                 <View style={styles.Content}>
                                     <Text style={styles.txtTitle}>Orderer: </Text>
@@ -103,7 +140,7 @@ export function Order({ action }) {
                                         <TouchableOpacity style={styles.button} onPress={handleCancelButtonPress}>
                                             <Text style={styles.buttonText}>Cancel</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.button} onPress={handleConfirmButtonPress}>
+                                        <TouchableOpacity style={styles.button} onPress={() => handleConfirmButtonPress(item.BILL_ID)}>
                                             <Text style={styles.buttonText}>Confirm</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -198,20 +235,20 @@ const styles = StyleSheet.create({
         marginTop: 5,
     },
     itemName: {
-        fontSize: 16,
+        fontSize: 12,
         fontWeight: 'bold',
         marginBottom: 5,
     },
     itemPrice: {
-        fontSize: 14,
+        fontSize: 10,
         color: '#888',
     },
     itemQuantity: {
-        fontSize: 14,
+        fontSize: 10,
         color: '#888',
     },
     itemTotal: {
-        fontSize: 14,
+        fontSize: 10,
         color: '#888',
     },
 });

@@ -77,7 +77,7 @@ export function Login() {
             secureTextEntry={true}
           />
 
-          <Text style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
+          <Text onPress={() => navigation.navigate('Forgot')} style={{ color: '#5CB15A', fontSize: 20, textAlign: 'right', marginBottom: 18 }}>Forgot Password?</Text>
 
           <Button onPress={handleLogin} buttonStyle={{ backgroundColor: '#5CB15A', borderRadius: 8 }}>
             Login

@@ -11,7 +11,9 @@ export function HomeScreen() {
   const navigation = useNavigation();
   const screenWith = Dimensions.get('window').width;
   const { height, width } = Dimensions.get('window');
+  const [listCategory, setListCategory] = React.useState([]);
   const profile = useSelector((state) => state.user.profile);
+  console.log(listCategory)
   const imagesPanner = [
     {
       id: 1,
@@ -33,8 +35,8 @@ export function HomeScreen() {
       try {
         const response = await fetch('http://206.189.45.141/api/testproduct5.php');
         const resJson = await response.json();
-        console.log(resJson);
-        setListCategory(resJson.data);
+        // console.log(resJson);
+        setListCategory(resJson);
       } catch (error) {
         console.error('Error fetching product categories:', error);
       }
@@ -44,20 +46,14 @@ export function HomeScreen() {
 
   const RenderRecommended = ({ item }) => {
     return (
-      <TouchableOpacity key={item.id} onPress={() => navigation.navigate('Cart',
+      <TouchableOpacity key={item.PRODUCT_ID} onPress={() => navigation.navigate('Detail',
         {
-          id: item.product_id
+          id: item.PRODUCT_ID
         }
       )} style={styles.box}>
-        {item.sale === '' ? null : (
-          <View style={{ textAlign: 'left', backgroundColor: '#F56262', width: '25%', height: '8%', alignSelf: 'flex-start', position: 'absolute' }}>
-            <Text style={{ fontSize: 12, color: 'red', textAlign: 'center', backgroundColor: '#F56262', fontWeight: '500' }}>{item.sale}</Text>
-          </View>
-        )}
-        <Image resizeMode="cover" style={{ width: 100, height: 100, marginTop: 10 }} source={item.image} />
-        <Text style={{ fontSize: 14, fontWeight: '500', color: '#5CB15A' }}>Rs 2900.00</Text>
-        <Text style={styles.txtNameProduct}>{item.name}</Text>
-        <Text style={styles.txtkg}>{item.kg}kg</Text>
+        {/* <Image resizeMode="cover" style={{ width: 100, height: 100, marginTop: 10 }} source={item.image_link} /> */}
+        <Text style={styles.txtNameProduct}>{item.PRODUCT_NAME}</Text>
+        <Text style={styles.txtNameProduct}>{item.total_quantity}</Text>
         <Text style={styles.line}></Text>
         <TouchableOpacity style={{ flexDirection: 'row', alignItems: 'center', gap: 10, paddingTop: 5 }}>
           <Feather name="shopping-bag" size={20} color="#5CB15A" />
@@ -109,13 +105,13 @@ export function HomeScreen() {
         <Text style={{ fontWeight: '700', fontSize: 20, color: '#868889', marginTop: 20, textAlign: 'left' }}>Top Selling</Text>
 
         <FlatList
-          data={data}
+          data={listCategory}
           renderItem={RenderRecommended}
           numColumns={2}
           columnWrapperStyle={{ columnGap: 10 }}
           contentContainerStyle={{ gap: 10 }}
           style={{ maxWidth: '100%', maxHeight: 'auto', marginTop: 20 }}
-          keyExtractor={(item) => item.id.toString()}
+          keyExtractor={(item) => item.PRODUCT_ID}
           scrollEnabled={false}
         />
       </View>

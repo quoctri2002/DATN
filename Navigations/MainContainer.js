@@ -5,7 +5,7 @@ import { Feather } from '@expo/vector-icons';
 //Screens
 import { Profile } from '../Screens/Profile';
 import { CartNavigation } from './CartNavigation';
-import { HomeScreen } from '../Screens/Home';
+import { HomeScreen, Dashboard } from '../Screens/Home';
 
 // Screen names
 const homeName = 'Home';
@@ -49,7 +49,7 @@ export function MainContainer() {
           return <Feather name={iconName} size={25} color="#FFFFFF" />;
         },
       })}>
-      <Tab.Screen name={homeName} component={HomeScreen} />
+      <Tab.Screen name={homeName} component={Dashboard} />
       <Tab.Screen name={shopName} component={CartNavigation} />
       <Tab.Screen name={profileName} component={Profile} />
     </Tab.Navigator>

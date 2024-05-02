@@ -86,7 +86,7 @@ export function Adress({ action }) {
             setdataAddress(updatedResJson.data);
 
             // Set addAdress to false to hide the form
-            alert(response.message);
+            alert("Add Address Successfully");
             setAddAdress(false);
 
             if (!response.ok) {

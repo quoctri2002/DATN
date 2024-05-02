@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { Button, Input } from '@rneui/base';
 import { getProfile } from '../../store/thunkApis';
 import * as ImagePicker from 'expo-image-picker';
+import { updateAvatar } from '../../store/slices';
 
 export function Account({ action }) {
   const { setModalVisible } = action;
@@ -15,7 +16,7 @@ export function Account({ action }) {
 
   const EditProfile = () => {
     const dispatch = useDispatch();
-    const [avatar, setAvatar] = useState(profile.customer_image);
+    const [avatar, setAvatar] = useState(profile.customer_image + '?' + new Date() );
     const [user, setUser] = useState({
       name: profile.customer_name, phone: profile.CUSTOMER_PHONE, address: profile.customer_address, password: ''
     });
@@ -109,7 +110,7 @@ export function Account({ action }) {
           <Avatar
             size={90}
             rounded
-            source={{ uri: avatar }}
+            source={{ uri: avatar}}
           />
         </Pressable>
         <View>
@@ -215,7 +216,7 @@ export function Account({ action }) {
       <Avatar
         size={90}
         rounded
-        source={{ uri: profile.customer_image }}
+        source={{ uri: profile.customer_image + '?' + new Date()  }}
       />
       <View>
         <Text style={styles.textName}>{profile.customer_name}</Text>

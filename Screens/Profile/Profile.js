@@ -27,7 +27,7 @@ export function Profile() {
           <Image style={styles.logoImage} source={require('../../assets/images/LogoDashboard.png')} />
         </View>
       </View>
-      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile?.customer_image }} />
+      <Image style={{ width: '100%', height: '65%' }} resizeMode="cover" source={{ uri: profile?.customer_image + '?' + new Date() }} />
       <View style={styles.view2in}>
 
       </View>
